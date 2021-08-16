@@ -1,11 +1,10 @@
 import React from 'react';
+import Register from './Register';
 
 const LoginRegister = () => {
   return (
     <div>
-      <div>
-        <div>LOGIN</div>
-      </div>
+      <Register />
     </div>
   );
 };

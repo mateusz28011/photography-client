@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import Navbar from './components/Navbar';
 import { Route, Switch } from 'react-router-dom';
-import LoginRegister from './components/pages/LoginRegister';
+import LoginRegister from './components/pages/LoginRegister/LoginRegister';
 
 const App = () => {
   return (
