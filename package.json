@@ -21,6 +21,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
     "tailwind-capitalize-first-letter": "^1.0.3",
+    "universal-cookie": "^4.0.4",
+    "uuidv4": "^6.2.12",
     "web-vitals": "^1.1.2",
     "yup": "^0.32.9"
   },

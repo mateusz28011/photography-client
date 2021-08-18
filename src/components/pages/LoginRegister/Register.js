@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -8,7 +8,7 @@ import {
   createLoadingSelector,
   createErrorMessageSelector,
 } from '../../../selectors';
-import { checkAndReturnApiError } from '../../../utils';
+import ApiError from '../../ApiError';
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required('First name is required.'),
@@ -17,17 +17,17 @@ const registerSchema = yup.object().shape({
     .string()
     .email('Email must be a valid email.')
     .required('Email is required.'),
-  password: yup
+  password1: yup
     .string()
     .min(
       8,
       'This password is too short. It must contain at least 8 characters.'
     )
     .required('Password is required.'),
-  rePassword: yup
+  password2: yup
     .string()
     .required('You must re-enter your password.')
-    .oneOf([yup.ref('password'), null], 'Passwords must match.'),
+    .oneOf([yup.ref('password1'), null], 'Passwords must match.'),
 });
 
 const Register = ({ loading, error, registeredSuccessfully, registerUser }) => {
@@ -35,7 +35,6 @@ const Register = ({ loading, error, registeredSuccessfully, registerUser }) => {
     register,
     handleSubmit,
     formState: { errors: formErrors },
-    reset,
   } = useForm({
     resolver: yupResolver(registerSchema),
     reValidateMode: 'onSubmit',
@@ -45,7 +44,7 @@ const Register = ({ loading, error, registeredSuccessfully, registerUser }) => {
     <p>loading</p>
   ) : (
     <>
-      <div>REGISTER</div>
+      <div>SIGN UP</div>
       {registeredSuccessfully && (
         <p>
           Now you can activate your account by the link sent to your e-mail.
@@ -60,7 +59,7 @@ const Register = ({ loading, error, registeredSuccessfully, registerUser }) => {
           {...register('firstName')}
         />
         <p>{formErrors.firstName?.message}</p>
-        {checkAndReturnApiError('firstName', error)}
+        <ApiError error={error} name={'firstName'} />
         <label htmlFor='lastName'>Last name:</label>
         <input
           className='block'
@@ -69,7 +68,7 @@ const Register = ({ loading, error, registeredSuccessfully, registerUser }) => {
           {...register('lastName')}
         />
         <p>{formErrors.lastName?.message}</p>
-        {checkAndReturnApiError('lastName', error)}
+        <ApiError error={error} name={'lastName'} />
         <label htmlFor='email'>Email:</label>
         <input
           className='block'
@@ -77,29 +76,29 @@ const Register = ({ loading, error, registeredSuccessfully, registerUser }) => {
           placeholder='email'
           {...register('email')}
         />
-        {checkAndReturnApiError('email', error)}
+        <ApiError error={error} name={'email'} />
         <p>{formErrors.email?.message}</p>
-        <label htmlFor='password'>Password:</label>
+        <label htmlFor='password1'>Password:</label>
         <input
           className='block'
           type='password'
-          placeholder='password'
-          {...register('password')}
+          placeholder='password1'
+          {...register('password1')}
         />
-        <p>{formErrors.password?.message}</p>
-        {checkAndReturnApiError('password', error)}
-        <label htmlFor='rePassword'>Confirm password:</label>
+        <p>{formErrors.password1?.message}</p>
+        <ApiError error={error} name={'password1'} />
+        <label htmlFor='password2'>Confirm password:</label>
         <input
           className='block'
           type='password'
-          placeholder='rePassword'
-          {...register('rePassword')}
+          placeholder='password2'
+          {...register('password2')}
         />
-        <p>{formErrors.rePassword?.message}</p>
+        <p>{formErrors.password2?.message}</p>
         <input
           className='block'
           type='submit'
-          value='SIGN UP'
+          value='Register'
           disabled={loading ? true : false}
         />
       </form>
