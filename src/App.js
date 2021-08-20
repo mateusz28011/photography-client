@@ -7,6 +7,7 @@ import LoginRegister from './components/pages/LoginRegister/LoginRegister';
 import { useEffect } from 'react';
 import { getUser } from './actions/auth';
 import doesHttpOnlyCookieExist from './utils/doesHttpOnlyCookieExist';
+import Search from './components/pages/Search/Search';
 
 const App = () => {
   useEffect(() => {
@@ -23,6 +24,9 @@ const App = () => {
           </Route>
           <Route exact path='/login-register'>
             <LoginRegister />
+          </Route>
+          <Route exact path='/search'>
+            <Search />
           </Route>
           <Route>CO</Route>
         </Switch>
