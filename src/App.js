@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { getUser } from './actions/auth';
 import doesHttpOnlyCookieExist from './utils/doesHttpOnlyCookieExist';
 import Search from './components/pages/Search/Search';
+import Vendor from './components/pages/Vendor/Vendor';
 
 const App = () => {
   useEffect(() => {
@@ -25,8 +26,11 @@ const App = () => {
           <Route exact path='/login-register'>
             <LoginRegister />
           </Route>
-          <Route exact path='/search'>
+          <Route exact path='/vendor'>
             <Search />
+          </Route>
+          <Route exact path='/vendor/:vendorid'>
+            <Vendor />
           </Route>
           <Route>CO</Route>
         </Switch>

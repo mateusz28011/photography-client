@@ -6,6 +6,8 @@ import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:8000';
+// delete axios.defaults.headers.common['Accept'];
+axios.defaults.headers.common['Accept'] = 'application/json';
 axios.defaults.withCredentials = true;
 axios.interceptors.response.use(
   function (response) {

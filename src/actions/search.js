@@ -5,7 +5,7 @@ import {
   SEARCH_SUCCESS,
   SEARCH_FAILURE,
 } from '../actions/types';
-import queryString from 'query-string';
+// import queryString from 'query-string';
 
 const search = async (dispach, url) => {
   try {
@@ -24,13 +24,13 @@ export const searchProfiles = (query) => async (dispach) => {
   search(dispach, `/profiles/${query}`);
 };
 
-export const loadNext = (next) => async (dispach) => {
-  next && search(dispach, next);
-};
+// export const loadNext = (next) => async (dispach) => {
+//   next && search(dispach, next);
+// };
 
-export const loadPrevious = (previous) => async (dispach) => {
-  previous && search(dispach, previous);
-};
+// export const loadPrevious = (previous) => async (dispach) => {
+//   previous && search(dispach, previous);
+// };
 //   try {
 //     dispach({ type: SEARCH_REQUEST });
 //     const response = await axios.get('/profiles/');

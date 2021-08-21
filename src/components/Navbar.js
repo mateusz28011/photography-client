@@ -9,8 +9,8 @@ const Navbar = ({ user, logoutUser }) => {
     <div className='flex-row sm:flex bg-sky-500 w-full mx-auto'>
       <Link to='/'>Photography</Link>
       <div className='flex-row sm:flex sm:ml-auto'>
-        <Link to='/search' className='block'>
-          SEARCH
+        <Link to='/vendor' className='block'>
+          VENDORS
         </Link>
         <Link to='/' className='block'>
           LINK2

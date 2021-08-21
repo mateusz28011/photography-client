@@ -9,6 +9,7 @@ import {
 } from '../../../selectors';
 import NavigationNextPrevious from './NavigationNextPrevious';
 import queryString from 'query-string';
+import ApiError from '../../ApiError';
 
 const Search = ({ loading, error, data, searchProfiles }) => {
   const location = useLocation();
@@ -17,6 +18,7 @@ const Search = ({ loading, error, data, searchProfiles }) => {
 
   const onSubmitSearch = ({ search }) => {
     const parsed = queryString.parse(location.search);
+    parsed.page = undefined;
     parsed.search = search ? search : undefined;
     const query = queryString.stringify(parsed);
     history.push(`${location.pathname}?${query}`);
@@ -29,11 +31,14 @@ const Search = ({ loading, error, data, searchProfiles }) => {
     history.push(`${location.pathname}?${query}`);
   };
 
+  const showVendor = ({ id }) => {
+    history.push(`/vendor/${id}`);
+  };
+
   useEffect(() => {
-    console.log('fetch');
+    console.log('fetch vendors');
     searchProfiles(location.search);
   }, [searchProfiles, location]);
-  console.log(data);
 
   return (
     <div>
@@ -54,11 +59,20 @@ const Search = ({ loading, error, data, searchProfiles }) => {
       </form>
       {loading ? (
         <p>loading</p>
+      ) : error ? (
+        <ApiError error={error} />
       ) : (
         <div>
           {data &&
             data.results.map((result, index) => (
-              <div key={index}>{result.name}</div>
+              <div
+                onClick={() => {
+                  showVendor(result);
+                }}
+                key={index}
+              >
+                {result.name}
+              </div>
             ))}
           <NavigationNextPrevious />
         </div>
