@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadNext, loadPrevious } from '../../../actions/search';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 

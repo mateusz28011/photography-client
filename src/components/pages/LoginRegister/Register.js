@@ -44,7 +44,7 @@ const Register = ({ loading, error, registeredSuccessfully, registerUser }) => {
     <p>loading</p>
   ) : (
     <>
-      <div>SIGN UP</div>
+      <div>SIGNUP</div>
       {registeredSuccessfully && (
         <p>
           Now you can activate your account by the link sent to your e-mail.
