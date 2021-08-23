@@ -7,7 +7,19 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 
+  body {
+    @apply font-roboto bg-sky-50;
+  }
+
   .menuLinkStyle {
     @apply mt-3 md:my-2 md:mx-4;
+  }
+
+  [type='email'],
+  [type='text'],
+  [type='search'],
+  [type='select'],
+  [type='password'] {
+    @apply block w-full mt-1 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500;
   }
 }

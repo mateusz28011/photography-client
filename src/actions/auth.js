@@ -13,6 +13,8 @@ import {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   GET_USER_FAILURE,
+  LOGIN_ERROR_CLEAR,
+  REGISTER_ERROR_CLEAR,
 } from '../actions/types';
 
 export const registerUser = (userData) => async (dispach) => {
@@ -31,6 +33,10 @@ export const registerUser = (userData) => async (dispach) => {
   }
 };
 
+export const registerUserClearError = () => async (dispach) => {
+  dispach({ type: REGISTER_ERROR_CLEAR });
+};
+
 export const loginUser = (userData) => async (dispach) => {
   try {
     dispach({ type: LOGIN_REQUEST });
@@ -43,6 +49,10 @@ export const loginUser = (userData) => async (dispach) => {
       payload: error,
     });
   }
+};
+
+export const loginUserClearError = () => async (dispach) => {
+  dispach({ type: LOGIN_ERROR_CLEAR });
 };
 
 export const logoutUser = () => async (dispach) => {
@@ -71,17 +81,3 @@ export const getUser = () => async (dispach) => {
     });
   }
 };
-
-// export const refreshToken = () => async (dispach) => {
-//   try {
-//     dispach({ type: REFRESH_TOKEN_REQUEST });
-//     await axios.post('/dj-rest-auth/token/refresh/');
-//     dispach({ type: REFRESH_TOKEN_SUCCESS });
-//   } catch (error) {
-//     dispach({
-//       type: REFRESH_TOKEN_FAILURE,
-//       payload: error,
-//     });
-//     logoutUser();
-//   }
-// };

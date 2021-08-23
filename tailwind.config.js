@@ -5,10 +5,14 @@ module.exports = {
   theme: {
     extend: {
       colors: { ...colors },
+      fontFamily: { roboto: "'Roboto',sans-serif" },
     },
   },
   variants: {
     extend: {},
   },
-  plugins: [require('tailwind-capitalize-first-letter')],
+  plugins: [
+    require('tailwind-capitalize-first-letter'),
+    require('@tailwindcss/forms'),
+  ],
 };

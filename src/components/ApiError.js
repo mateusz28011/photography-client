@@ -1,8 +1,14 @@
 import React from 'react';
 import { v4 } from 'uuid';
 
-const Error = ({ error }) => {
-  return <p className='capitalize-first'>{error}</p>;
+export const Error = ({ error }) => {
+  return error ? (
+    <div className='bg-red-100 px-2 py-1 my-3 rounded'>
+      <div className='capitalize-first text-red-500 font-medium whitespace-pre-line'>
+        {error}
+      </div>
+    </div>
+  ) : null;
 };
 
 const ApiError = ({ error, name }) => {

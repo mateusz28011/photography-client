@@ -3,12 +3,13 @@ import { Provider } from 'react-redux';
 import store from './store';
 import Navbar from './components/Navbar';
 import { Route, Switch } from 'react-router-dom';
-import LoginRegister from './components/pages/LoginRegister/LoginRegister';
 import { useEffect } from 'react';
 import { getUser } from './actions/auth';
 import doesHttpOnlyCookieExist from './utils/doesHttpOnlyCookieExist';
 import Search from './components/pages/Search/Search';
 import Vendor from './components/pages/Vendor/Vendor';
+import Login from './components/pages/Login/Login';
+import Register from './components/pages/Register/Register';
 
 const App = () => {
   useEffect(() => {
@@ -17,23 +18,28 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <div className='max-w-screen-2xl bg-gray-200 min-h-screen mx-auto'>
+      <div className='max-w-screen-2xl min-h-screen mx-auto'>
         <Navbar />
-        <Switch>
-          <Route exact path='/'>
-            CO
-          </Route>
-          <Route exact path='/login-register'>
-            <LoginRegister />
-          </Route>
-          <Route exact path='/vendor'>
-            <Search />
-          </Route>
-          <Route exact path='/vendor/:vendorid'>
-            <Vendor />
-          </Route>
-          <Route>CO</Route>
-        </Switch>
+        <div className='px-6'>
+          <Switch>
+            <Route exact path='/'>
+              CO
+            </Route>
+            <Route exact path='/login'>
+              <Login />
+            </Route>
+            <Route exact path='/register'>
+              <Register />
+            </Route>
+            <Route exact path='/vendor'>
+              <Search />
+            </Route>
+            <Route exact path='/vendor/:vendorid'>
+              <Vendor />
+            </Route>
+            <Route>CO</Route>
+          </Switch>
+        </div>
       </div>
     </Provider>
   );

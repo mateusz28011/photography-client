@@ -51,6 +51,7 @@ const Navbar = ({ user, logoutUser }) => {
           'link3',
           'link4',
           'link5',
+          'link6',
         ].includes(e.target.id)
       ) {
         setIsMenuOpen(false);
@@ -66,12 +67,12 @@ const Navbar = ({ user, logoutUser }) => {
   }, []);
 
   return (
-    <div
+    <nav
       id='menu'
-      className='flex flex-col md:flex-row items-center w-full mx-auto text-center text-2xl bg-sky-500 text-white font-medium md:justify-between'
+      className='flex flex-col md:flex-row items-center w-full mx-auto text-center text-xl bg-blue-600 text-white  md:justify-between md:py-3'
     >
-      <div className='flex w-full md:w-auto justify-between mx-3 mt-1 md:-mt-1 md:ml-6'>
-        <Link to='/' className='text-4xl m-2 md:m-0'>
+      <div className='flex w-full md:w-auto justify-between mx-3 mt-1 md:ml-6'>
+        <Link to='/' className='text-4xl m-2 md:m-0 font-medium'>
           Photo
         </Link>
         <NavbarMenuBtn
@@ -84,41 +85,41 @@ const Navbar = ({ user, logoutUser }) => {
       {(isMenuOpen || !isSmallScreen) && (
         <div
           id='menuLinks'
-          className='flex flex-col md:flex-row md:items-center md:text-lg'
+          className='flex space-y-3 pb-5 uppercase flex-col md:normal-case md:flex-row md:items-center md:text-lg md:space-y-0 md:space-x-4 md:pb-0 md:mr-6'
         >
-          <div id='link0' className='mt-1 md:my-2 md:mx-4'>
-            <Link to='/vendor'>VENDORS</Link>
+          <div id='link0'>
+            <Link to='/vendor'>Vendors</Link>
           </div>
-          <div id='link1' className='menuLinkStyle'>
+          <div id='link1'>
             <Link to='/2'>LINK2</Link>
           </div>
-          <div id='link2' className='menuLinkStyle'>
+          <div id='link2'>
             <Link to='/3'>LINK3</Link>
           </div>
-          <div id='link3' className='menuLinkStyle'>
-            <Link to='/4'>LINK4</Link>
-          </div>
-          <div id='link4' className='menuLinkStyle'>
-            <Link to='/5'>LINK5</Link>
-          </div>
-          <div
-            id='link5'
-            className={
-              'mt-5 mb-6 py-3 px-5 rounded-xl md:py-2 md:px-4 md:m-4 md:ml-6 ' +
-              (user ? 'bg-red-400' : 'bg-green-400')
-            }
-          >
+          <div className='flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-4 items-center'>
             {user ? (
-              <Link to='/' onClick={logoutUser}>
-                LOGOUT
-              </Link>
+              <>
+                <div id='link3'>
+                  <Link to='/4'>My account</Link>
+                </div>
+                <Link id='link6' to='/' onClick={logoutUser}>
+                  Logout
+                </Link>
+              </>
             ) : (
-              <Link to='/login-register'>LOGIN / SIGNUP</Link>
+              <>
+                <div id='link4'>
+                  <Link to='/login'>Sign In</Link>
+                </div>
+                <div id='link5' className='border-2 rounded-md px-2 py-0.5'>
+                  <Link to='/register'>Sign Up</Link>
+                </div>
+              </>
             )}
           </div>
         </div>
       )}
-    </div>
+    </nav>
   );
 };
 
