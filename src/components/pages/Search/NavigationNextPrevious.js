@@ -1,7 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const NavigationNextPrevious = ({ next, previous }) => {
   const location = useLocation();
@@ -13,17 +13,23 @@ const NavigationNextPrevious = ({ next, previous }) => {
   };
 
   return (
-    <div className='flex'>
-      {previous && <div onClick={() => updateLocation(previous)}>previous</div>}
-      {next && <div onClick={() => updateLocation(next)}>next</div>}
+    <div className='flex w-full bg-white shadow rounded items-center justify-center py-4 text-2xl space-x-12 text-gray-600'>
+      {
+        <div onClick={previous && (() => updateLocation(previous))}>
+          <FaChevronLeft
+            className={previous ? 'cursor-pointer ' : ' text-gray-300'}
+          />
+        </div>
+      }
+      {
+        <div onClick={next && (() => updateLocation(next))}>
+          <FaChevronRight
+            className={next ? 'cursor-pointer ' : ' text-gray-300'}
+          />
+        </div>
+      }
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
-  next: state.search.data?.next,
-  previous: state.search.data?.previous,
-  // count: state.search.data?.count,
-});
-
-export default connect(mapStateToProps)(NavigationNextPrevious);
+export default NavigationNextPrevious;

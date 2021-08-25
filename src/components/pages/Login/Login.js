@@ -47,7 +47,7 @@ const Login = ({ user, loading, error, loginUser, loginUserClearError }) => {
     <p>loading</p>
   ) : (
     <>
-      <div className='text-4xl font-black text-center mt-16 mb-12 font-roboto md:mt-28'>
+      <div className='text-4xl font-black text-center mb-12 font-roboto mt-16 md:mt-28'>
         Sign in to your account
         <div className='font-medium text-base text-gray-500 mt-4'>
           Don't have an account yet?
@@ -71,14 +71,14 @@ const Login = ({ user, loading, error, loginUser, loginUserClearError }) => {
             <Error error={formErrors.email?.message} />
           </div>
           <div>
-            <label htmlFor='password' className='font-medium'>
+            <label htmlFor='password' className='font-medium text-gray-700'>
               Password
             </label>
             <input type='password' {...register('password')} />
             <Error error={formErrors.password?.message} />
           </div>
           <input
-            className='w-full bg-blue-600 text-white rounded-md shadow-sm font-medium py-2 text-lg cursor-pointer focus:bg-blue-500'
+            className='w-full btn-basic py-2'
             type='submit'
             value='Sign in'
             disabled={loading ? true : false}

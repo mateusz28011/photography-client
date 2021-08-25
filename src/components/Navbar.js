@@ -69,7 +69,7 @@ const Navbar = ({ user, logoutUser }) => {
   return (
     <nav
       id='menu'
-      className='flex flex-col md:flex-row items-center w-full mx-auto text-center text-xl bg-blue-600 text-white  md:justify-between md:py-3'
+      className='flex flex-col shadow md:flex-row items-center w-full mx-auto text-center text-xl bg-blue-600 text-white  md:justify-between md:py-3'
     >
       <div className='flex w-full md:w-auto justify-between mx-3 mt-1 md:ml-6'>
         <Link to='/' className='text-4xl m-2 md:m-0 font-medium'>

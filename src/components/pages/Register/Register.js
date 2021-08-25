@@ -78,7 +78,7 @@ const Register = ({
     <p>loading</p>
   ) : (
     <>
-      <div className='text-4xl font-black text-center mt-16 mb-12 md:mt-28'>
+      <div className='text-4xl font-black text-center mb-12 mt-16 md:mt-28'>
         Create your account
         <div className='font-medium text-base text-gray-500 mt-4'>
           Already has account?
@@ -136,7 +136,7 @@ const Register = ({
             <Error error={formErrors.password2?.message} />
           </div>
           <input
-            className='w-full bg-blue-600 text-white rounded-md shadow-sm font-medium py-2 text-lg focus:bg-blue-500'
+            className='w-full btn-basic py-2'
             type='submit'
             value='Sign Up'
             disabled={loading ? true : false}

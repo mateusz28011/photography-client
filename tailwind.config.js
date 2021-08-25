@@ -9,10 +9,13 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      backgroundColor: ['active'],
+    },
   },
   plugins: [
     require('tailwind-capitalize-first-letter'),
     require('@tailwindcss/forms'),
+    require('@tailwindcss/line-clamp'),
   ],
 };

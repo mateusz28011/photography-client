@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { useLocation, useHistory } from 'react-router-dom';
@@ -10,11 +10,17 @@ import {
 import NavigationNextPrevious from './NavigationNextPrevious';
 import queryString from 'query-string';
 import ApiError from '../../ApiError';
+import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 
 const Search = ({ loading, error, data, searchProfiles }) => {
   const location = useLocation();
   const history = useHistory();
   const { register, handleSubmit } = useForm();
+  const [showOrdering, setShowOrdering] = useState(false);
+
+  const toggleShowOrdering = () => {
+    setShowOrdering((prev) => !prev);
+  };
 
   const onSubmitSearch = ({ search }) => {
     const parsed = queryString.parse(location.search);
@@ -41,42 +47,116 @@ const Search = ({ loading, error, data, searchProfiles }) => {
   }, [searchProfiles, location]);
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmitSearch)}>
-        <input type='search' name='search' {...register('search')} />
-        <input type='submit' value='Search' />
-      </form>
-      <form onSubmit={handleSubmit(onSubmitFilter)}>
-        <label htmlFor='ordering'>Ordering</label>
-        <select name='ordering' {...register('ordering')}>
-          <option></option>
-          <option value='name'>name - ascending</option>
-          <option value='-name'>name - descending</option>
-          <option value='created'>created - ascending</option>
-          <option value='-created'>created - descending</option>
-        </select>
-        <input type='submit' value='Filter' />
-      </form>
-      {loading ? (
-        <p>loading</p>
-      ) : error ? (
-        <ApiError error={error} />
-      ) : (
-        <div>
-          {data &&
-            data.results.map((result, index) => (
-              <div
-                onClick={() => {
-                  showVendor(result);
-                }}
-                key={index}
-              >
-                {result.name}
-              </div>
-            ))}
-          <NavigationNextPrevious />
+    <>
+      <form
+        onSubmit={handleSubmit(onSubmitSearch)}
+        className='flex flex-col items-center bg-white p-5 rounded-b-lg shadow'
+      >
+        <label
+          htmlFor='search'
+          className='text-lg md:text-xl font-medium text-gray-700 text-center'
+        >
+          Search in names and descriptions
+        </label>
+        <div className='flex w-full justify-center flex-wrap items-center'>
+          <input
+            type='search'
+            name='search'
+            {...register('search')}
+            className='w-48 flex-shrink mb-1'
+          />
+          <input
+            type='submit'
+            value='Search'
+            className='btn-basic ml-4 py-1.5 px-5 mt-1 mb-1'
+          />
         </div>
-      )}
+      </form>
+      <form
+        onSubmit={handleSubmit(onSubmitFilter)}
+        className='bg-white text-lg'
+      >
+        <label
+          htmlFor='ordering'
+          className='font-medium text-gray-700 flex items-center pb-2 pl-3'
+        >
+          Ordering
+          {showOrdering ? (
+            <FaChevronDown
+              onClick={toggleShowOrdering}
+              className='ml-2 cursor-pointer'
+            />
+          ) : (
+            <FaChevronUp
+              onClick={toggleShowOrdering}
+              className='ml-2 cursor-pointer'
+            />
+          )}
+        </label>
+        {showOrdering && (
+          <div className='flex w-full justify-start flex-wrap items-center pb-5 px-3'>
+            <select
+              name='ordering'
+              {...register('ordering')}
+              className='w-56 flex-shrink'
+            >
+              <option value='name'>name - ascending</option>
+              <option value='-name'>name - descending</option>
+              <option value='created'>created - ascending</option>
+              <option value='-created'>created - descending</option>
+            </select>
+            <input
+              type='submit'
+              value='Filter'
+              className='btn-basic ml-4 py-1.5 px-7 mt-1'
+            />
+          </div>
+        )}
+      </form>
+      <div className=''>
+        {loading ? (
+          <p>loading</p>
+        ) : error ? (
+          <ApiError error={error} />
+        ) : (
+          <>
+            <div className='mt-3 grid md:grid-cols-2 md:gap-x-3 auto-rows-max px-3 2xl:px-0'>
+              {data &&
+                data.results.map((vendor, index) => (
+                  <Vendor vendor={vendor} showVendor={showVendor} key={index} />
+                ))}
+            </div>
+            <NavigationNextPrevious previous={data.previous} next={data.next} />
+          </>
+        )}
+      </div>
+    </>
+  );
+};
+
+const Vendor = ({ vendor, showVendor }) => {
+  const { name, avatar, description } = vendor;
+  return (
+    <div className='bg-white mb-3 rounded-lg shadow px-5 py-9 flex flex-col justify-start w-full sm:flex-none sm:grid sm:gap-y-4 sm:grid-rows-4 sm:grid-cols-6 sm:gap-x-5 sm:h-72'>
+      <img
+        src={avatar}
+        alt={`${name}'s avatar`}
+        className='w-max mx-auto h-52 object-contain shadow rounded sm:w-full sm:h-full sm:row-span-full sm:col-span-2 sm:self-center'
+      />
+      <div className='text-center mt-6 mb-2.5 text-xl font-medium sm:my-0 sm:col-start-3 sm:col-end-7 sm:flex sm:items-center sm:justify-center'>
+        <div>{name}</div>
+      </div>
+      <div className='line-clamp-4 sm:mb-0 sm:col-start-3 sm:col-end-7 sm:row-start-2 sm:row-end-4 lg:line-clamp-4'>
+        {description}
+      </div>
+      <button
+        onClick={() => {
+          showVendor(vendor);
+        }}
+        className='btn-basic py-2 mt-6 sm:mt-auto sm:col-start-3 sm:col-end-7'
+      >
+        Show
+      </button>
     </div>
   );
 };

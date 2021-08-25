@@ -20,7 +20,8 @@ const App = () => {
     <Provider store={store}>
       <div className='max-w-screen-2xl min-h-screen mx-auto'>
         <Navbar />
-        <div className='px-6'>
+        {/* <div className='px-3 py-3 md:'> */}
+        <div className=''>
           <Switch>
             <Route exact path='/'>
               CO

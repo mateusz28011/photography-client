@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply font-roboto bg-sky-50;
+    @apply font-roboto bg-gray-100;
   }
 
   .menuLinkStyle {
@@ -18,8 +18,15 @@
   [type='email'],
   [type='text'],
   [type='search'],
-  [type='select'],
+  select,
+  select[multiple],
   [type='password'] {
     @apply block w-full mt-1 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500;
+  }
+}
+
+@layer utilities {
+  .btn-basic {
+    @apply bg-blue-600 cursor-pointer active:bg-blue-500 text-lg rounded-md shadow-sm font-medium text-white;
   }
 }
