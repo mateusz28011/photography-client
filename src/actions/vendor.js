@@ -11,7 +11,6 @@ export const getVendor = (vendorId) => async (dispach) => {
     const response = await axios.get(`/profiles/${vendorId}/`);
     dispach({ type: GET_VENDOR_SUCCESS, payload: response.data });
   } catch (error) {
-    console.log(error.response);
     dispach({
       type: GET_VENDOR_FAILURE,
       payload: error,

@@ -10,6 +10,8 @@ import Search from './components/pages/Search/Search';
 import Vendor from './components/pages/Vendor/Vendor';
 import Login from './components/pages/Login/Login';
 import Register from './components/pages/Register/Register';
+import PrivateRoute from './PrivateRoute';
+import Footer from './components/Footer';
 
 const App = () => {
   useEffect(() => {
@@ -18,32 +20,35 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <div className='max-w-screen-2xl min-h-screen mx-auto'>
+      <div className='max-w-screen-2xl min-h-screen mx-auto flex flex-col'>
         <Navbar />
         {/* <div className='px-3 py-3 md:'> */}
-        <div className=''>
-          <Switch>
-            <Route exact path='/'>
-              CO
-            </Route>
-            <Route exact path='/login'>
-              <Login />
-            </Route>
-            <Route exact path='/register'>
-              <Register />
-            </Route>
-            <Route exact path='/vendor'>
-              <Search />
-            </Route>
-            <Route exact path='/vendor/:vendorid'>
-              <Vendor />
-            </Route>
-            <Route>CO</Route>
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path='/'>
+            CO
+          </Route>
+          <Route exact path='/login'>
+            <Login />
+          </Route>
+          <Route exact path='/register'>
+            <Register />
+          </Route>
+          <Route exact path='/vendor'>
+            <Search />
+          </Route>
+          <Route exact path='/vendor/:vendorid'>
+            <Vendor />
+          </Route>
+          <Route>CO</Route>
+        </Switch>
+        <Footer />
       </div>
     </Provider>
   );
 };
+
+{
+  /* <PrivateRoute component={Search} exact path='/vendor'></PrivateRoute> */
+}
 
 export default App;

@@ -29,4 +29,7 @@
   .btn-basic {
     @apply bg-blue-600 cursor-pointer active:bg-blue-500 text-lg rounded-md shadow-sm font-medium text-white;
   }
+  .btn-disabled {
+    @apply bg-blue-300 cursor-pointer text-lg rounded-md shadow-sm font-medium text-gray-600;
+  }
 }

@@ -48,71 +48,70 @@ const Search = ({ loading, error, data, searchProfiles }) => {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmitSearch)}
-        className='flex flex-col items-center bg-white p-5 rounded-b-lg shadow'
-      >
-        <label
-          htmlFor='search'
-          className='text-lg md:text-xl font-medium text-gray-700 text-center'
+      <div className='bg-white rounded-b-lg shadow'>
+        <form
+          onSubmit={handleSubmit(onSubmitSearch)}
+          className='flex flex-col items-center p-5 '
         >
-          Search in names and descriptions
-        </label>
-        <div className='flex w-full justify-center flex-wrap items-center'>
-          <input
-            type='search'
-            name='search'
-            {...register('search')}
-            className='w-48 flex-shrink mb-1'
-          />
-          <input
-            type='submit'
-            value='Search'
-            className='btn-basic ml-4 py-1.5 px-5 mt-1 mb-1'
-          />
-        </div>
-      </form>
-      <form
-        onSubmit={handleSubmit(onSubmitFilter)}
-        className='bg-white text-lg'
-      >
-        <label
-          htmlFor='ordering'
-          className='font-medium text-gray-700 flex items-center pb-2 pl-3'
-        >
-          Ordering
-          {showOrdering ? (
-            <FaChevronDown
-              onClick={toggleShowOrdering}
-              className='ml-2 cursor-pointer'
+          <label
+            htmlFor='search'
+            className='text-lg md:text-xl font-medium text-gray-700 text-center'
+          >
+            Search in names and descriptions
+          </label>
+          <div className='flex w-full justify-center flex-wrap items-center'>
+            <input
+              type='search'
+              name='search'
+              {...register('search')}
+              className='w-48 flex-shrink mb-1'
             />
-          ) : (
-            <FaChevronUp
-              onClick={toggleShowOrdering}
-              className='ml-2 cursor-pointer'
-            />
-          )}
-        </label>
-        {showOrdering && (
-          <div className='flex w-full justify-start flex-wrap items-center pb-5 px-3'>
-            <select
-              name='ordering'
-              {...register('ordering')}
-              className='w-56 flex-shrink'
-            >
-              <option value='name'>name - ascending</option>
-              <option value='-name'>name - descending</option>
-              <option value='created'>created - ascending</option>
-              <option value='-created'>created - descending</option>
-            </select>
             <input
               type='submit'
-              value='Filter'
-              className='btn-basic ml-4 py-1.5 px-7 mt-1'
+              value='Search'
+              className='btn-basic ml-4 py-1.5 px-5 mt-1 mb-1'
             />
           </div>
-        )}
-      </form>
+        </form>
+        <form onSubmit={handleSubmit(onSubmitFilter)} className='text-lg'>
+          <label
+            htmlFor='ordering'
+            className='font-medium text-gray-700 flex items-center pb-2 pl-3'
+          >
+            Ordering
+            {showOrdering ? (
+              <FaChevronDown
+                onClick={toggleShowOrdering}
+                className='ml-2 cursor-pointer'
+              />
+            ) : (
+              <FaChevronUp
+                onClick={toggleShowOrdering}
+                className='ml-2 cursor-pointer'
+              />
+            )}
+          </label>
+          {showOrdering && (
+            <div className='flex w-full justify-start flex-wrap items-center pb-5 px-3'>
+              <select
+                name='ordering'
+                {...register('ordering')}
+                className='w-56 flex-shrink'
+              >
+                <option value='name'>name - ascending</option>
+                <option value='-name'>name - descending</option>
+                <option value='created'>created - ascending</option>
+                <option value='-created'>created - descending</option>
+              </select>
+              <input
+                type='submit'
+                value='Filter'
+                className='btn-basic ml-4 py-1.5 px-7 mt-1'
+              />
+            </div>
+          )}
+        </form>
+      </div>
       <div className=''>
         {loading ? (
           <p>loading</p>
@@ -126,7 +125,10 @@ const Search = ({ loading, error, data, searchProfiles }) => {
                   <Vendor vendor={vendor} showVendor={showVendor} key={index} />
                 ))}
             </div>
-            <NavigationNextPrevious previous={data.previous} next={data.next} />
+            <NavigationNextPrevious
+              previous={data?.previous}
+              next={data?.next}
+            />
           </>
         )}
       </div>
@@ -141,9 +143,9 @@ const Vendor = ({ vendor, showVendor }) => {
       <img
         src={avatar}
         alt={`${name}'s avatar`}
-        className='w-max mx-auto h-52 object-contain shadow rounded sm:w-full sm:h-full sm:row-span-full sm:col-span-2 sm:self-center'
+        className='w-max mx-auto h-52 object-contain shadow rounded sm:w-auto sm:h-full sm:row-span-full sm:col-span-2 sm:self-center'
       />
-      <div className='text-center mt-6 mb-2.5 text-xl font-medium sm:my-0 sm:col-start-3 sm:col-end-7 sm:flex sm:items-center sm:justify-center'>
+      <div className='text-center mt-6 mb-2.5 text-xl font-semibold sm:my-0 sm:col-start-3 sm:col-end-7 sm:flex sm:items-center sm:justify-center'>
         <div>{name}</div>
       </div>
       <div className='line-clamp-4 sm:mb-0 sm:col-start-3 sm:col-end-7 sm:row-start-2 sm:row-end-4 lg:line-clamp-4'>

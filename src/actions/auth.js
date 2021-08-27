@@ -72,7 +72,6 @@ export const getUser = () => async (dispach) => {
   try {
     dispach({ type: GET_USER_REQUEST });
     const response = await axios.get('/dj-rest-auth/user/');
-    console.log(response);
     dispach({ type: GET_USER_SUCCESS, payload: response.data });
   } catch (error) {
     dispach({
