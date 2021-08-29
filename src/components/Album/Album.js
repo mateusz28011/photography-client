@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import PhotoTile from './PhotoTile';
 import AlbumTile from './AlbumTile';
 import CreatorTile from './CreatorTile';
+import Preview from './Preview';
 
 const Album = ({
   albumId: rootAlbumId,
@@ -31,7 +32,8 @@ const Album = ({
   const parentAlbum = data?.parentAlbum || null;
   const [isCreator, setIsCreator] = useState(false);
   const [albumId, setAlbumId] = useState(rootAlbumId);
-
+  const [showPreview, setShowPreview] = useState(false);
+  console.log('showpreview', showPreview);
   useEffect(() => {
     console.log('fetch album');
     getAlbum(albumId);
@@ -65,6 +67,13 @@ const Album = ({
                 clearFunc={createAlbumClearError}
               />
             )}
+            {(showPreview || showPreview === 0) && (
+              <Preview
+                images={images}
+                imageIndex={showPreview}
+                setShowPreview={setShowPreview}
+              />
+            )}
             <div className='flex flex-wrap justify-around gap-3 p-3 2xl:justify-between 2xl:px-0'>
               <CreatorTile isCreator={isCreator} albumId={albumId} />
               {parentAlbum && (
@@ -82,8 +91,15 @@ const Album = ({
                   );
                 })}
               {images &&
-                images.map((image) => {
-                  return <PhotoTile {...image} key={v4()} />;
+                images.map((image, index) => {
+                  return (
+                    <PhotoTile
+                      {...image}
+                      index={index}
+                      setShowPreview={setShowPreview}
+                      key={v4()}
+                    />
+                  );
                 })}
             </div>
           </>

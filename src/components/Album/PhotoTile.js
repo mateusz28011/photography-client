@@ -1,8 +1,12 @@
 import Tile from './Tile';
 
-const PhotoTile = ({ thumbnailUrl, url, title }) => {
+const PhotoTile = ({ thumbnailUrl, url, title, setShowPreview, index }) => {
+  const handleAlbumClick = () => {
+    setShowPreview(index);
+  };
+
   return (
-    <Tile>
+    <Tile clickFunc={handleAlbumClick}>
       <img
         src={thumbnailUrl}
         alt={title}
