@@ -7,11 +7,11 @@ import {
   createErrorMessageSelector,
 } from '../../../selectors';
 import ApiError from '../../ApiError';
-import Album from '../../Album';
+import Album from '../../Album/Album';
 
 const Vendor = ({ user, loading, error, data, getVendor }) => {
   const { vendorid } = useParams();
-  const { portfolio, name, avatar, description, created } = data || {};
+  const { portfolio, name, avatar, description } = data || {};
   const { email, id: ownerId, firstName, lastName } = data?.owner || {};
   const [isOwner, setIsOwner] = useState(false);
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -29,13 +29,6 @@ const Login = ({ user, loading, error, loginUser, loginUserClearError }) => {
     resolver: yupResolver(loginSchema),
   });
 
-  // Clear error left by api.
-  useEffect(() => {
-    return () => {
-      loginUserClearError();
-    };
-  }, [loginUserClearError]);
-
   if (!user) {
     return loading ? (
       <p>loading</p>
@@ -55,7 +48,7 @@ const Login = ({ user, loading, error, loginUser, loginUserClearError }) => {
         </div>
 
         <div className='w-full mx-auto max-w-md py-8 px-6 bg-white rounded-lg shadow mb-16 md:mb-28'>
-          <ApiError error={error} />
+          <ApiError error={error} clearFunc={loginUserClearError} />
           <form className='space-y-6' onSubmit={handleSubmit(loginUser)}>
             <div>
               <label htmlFor='email' className='font-medium text-gray-700'>

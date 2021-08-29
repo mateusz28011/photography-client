@@ -15,6 +15,10 @@
     @apply mt-3 md:my-2 md:mx-4;
   }
 
+  .btn-border {
+    @apply font-medium text-lg text-blue-600 rounded border-2 border-blue-600 hover:bg-blue-600 hover:text-white cursor-pointer transition duration-100;
+  }
+
   [type='email'],
   [type='text'],
   [type='search'],
@@ -22,6 +26,10 @@
   select[multiple],
   [type='password'] {
     @apply block w-full mt-1 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500;
+  }
+
+  [type='checkbox'] {
+    @apply focus:ring-0 rounded shadow-sm ml-3 cursor-pointer;
   }
 }
 

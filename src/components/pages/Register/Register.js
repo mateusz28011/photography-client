@@ -67,13 +67,6 @@ const Register = ({
     };
   }, [user, history, registeredSuccessfully]);
 
-  // Clear error left by api.
-  useEffect(() => {
-    return () => {
-      registerUserClearError();
-    };
-  }, [registerUserClearError]);
-
   return loading ? (
     <p>loading</p>
   ) : (
@@ -102,7 +95,11 @@ const Register = ({
             </label>
             <input type='text' {...register('firstName')} />
             <Error error={formErrors.firstName?.message} />
-            <ApiError error={error} name={'firstName'} />
+            <ApiError
+              error={error}
+              name={'firstName'}
+              clearFunc={registerUserClearError}
+            />
           </div>
           <div>
             <label htmlFor='lastName' className='font-medium text-gray-700'>
@@ -110,7 +107,11 @@ const Register = ({
             </label>
             <input type='text' {...register('lastName')} />
             <Error error={formErrors.lastName?.message} />
-            <ApiError error={error} name={'lastName'} />
+            <ApiError
+              error={error}
+              name={'lastName'}
+              clearFunc={registerUserClearError}
+            />
           </div>
           <div>
             <label htmlFor='email' className='font-medium text-gray-700'>
@@ -126,7 +127,11 @@ const Register = ({
             </label>
             <input type='password' {...register('password1')} />
             <Error error={formErrors.password1?.message} />
-            <ApiError error={error} name={'password1'} />
+            <ApiError
+              error={error}
+              name={'password1'}
+              clearFunc={registerUserClearError}
+            />
           </div>
           <div>
             <label htmlFor='password2' className='font-medium text-gray-700'>
