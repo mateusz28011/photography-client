@@ -4,6 +4,7 @@ import {
   uploadImageToAlbumClearError,
   deleteImageFromAlbumClearError,
   createAlbumClearError,
+  renameImageFromAlbumClearError,
 } from '../../actions/album';
 import ApiError from '../ApiError';
 
@@ -12,6 +13,7 @@ const AlbumApiErrors = ({
   uploadImageToAlbumClearError,
   deleteImageFromAlbumClearError,
   createAlbumClearError,
+  renameImageFromAlbumClearError,
 }) => {
   return (
     <div>
@@ -36,6 +38,13 @@ const AlbumApiErrors = ({
           clearFunc={deleteImageFromAlbumClearError}
         />
       )}
+      {errors.renameImageFromAlbum && (
+        <ApiError
+          error={errors.renameImageFromAlbum}
+          center
+          clearFunc={renameImageFromAlbumClearError}
+        />
+      )}
     </div>
   );
 };
@@ -45,6 +54,7 @@ const mapStateToProps = (state) => ({
     uploadImageToAlbum: state.error?.UPLOAD_IMAGE_TO_ALBUM,
     createAlbum: state.error?.CREATE_ALBUM,
     deleteImageFromAlbum: state.error?.DELETE_IMAGE_FROM_ALBUM,
+    renameImageFromAlbum: state.error?.RENAME_IMAGE_FROM_ALBUM,
   },
 });
 
@@ -52,4 +62,5 @@ export default connect(mapStateToProps, {
   uploadImageToAlbumClearError,
   deleteImageFromAlbumClearError,
   createAlbumClearError,
+  renameImageFromAlbumClearError,
 })(AlbumApiErrors);

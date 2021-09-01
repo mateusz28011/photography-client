@@ -7,7 +7,12 @@ const loading = (state = {}, action) => {
 
   const [, requestName, requestState] = matches;
 
-  if (requestName === 'DELETE_IMAGE_FROM_ALBUM') {
+  if (
+    ['DELETE_IMAGE_FROM_ALBUM', 'RENAME_IMAGE_FROM_ALBUM'].indexOf(
+      requestName
+    ) >= 0
+  ) {
+    console.log(action.payload);
     const imageID = action.payload?.imageId ?? action.payload;
     return {
       ...state,

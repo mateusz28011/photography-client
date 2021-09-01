@@ -39,10 +39,6 @@ const Album = ({
       user?.id === creatorId ? setIsCreator(true) : setIsCreator(false);
   }, [user, creatorId]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   return loading ? (
     <Loading className='my-32' />
   ) : error ? (

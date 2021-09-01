@@ -15,6 +15,10 @@ import {
   DELETE_IMAGE_FROM_ALBUM_SUCCESS,
   DELETE_IMAGE_FROM_ALBUM_FAILURE,
   DELETE_IMAGE_FROM_ALBUM_ERROR_CLEAR,
+  RENAME_IMAGE_FROM_ALBUM_REQUEST,
+  RENAME_IMAGE_FROM_ALBUM_SUCCESS,
+  RENAME_IMAGE_FROM_ALBUM_FAILURE,
+  RENAME_IMAGE_FROM_ALBUM_ERROR_CLEAR,
 } from '../actions/types';
 
 export const getAlbum = (albumId) => async (dispach) => {
@@ -82,4 +86,25 @@ export const deleteImageFromAlbum = (albumId, imageId) => async (dispach) => {
 
 export const deleteImageFromAlbumClearError = () => async (dispach) => {
   dispach({ type: DELETE_IMAGE_FROM_ALBUM_ERROR_CLEAR });
+};
+
+export const renameImageFromAlbum =
+  (albumId, imageId, formData) => async (dispach) => {
+    try {
+      dispach({ type: RENAME_IMAGE_FROM_ALBUM_REQUEST, payload: imageId });
+      await axios.patch(`/albums/${albumId}/images/${imageId}/`, formData);
+      dispach({
+        type: RENAME_IMAGE_FROM_ALBUM_SUCCESS,
+        payload: { imageId, title: formData.title },
+      });
+    } catch (error) {
+      dispach({
+        type: RENAME_IMAGE_FROM_ALBUM_FAILURE,
+        payload: { error, imageId },
+      });
+    }
+  };
+
+export const renameImageFromAlbumClearError = () => async (dispach) => {
+  dispach({ type: RENAME_IMAGE_FROM_ALBUM_ERROR_CLEAR });
 };

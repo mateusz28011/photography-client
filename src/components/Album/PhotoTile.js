@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Tile from './Tile';
 import PhotoManager from './PhotoManager';
 import { connect } from 'react-redux';
 import Loading from '../Loading';
+import { createLoadingSelector } from '../../selectors';
 
 const PhotoTile = ({
   id: imageId,
@@ -11,15 +12,25 @@ const PhotoTile = ({
   setShowPreview,
   index,
   isCreator,
-  loading,
+  loadingDeleteImageFromAlbum,
+  loadingRenameImageFromAlbum,
 }) => {
+  const [showRenameImage, setShowRenameImage] = useState(false);
+
+  const toggleShowRenameImage = () => {
+    setShowRenameImage((prev) => !prev);
+  };
+
   const handleAlbumClick = () => {
     setShowPreview(index);
   };
 
   return (
     <Tile clickFunc={handleAlbumClick}>
-      {loading && loading[String(imageId)] ? (
+      {(loadingDeleteImageFromAlbum &&
+        loadingDeleteImageFromAlbum[String(imageId)]) ||
+      (loadingRenameImageFromAlbum &&
+        loadingRenameImageFromAlbum[String(imageId)]) ? (
         <Loading />
       ) : (
         <>
@@ -28,10 +39,18 @@ const PhotoTile = ({
             alt={title}
             className='rounded mx-auto shadow-sm mb-3'
           />
-          <div className='text-center my-auto w-52 flex items-center justify-center'>
-            <span className='truncate pr-1'>{title}</span>
-          </div>
-          <PhotoManager isCreator={isCreator} imageId={imageId} />
+          {!showRenameImage && (
+            <div className='text-center my-auto w-52 flex items-center justify-center'>
+              <span className='truncate pr-1'>{title}</span>
+            </div>
+          )}
+          <PhotoManager
+            isCreator={isCreator}
+            imageId={imageId}
+            title={title}
+            showRenameImage={showRenameImage}
+            toggleShowRenameImage={toggleShowRenameImage}
+          />
         </>
       )}
     </Tile>
@@ -39,7 +58,8 @@ const PhotoTile = ({
 };
 
 const mapStateToProps = (state) => ({
-  loading: state.loading?.DELETE_IMAGE_FROM_ALBUM,
+  loadingDeleteImageFromAlbum: state.loading?.DELETE_IMAGE_FROM_ALBUM,
+  loadingRenameImageFromAlbum: state.loading?.RENAME_IMAGE_FROM_ALBUM,
 });
 
 export default connect(mapStateToProps)(PhotoTile);

@@ -3,6 +3,7 @@ import {
   CREATE_ALBUM_SUCCESS,
   UPLOAD_IMAGE_TO_ALBUM_SUCCESS,
   DELETE_IMAGE_FROM_ALBUM_SUCCESS,
+  RENAME_IMAGE_FROM_ALBUM_SUCCESS,
 } from '../actions/types';
 
 const initialState = {
@@ -36,6 +37,17 @@ const album = (state = initialState, action) => {
         data: {
           ...state.data,
           images: state.data.images.filter((image) => image.id !== payload),
+        },
+      };
+    case RENAME_IMAGE_FROM_ALBUM_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          images: state.data.images.map((image) => {
+            if (image.id === payload.imageId) image.title = payload.title;
+            return image;
+          }),
         },
       };
     default:
