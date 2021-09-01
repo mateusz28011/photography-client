@@ -36,9 +36,9 @@ const Vendor = ({ user, loading, error, data, getVendor }) => {
   }, [user, ownerId]);
 
   return loading ? (
-    <Loading />
+    <Loading className='py-32' />
   ) : error ? (
-    <ApiError error={error} />
+    <ApiError error={error} center />
   ) : data ? (
     <>
       <div className='px-5 py-9 mt-3 mx-3 flex flex-col bg-white shadow rounded-lg items-center md:px-10 md:w-2/3 md:mx-auto xl:w-1/2 xl:mx-auto '>

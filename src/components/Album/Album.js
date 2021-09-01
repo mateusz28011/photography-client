@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ApiError from '../ApiError';
 import { v4 } from 'uuid';
-import {
-  getAlbum,
-  uploadImageToAlbum,
-  uploadImageToAlbumClearError,
-  createAlbumClearError,
-  deleteImageFromAlbumClearError,
-} from '../../actions/album';
+import { getAlbum } from '../../actions/album';
 import {
   createLoadingSelector,
   createErrorMessageSelector,
@@ -18,6 +12,7 @@ import AlbumTile from './AlbumTile';
 import CreatorTile from './CreatorTile';
 import Preview from './Preview';
 import Loading from '../Loading';
+import AlbumApiErrors from './AlbumApiErrors';
 
 const Album = ({
   albumId: rootAlbumId,
@@ -26,9 +21,6 @@ const Album = ({
   error,
   data,
   getAlbum,
-  uploadImageToAlbumClearError,
-  createAlbumClearError,
-  deleteImageFromAlbumClearError,
 }) => {
   const { images, childAlbums } = data || {};
   const { id: creatorId } = data?.creator || {};
@@ -47,33 +39,17 @@ const Album = ({
       user?.id === creatorId ? setIsCreator(true) : setIsCreator(false);
   }, [user, creatorId]);
 
-  return loading.getAlbum ? (
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
+  return loading ? (
     <Loading className='my-32' />
-  ) : error.getAlbum ? (
-    <ApiError error={error.getAlbum} center />
+  ) : error ? (
+    <ApiError error={error} center />
   ) : data ? (
     <>
-      {error.uploadImageToAlbum && (
-        <ApiError
-          error={error.uploadImageToAlbum}
-          center
-          clearFunc={uploadImageToAlbumClearError}
-        />
-      )}
-      {error.createAlbum && (
-        <ApiError
-          error={error.createAlbum}
-          center
-          clearFunc={createAlbumClearError}
-        />
-      )}
-      {error.deleteImageFromAlbum && (
-        <ApiError
-          error={error.deleteImageFromAlbum}
-          center
-          clearFunc={deleteImageFromAlbumClearError}
-        />
-      )}
+      <AlbumApiErrors />
       {(showPreview || showPreview === 0) && (
         <Preview
           images={images}
@@ -115,36 +91,13 @@ const Album = ({
 const loadingSelector = createLoadingSelector(['GET_ALBUM']);
 const errorSelector = createErrorMessageSelector(['GET_ALBUM']);
 
-const loadingSelectorUploadImageToAlbum = createLoadingSelector([
-  'UPLOAD_IMAGE_TO_ALBUM',
-]);
-const errorSelectorUploadImageToAlbum = createErrorMessageSelector([
-  'UPLOAD_IMAGE_TO_ALBUM',
-]);
-const errorSelectorCreateAlbum = createErrorMessageSelector(['CREATE_ALBUM']);
-const errorSelectorDeleteImageFromAlbum = createErrorMessageSelector([
-  'DELETE_IMAGE_FROM_ALBUM',
-]);
-
 const mapStateToProps = (state) => ({
-  loading: {
-    getAlbum: loadingSelector(state),
-    uploadImageToAlbum: loadingSelectorUploadImageToAlbum(state),
-  },
-  error: {
-    getAlbum: errorSelector(state),
-    uploadImageToAlbum: errorSelectorUploadImageToAlbum(state),
-    createAlbum: errorSelectorCreateAlbum(state),
-    deleteImageFromAlbum: errorSelectorDeleteImageFromAlbum(state),
-  },
+  loading: loadingSelector(state),
+  error: errorSelector(state),
   data: state.album.data,
   user: state.auth.user,
 });
 
 export default connect(mapStateToProps, {
   getAlbum,
-  uploadImageToAlbum,
-  uploadImageToAlbumClearError,
-  createAlbumClearError,
-  deleteImageFromAlbumClearError,
 })(Album);

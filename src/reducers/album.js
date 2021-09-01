@@ -21,8 +21,7 @@ const album = (state = initialState, action) => {
       } else {
         childAlbums = [payload];
       }
-      state.data.childAlbums = childAlbums;
-      return state;
+      return { ...state, data: { ...state.data, childAlbums: childAlbums } };
     case UPLOAD_IMAGE_TO_ALBUM_SUCCESS:
       let images = state.data.images;
       if (images) {
@@ -30,13 +29,15 @@ const album = (state = initialState, action) => {
       } else {
         images = [payload];
       }
-      state.data.images = images;
-      return state;
+      return { ...state, data: { ...state.data, images: images } };
     case DELETE_IMAGE_FROM_ALBUM_SUCCESS:
-      state.data.images = state.data.images.filter(
-        (image) => image.id !== payload
-      );
-      return state;
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          images: state.data.images.filter((image) => image.id !== payload),
+        },
+      };
     default:
       return state;
   }

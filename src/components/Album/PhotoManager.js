@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import { deleteImageFromAlbum } from '../../actions/album';
 import { connect } from 'react-redux';
