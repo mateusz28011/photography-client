@@ -6,13 +6,22 @@ const loading = (state = {}, action) => {
   if (!matches) return state;
 
   const [, requestName, requestState] = matches;
-  return {
-    ...state,
-    // Store whether a request is happening at the moment or not
-    // e.g. will be true when receiving GET_TODOS_REQUEST
-    //      and false when receiving GET_TODOS_SUCCESS / GET_TODOS_FAILURE
-    [requestName]: requestState === 'REQUEST',
-  };
+
+  if (requestName === 'DELETE_IMAGE_FROM_ALBUM') {
+    const imageID = action.payload?.imageId ?? action.payload;
+    return {
+      ...state,
+      [requestName]: { [imageID]: requestState === 'REQUEST' },
+    };
+  } else {
+    return {
+      ...state,
+      // Store whether a request is happening at the moment or not
+      // e.g. will be true when receiving GET_TODOS_REQUEST
+      //      and false when receiving GET_TODOS_SUCCESS / GET_TODOS_FAILURE
+      [requestName]: requestState === 'REQUEST',
+    };
+  }
 };
 
 export default loading;

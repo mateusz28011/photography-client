@@ -5,7 +5,7 @@ const Tile = ({ children, clickFunc }) => {
       className={
         'bg-white p-3 shadow rounded-lg w-80 h-96 flex flex-col items-center relative' +
         (clickFunc
-          ? ' cursor-pointer hover:bg-blue-50 transition-colors duration-100'
+          ? ' cursor-pointer hover:bg-blue-100 transition-colors duration-100'
           : '')
       }
     >

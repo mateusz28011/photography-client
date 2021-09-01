@@ -6,6 +6,7 @@ import {
   uploadImageToAlbum,
   uploadImageToAlbumClearError,
   createAlbumClearError,
+  deleteImageFromAlbumClearError,
 } from '../../actions/album';
 import {
   createLoadingSelector,
@@ -16,6 +17,7 @@ import PhotoTile from './PhotoTile';
 import AlbumTile from './AlbumTile';
 import CreatorTile from './CreatorTile';
 import Preview from './Preview';
+import Loading from '../Loading';
 
 const Album = ({
   albumId: rootAlbumId,
@@ -26,6 +28,7 @@ const Album = ({
   getAlbum,
   uploadImageToAlbumClearError,
   createAlbumClearError,
+  deleteImageFromAlbumClearError,
 }) => {
   const { images, childAlbums } = data || {};
   const { id: creatorId } = data?.creator || {};
@@ -33,7 +36,7 @@ const Album = ({
   const [isCreator, setIsCreator] = useState(false);
   const [albumId, setAlbumId] = useState(rootAlbumId);
   const [showPreview, setShowPreview] = useState(false);
-  console.log('showpreview', showPreview);
+
   useEffect(() => {
     console.log('fetch album');
     getAlbum(albumId);
@@ -44,69 +47,69 @@ const Album = ({
       user?.id === creatorId ? setIsCreator(true) : setIsCreator(false);
   }, [user, creatorId]);
 
-  return (
+  return loading.getAlbum ? (
+    <Loading className='my-32' />
+  ) : error.getAlbum ? (
+    <ApiError error={error.getAlbum} center />
+  ) : data ? (
     <>
-      {loading.getAlbum ? (
-        <p>loading</p>
-      ) : error.getAlbum ? (
-        <ApiError error={error.getAlbum} />
-      ) : (
-        data && (
-          <>
-            {error.uploadImageToAlbum && (
-              <ApiError
-                error={error.uploadImageToAlbum}
-                center
-                clearFunc={uploadImageToAlbumClearError}
-              />
-            )}
-            {error.createAlbum && (
-              <ApiError
-                error={error.createAlbum}
-                center
-                clearFunc={createAlbumClearError}
-              />
-            )}
-            {(showPreview || showPreview === 0) && (
-              <Preview
-                images={images}
-                imageIndex={showPreview}
-                setShowPreview={setShowPreview}
-              />
-            )}
-            <div className='flex flex-wrap justify-around gap-3 p-3 2xl:justify-between 2xl:px-0'>
-              <CreatorTile isCreator={isCreator} albumId={albumId} />
-              {parentAlbum && (
-                <AlbumTile
-                  {...parentAlbum}
-                  parent
-                  setAlbumId={setAlbumId}
-                  key={v4()}
-                />
-              )}
-              {childAlbums &&
-                childAlbums.map((album) => {
-                  return (
-                    <AlbumTile {...album} setAlbumId={setAlbumId} key={v4()} />
-                  );
-                })}
-              {images &&
-                images.map((image, index) => {
-                  return (
-                    <PhotoTile
-                      {...image}
-                      index={index}
-                      setShowPreview={setShowPreview}
-                      key={v4()}
-                    />
-                  );
-                })}
-            </div>
-          </>
-        )
+      {error.uploadImageToAlbum && (
+        <ApiError
+          error={error.uploadImageToAlbum}
+          center
+          clearFunc={uploadImageToAlbumClearError}
+        />
       )}
+      {error.createAlbum && (
+        <ApiError
+          error={error.createAlbum}
+          center
+          clearFunc={createAlbumClearError}
+        />
+      )}
+      {error.deleteImageFromAlbum && (
+        <ApiError
+          error={error.deleteImageFromAlbum}
+          center
+          clearFunc={deleteImageFromAlbumClearError}
+        />
+      )}
+      {(showPreview || showPreview === 0) && (
+        <Preview
+          images={images}
+          imageIndex={showPreview}
+          setShowPreview={setShowPreview}
+        />
+      )}
+      <div className='flex flex-wrap justify-around gap-3 p-3 2xl:justify-between 2xl:px-0'>
+        <CreatorTile isCreator={isCreator} albumId={albumId} />
+        {parentAlbum && (
+          <AlbumTile
+            {...parentAlbum}
+            parent
+            setAlbumId={setAlbumId}
+            key={v4()}
+          />
+        )}
+        {childAlbums &&
+          childAlbums.map((album) => {
+            return <AlbumTile {...album} setAlbumId={setAlbumId} key={v4()} />;
+          })}
+        {images &&
+          images.map((image, index) => {
+            return (
+              <PhotoTile
+                {...image}
+                index={index}
+                setShowPreview={setShowPreview}
+                isCreator={isCreator}
+                key={v4()}
+              />
+            );
+          })}
+      </div>
     </>
-  );
+  ) : null;
 };
 
 const loadingSelector = createLoadingSelector(['GET_ALBUM']);
@@ -119,6 +122,9 @@ const errorSelectorUploadImageToAlbum = createErrorMessageSelector([
   'UPLOAD_IMAGE_TO_ALBUM',
 ]);
 const errorSelectorCreateAlbum = createErrorMessageSelector(['CREATE_ALBUM']);
+const errorSelectorDeleteImageFromAlbum = createErrorMessageSelector([
+  'DELETE_IMAGE_FROM_ALBUM',
+]);
 
 const mapStateToProps = (state) => ({
   loading: {
@@ -129,6 +135,7 @@ const mapStateToProps = (state) => ({
     getAlbum: errorSelector(state),
     uploadImageToAlbum: errorSelectorUploadImageToAlbum(state),
     createAlbum: errorSelectorCreateAlbum(state),
+    deleteImageFromAlbum: errorSelectorDeleteImageFromAlbum(state),
   },
   data: state.album.data,
   user: state.auth.user,
@@ -139,4 +146,5 @@ export default connect(mapStateToProps, {
   uploadImageToAlbum,
   uploadImageToAlbumClearError,
   createAlbumClearError,
+  deleteImageFromAlbumClearError,
 })(Album);

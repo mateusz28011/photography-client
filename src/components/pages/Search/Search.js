@@ -11,6 +11,7 @@ import NavigationNextPrevious from './NavigationNextPrevious';
 import queryString from 'query-string';
 import ApiError from '../../ApiError';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
+import Loading from '../../Loading';
 
 const Search = ({ loading, error, data, searchProfiles }) => {
   const location = useLocation();
@@ -114,9 +115,9 @@ const Search = ({ loading, error, data, searchProfiles }) => {
       </div>
       <div className=''>
         {loading ? (
-          <p>loading</p>
+          <Loading className='my-32' />
         ) : error ? (
-          <ApiError error={error} />
+          <ApiError error={error} center />
         ) : (
           <>
             <div className='mt-3 grid md:grid-cols-2 md:gap-x-3 auto-rows-max px-3 2xl:px-0'>

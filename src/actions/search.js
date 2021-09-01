@@ -13,6 +13,7 @@ const search = async (dispach, url) => {
     const response = await axios.get(url);
     dispach({ type: SEARCH_SUCCESS, payload: response.data });
   } catch (error) {
+    console.log(error.response);
     dispach({
       type: SEARCH_FAILURE,
       payload: error,

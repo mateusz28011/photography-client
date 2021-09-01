@@ -10,6 +10,7 @@ import {
   createLoadingSelector,
   createErrorMessageSelector,
 } from '../../selectors';
+import Loading from '../Loading';
 
 const CreatorTile = ({
   isCreator,
@@ -41,7 +42,7 @@ const CreatorTile = ({
         <div className='flex flex-col h-full w-11/12 items-center justify-center divide-y divide-blue-600'>
           <div className='h-1/2 flex flex-col justify-center items-center w-full'>
             {loading ? (
-              <p>loading</p>
+              <Loading />
             ) : (
               <label className='h-3/4 w-10/12 flex items-center justify-center btn-border'>
                 <span>Upload an image</span>

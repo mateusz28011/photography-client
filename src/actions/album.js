@@ -11,6 +11,10 @@ import {
   CREATE_ALBUM_SUCCESS,
   CREATE_ALBUM_FAILURE,
   CREATE_ALBUM_ERROR_CLEAR,
+  DELETE_IMAGE_FROM_ALBUM_REQUEST,
+  DELETE_IMAGE_FROM_ALBUM_SUCCESS,
+  DELETE_IMAGE_FROM_ALBUM_FAILURE,
+  DELETE_IMAGE_FROM_ALBUM_ERROR_CLEAR,
 } from '../actions/types';
 
 export const getAlbum = (albumId) => async (dispach) => {
@@ -61,4 +65,21 @@ export const createAlbum = (formData, parentAlbum) => async (dispach) => {
 
 export const createAlbumClearError = () => async (dispach) => {
   dispach({ type: CREATE_ALBUM_ERROR_CLEAR });
+};
+
+export const deleteImageFromAlbum = (albumId, imageId) => async (dispach) => {
+  try {
+    dispach({ type: DELETE_IMAGE_FROM_ALBUM_REQUEST, payload: imageId });
+    await axios.delete(`/albums/${albumId}/images/${imageId}/`);
+    dispach({ type: DELETE_IMAGE_FROM_ALBUM_SUCCESS, payload: imageId });
+  } catch (error) {
+    dispach({
+      type: DELETE_IMAGE_FROM_ALBUM_FAILURE,
+      payload: { error, imageId },
+    });
+  }
+};
+
+export const deleteImageFromAlbumClearError = () => async (dispach) => {
+  dispach({ type: DELETE_IMAGE_FROM_ALBUM_ERROR_CLEAR });
 };

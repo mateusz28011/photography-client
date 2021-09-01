@@ -19,6 +19,10 @@
     @apply font-medium text-lg text-blue-600 rounded border-2 border-blue-600 hover:bg-blue-600 hover:text-white cursor-pointer transition duration-100;
   }
 
+  .loader {
+    border-top-color: rgb(37, 99, 235);
+  }
+
   [type='email'],
   [type='text'],
   [type='search'],

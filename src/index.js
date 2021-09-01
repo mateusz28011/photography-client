@@ -20,13 +20,13 @@ axios.interceptors.response.use(
     // Do something with response error
     const originalRequest = error.config;
     if (
-      error.response.status === 401 &&
+      error.response?.status === 401 &&
       originalRequest.url.includes('/dj-rest-auth/token/refresh/')
     ) {
       // store.commit('clearUserData');
       // router.push('/login');
       return Promise.reject(error);
-    } else if (error.response.status === 401 && !originalRequest._retry) {
+    } else if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       // await execution of the store async action before
       // return

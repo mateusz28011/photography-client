@@ -2,6 +2,7 @@ import {
   GET_ALBUM_SUCCESS,
   CREATE_ALBUM_SUCCESS,
   UPLOAD_IMAGE_TO_ALBUM_SUCCESS,
+  DELETE_IMAGE_FROM_ALBUM_SUCCESS,
 } from '../actions/types';
 
 const initialState = {
@@ -21,7 +22,7 @@ const album = (state = initialState, action) => {
         childAlbums = [payload];
       }
       state.data.childAlbums = childAlbums;
-      return { ...state };
+      return state;
     case UPLOAD_IMAGE_TO_ALBUM_SUCCESS:
       let images = state.data.images;
       if (images) {
@@ -30,7 +31,12 @@ const album = (state = initialState, action) => {
         images = [payload];
       }
       state.data.images = images;
-      return { ...state };
+      return state;
+    case DELETE_IMAGE_FROM_ALBUM_SUCCESS:
+      state.data.images = state.data.images.filter(
+        (image) => image.id !== payload
+      );
+      return state;
     default:
       return state;
   }

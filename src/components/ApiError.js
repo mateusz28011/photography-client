@@ -17,14 +17,19 @@ export const Error = ({ error, center }) => {
 };
 
 const ApiError = ({ error, name, center, clearFunc }) => {
-  error = error && name ? error[name] : error[Object.keys(error)[0]];
+  console.log(error);
+  error =
+    error && name
+      ? error[name]
+      : typeof error == 'string'
+      ? error
+      : error[Object.keys(error)[0]];
 
   useEffect(() => {
     return () => {
       error && clearFunc && clearFunc();
     };
   }, [error, clearFunc]);
-
   return error && Array.isArray(error) ? (
     error.map((error) => <Error error={error} center={center} key={v4()} />)
   ) : (
