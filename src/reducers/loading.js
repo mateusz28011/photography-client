@@ -12,11 +12,16 @@ const loading = (state = {}, action) => {
       requestName
     ) >= 0
   ) {
-    console.log(action.payload);
-    const imageID = action.payload?.imageId ?? action.payload;
+    const imageId = action.payload?.imageId ?? action.payload;
     return {
       ...state,
-      [requestName]: { [imageID]: requestState === 'REQUEST' },
+      [requestName]: { [imageId]: requestState === 'REQUEST' },
+    };
+  } else if (['DELETE_ALBUM', 'RENAME_ALBUM'].indexOf(requestName) >= 0) {
+    const albumId = action.payload?.albumId ?? action.payload;
+    return {
+      ...state,
+      [requestName]: { [albumId]: requestState === 'REQUEST' },
     };
   } else {
     return {

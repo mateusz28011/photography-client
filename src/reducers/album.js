@@ -4,6 +4,8 @@ import {
   UPLOAD_IMAGE_TO_ALBUM_SUCCESS,
   DELETE_IMAGE_FROM_ALBUM_SUCCESS,
   RENAME_IMAGE_FROM_ALBUM_SUCCESS,
+  DELETE_ALBUM_SUCCESS,
+  RENAME_ALBUM_SUCCESS,
 } from '../actions/types';
 
 const initialState = {
@@ -23,6 +25,27 @@ const album = (state = initialState, action) => {
         childAlbums = [payload];
       }
       return { ...state, data: { ...state.data, childAlbums: childAlbums } };
+    case DELETE_ALBUM_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          childAlbums: state.data.childAlbums.filter(
+            (album) => album.id !== payload
+          ),
+        },
+      };
+    case RENAME_ALBUM_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          childAlbums: state.data.childAlbums.map((album) => {
+            if (album.id === payload.albumId) album.name = payload.name;
+            return album;
+          }),
+        },
+      };
     case UPLOAD_IMAGE_TO_ALBUM_SUCCESS:
       let images = state.data.images;
       if (images) {

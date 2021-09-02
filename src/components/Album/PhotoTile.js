@@ -3,7 +3,6 @@ import Tile from './Tile';
 import PhotoManager from './PhotoManager';
 import { connect } from 'react-redux';
 import Loading from '../Loading';
-import { createLoadingSelector } from '../../selectors';
 
 const PhotoTile = ({
   id: imageId,

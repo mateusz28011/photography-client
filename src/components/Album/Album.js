@@ -65,7 +65,14 @@ const Album = ({
         )}
         {childAlbums &&
           childAlbums.map((album) => {
-            return <AlbumTile {...album} setAlbumId={setAlbumId} key={v4()} />;
+            return (
+              <AlbumTile
+                {...album}
+                isCreator={isCreator}
+                setAlbumId={setAlbumId}
+                key={v4()}
+              />
+            );
           })}
         {images &&
           images.map((image, index) => {

@@ -19,6 +19,14 @@ import {
   RENAME_IMAGE_FROM_ALBUM_SUCCESS,
   RENAME_IMAGE_FROM_ALBUM_FAILURE,
   RENAME_IMAGE_FROM_ALBUM_ERROR_CLEAR,
+  DELETE_ALBUM_REQUEST,
+  DELETE_ALBUM_SUCCESS,
+  DELETE_ALBUM_FAILURE,
+  DELETE_ALBUM_ERROR_CLEAR,
+  RENAME_ALBUM_REQUEST,
+  RENAME_ALBUM_SUCCESS,
+  RENAME_ALBUM_FAILURE,
+  RENAME_ALBUM_ERROR_CLEAR,
 } from '../actions/types';
 
 export const getAlbum = (albumId) => async (dispach) => {
@@ -32,6 +40,61 @@ export const getAlbum = (albumId) => async (dispach) => {
       payload: error,
     });
   }
+};
+
+export const createAlbum = (formData, parentAlbum) => async (dispach) => {
+  try {
+    dispach({ type: CREATE_ALBUM_REQUEST });
+    if (parentAlbum) formData.parentAlbum = parentAlbum;
+    const response = await axios.post('/albums/', formData);
+    dispach({ type: CREATE_ALBUM_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispach({
+      type: CREATE_ALBUM_FAILURE,
+      payload: error,
+    });
+  }
+};
+
+export const createAlbumClearError = () => async (dispach) => {
+  dispach({ type: CREATE_ALBUM_ERROR_CLEAR });
+};
+
+export const deleteAlbum = (albumId) => async (dispach) => {
+  try {
+    dispach({ type: DELETE_ALBUM_REQUEST, payload: albumId });
+    await axios.delete(`/albums/${albumId}/`);
+    dispach({ type: DELETE_ALBUM_SUCCESS, payload: albumId });
+  } catch (error) {
+    dispach({
+      type: DELETE_ALBUM_FAILURE,
+      payload: { error, albumId },
+    });
+  }
+};
+
+export const deleteAlbumClearError = () => async (dispach) => {
+  dispach({ type: DELETE_ALBUM_ERROR_CLEAR });
+};
+
+export const renameAlbum = (albumId, formData) => async (dispach) => {
+  try {
+    dispach({ type: RENAME_ALBUM_REQUEST, payload: albumId });
+    await axios.patch(`/albums/${albumId}/`, formData);
+    dispach({
+      type: RENAME_ALBUM_SUCCESS,
+      payload: { albumId, name: formData.name },
+    });
+  } catch (error) {
+    dispach({
+      type: RENAME_ALBUM_FAILURE,
+      payload: { error, albumId },
+    });
+  }
+};
+
+export const renameAlbumClearError = () => async (dispach) => {
+  dispach({ type: RENAME_ALBUM_ERROR_CLEAR });
 };
 
 export const uploadImageToAlbum = (albumId, image) => async (dispach) => {
@@ -51,24 +114,6 @@ export const uploadImageToAlbum = (albumId, image) => async (dispach) => {
 
 export const uploadImageToAlbumClearError = () => async (dispach) => {
   dispach({ type: UPLOAD_IMAGE_TO_ALBUM_ERROR_CLEAR });
-};
-
-export const createAlbum = (formData, parentAlbum) => async (dispach) => {
-  try {
-    dispach({ type: CREATE_ALBUM_REQUEST });
-    if (parentAlbum) formData.parentAlbum = parentAlbum;
-    const response = await axios.post('/albums/', formData);
-    dispach({ type: CREATE_ALBUM_SUCCESS, payload: response.data });
-  } catch (error) {
-    dispach({
-      type: CREATE_ALBUM_FAILURE,
-      payload: error,
-    });
-  }
-};
-
-export const createAlbumClearError = () => async (dispach) => {
-  dispach({ type: CREATE_ALBUM_ERROR_CLEAR });
 };
 
 export const deleteImageFromAlbum = (albumId, imageId) => async (dispach) => {

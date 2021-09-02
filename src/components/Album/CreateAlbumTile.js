@@ -20,7 +20,6 @@ const CreateAlbumTile = ({
   const { register, handleSubmit } = useForm();
 
   const handleCreateAlbum = (formData) => {
-    console.log(formData);
     error && createAlbumClearError();
     createAlbum(formData, albumId);
   };
