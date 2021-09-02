@@ -32,11 +32,10 @@ const CreateAlbumTile = ({
         <>
           <FaChevronLeft
             onClick={toggleShowCreateAlbum}
-            size='2.5rem'
-            className='left-1 top-3 text-blue-600 absolute cursor-pointer'
+            className='chevron-left'
           />
           <form
-            className='space-y-6 my-auto'
+            className='space-y-6 my-auto pt-6'
             onSubmit={handleSubmit(handleCreateAlbum)}
           >
             <div>

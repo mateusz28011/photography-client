@@ -32,23 +32,24 @@ const AlbumTile = ({
         <Loading />
       ) : (
         <>
-          {parent && (
-            <FaChevronLeft
-              size='2.5rem'
-              className='left-1 top-3 text-blue-600 absolute'
-            />
-          )}
-          <HiPhotograph className='w-60 -mb-8 h-auto text-blue-600 filter drop-shadow-sm' />
-          {!showRenameAlbum && (
-            <div className='text-center my-auto w-52 truncate '>{name}</div>
-          )}
-          <AlbumManager
-            isCreator={isCreator}
-            albumId={albumId}
-            name={name}
-            showRenameAlbum={showRenameAlbum}
-            toggleShowRenameAlbum={toggleShowRenameAlbum}
-          />
+          {parent && <FaChevronLeft className='chevron-left' />}
+          <HiPhotograph className='w-full h-auto text-blue-600 filter drop-shadow-sm' />
+          <div className='w-full h-1/2 flex flex-col items-center justify-center'>
+            {!showRenameAlbum && (
+              <div className='text-center my-auto w-32 sm:w-36 lg:w-48 truncate '>
+                {name}
+              </div>
+            )}
+            <div className={isCreator && parent && 'invisible'}>
+              <AlbumManager
+                isCreator={isCreator}
+                albumId={albumId}
+                name={name}
+                showRenameAlbum={showRenameAlbum}
+                toggleShowRenameAlbum={toggleShowRenameAlbum}
+              />
+            </div>
+          </div>
         </>
       )}
     </Tile>

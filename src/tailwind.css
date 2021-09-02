@@ -19,6 +19,10 @@
     @apply font-medium text-lg text-blue-600 rounded border-2 border-blue-600 hover:bg-blue-600 hover:text-white cursor-pointer transition duration-100;
   }
 
+  .chevron-left {
+    @apply left-1 top-2 w-5 h-auto text-blue-600 absolute cursor-pointer md:w-8;
+  }
+
   .loader {
     border-top-color: rgb(37, 99, 235);
   }

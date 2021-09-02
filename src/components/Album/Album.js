@@ -53,12 +53,13 @@ const Album = ({
           setShowPreview={setShowPreview}
         />
       )}
-      <div className='flex flex-wrap justify-around gap-3 p-3 2xl:justify-between 2xl:px-0'>
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 p-3 2xl:justify-between 2xl:px-0'>
         <CreatorTile isCreator={isCreator} albumId={albumId} />
         {parentAlbum && (
           <AlbumTile
             {...parentAlbum}
             parent
+            isCreator={isCreator}
             setAlbumId={setAlbumId}
             key={v4()}
           />

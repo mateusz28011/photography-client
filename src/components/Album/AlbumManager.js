@@ -53,7 +53,7 @@ const AlbumManager = ({
         </form>
       )}
       {isCreator && (
-        <div className='flex space-x-2'>
+        <div className='flex space-x-2 mt-2'>
           <AiOutlineEdit
             onClick={handleToggleRenameAlbum}
             size='2rem'
