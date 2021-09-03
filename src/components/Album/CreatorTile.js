@@ -45,7 +45,7 @@ const CreatorTile = ({
               <Loading />
             ) : (
               <label className='h-3/4 w-10/12 flex items-center justify-center btn-border'>
-                <span className='text-center text-sm px-1 ssm:text-base sm:text-lg'>
+                <span className='text-center px-1 text-sm ssm:text-lg md:text-xl'>
                   Upload an image
                 </span>
                 <input
@@ -60,7 +60,7 @@ const CreatorTile = ({
           <div className='h-1/2 flex w-11/12 justify-center items-center'>
             <button
               onClick={toggleShowCreateAlbum}
-              className='h-3/4 w-11/12 flex items-center justify-center btn-border text-sm px-1 ssm:text-base sm:text-lg'
+              className='h-3/4 w-11/12 flex items-center justify-center btn-border px-1 text-sm ssm:text-lg md:text-xl'
             >
               Create an album
             </button>

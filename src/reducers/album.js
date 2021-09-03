@@ -14,11 +14,12 @@ const initialState = {
 
 const album = (state = initialState, action) => {
   const { type, payload } = action;
+  let childAlbums;
   switch (type) {
     case GET_ALBUM_SUCCESS:
       return { ...state, data: payload };
     case CREATE_ALBUM_SUCCESS:
-      let childAlbums = state.data.childAlbums;
+      childAlbums = state.data.childAlbums;
       if (childAlbums) {
         childAlbums.unshift(payload);
       } else {
@@ -36,16 +37,33 @@ const album = (state = initialState, action) => {
         },
       };
     case RENAME_ALBUM_SUCCESS:
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          childAlbums: state.data.childAlbums.map((album) => {
-            if (album.id === payload.albumId) album.name = payload.name;
-            return album;
-          }),
-        },
-      };
+      let isChanged = false;
+      childAlbums = state.data.childAlbums.map((album) => {
+        if (album.id === payload.albumId) {
+          album.name = payload.name;
+          isChanged = true;
+        }
+        return album;
+      });
+
+      if (isChanged) {
+        return {
+          ...state,
+          data: {
+            ...state.data,
+            childAlbums: childAlbums,
+          },
+        };
+      } else {
+        return {
+          ...state,
+          data: {
+            ...state.data,
+            name: payload.name,
+          },
+        };
+      }
+
     case UPLOAD_IMAGE_TO_ALBUM_SUCCESS:
       let images = state.data.images;
       if (images) {

@@ -170,7 +170,7 @@ const errorSelector = createErrorMessageSelector(['SEARCH']);
 const mapStateToProps = (state) => ({
   loading: loadingSelector(state),
   error: errorSelector(state),
-  data: state.search.data,
+  data: state.search?.profiles,
 });
 
 export default connect(mapStateToProps, { searchProfiles })(Search);

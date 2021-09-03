@@ -8,7 +8,7 @@ const auth = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case SEARCH_SUCCESS:
-      return { ...state, data: payload };
+      return { ...state, ...payload };
     default:
       return state;
   }

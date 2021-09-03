@@ -1,13 +1,13 @@
 import Tile from './Tile';
 import { useForm } from 'react-hook-form';
 import Loading from '../Loading';
-import { FaChevronLeft } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { createAlbum, createAlbumClearError } from '../../actions/album';
 import {
   createLoadingSelector,
   createErrorMessageSelector,
 } from '../../selectors';
+import BackButton from './BackButton';
 
 const CreateAlbumTile = ({
   toggleShowCreateAlbum,
@@ -30,10 +30,7 @@ const CreateAlbumTile = ({
         <Loading />
       ) : (
         <>
-          <FaChevronLeft
-            onClick={toggleShowCreateAlbum}
-            className='chevron-left'
-          />
+          <BackButton onClick={toggleShowCreateAlbum} />
           <form
             className='space-y-6 my-auto pt-6'
             onSubmit={handleSubmit(handleCreateAlbum)}

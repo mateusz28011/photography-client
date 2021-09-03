@@ -67,59 +67,60 @@ const Navbar = ({ user, logoutUser }) => {
   }, []);
 
   return (
-    <nav
-      id='menu'
-      className='flex flex-col shadow md:flex-row items-center w-full mx-auto text-center text-xl bg-blue-600 text-white  md:justify-between md:py-3'
-    >
-      <div className='flex w-full md:w-auto justify-between mx-3 mt-1 md:ml-6'>
-        <Link to='/' className='text-4xl m-2 md:m-0 font-medium'>
-          Photo
-        </Link>
-        <NavbarMenuBtn
-          className='focus:outline-none m-5 md:hidden transform scale-150'
-          isMenuOpen={isMenuOpen}
-          toggleMenu={toggleMenu}
-        />
-      </div>
-
-      {(isMenuOpen || !isSmallScreen) && (
-        <div
-          id='menuLinks'
-          className='flex space-y-3 pb-5 uppercase flex-col md:normal-case md:flex-row md:items-center md:text-lg md:space-y-0 md:space-x-4 md:pb-0 md:mr-6'
-        >
-          <div id='link0'>
-            <Link to='/vendor'>Vendors</Link>
-          </div>
-          <div id='link1'>
-            <Link to='/2'>LINK2</Link>
-          </div>
-          <div id='link2'>
-            <Link to='/3'>LINK3</Link>
-          </div>
-          <div className='flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-4 items-center'>
-            {user ? (
-              <>
-                <div id='link3'>
-                  <Link to='/4'>My account</Link>
-                </div>
-                <Link id='link6' to='/' onClick={logoutUser}>
-                  Logout
-                </Link>
-              </>
-            ) : (
-              <>
-                <div id='link4'>
-                  <Link to='/login'>Sign In</Link>
-                </div>
-                <div id='link5' className='border-2 rounded-md px-2 py-0.5'>
-                  <Link to='/register'>Sign Up</Link>
-                </div>
-              </>
-            )}
-          </div>
+    <div className='bg-blue-600 shadow'>
+      <nav
+        id='menu'
+        className='flex flex-col md:flex-row items-center w-full mx-auto text-center text-xl  text-white  md:justify-between md:py-3 2xl:container'
+      >
+        <div className='flex w-full md:w-auto justify-between mx-3 mt-1 md:ml-6 2xl:ml-2'>
+          <Link to='/' className='text-4xl m-2 md:m-0 font-medium'>
+            Photo
+          </Link>
+          <NavbarMenuBtn
+            className='focus:outline-none m-5 md:hidden transform scale-150'
+            isMenuOpen={isMenuOpen}
+            toggleMenu={toggleMenu}
+          />
         </div>
-      )}
-    </nav>
+        {(isMenuOpen || !isSmallScreen) && (
+          <div
+            id='menuLinks'
+            className='flex space-y-3 pb-5 uppercase flex-col md:normal-case md:flex-row md:items-center md:text-lg md:space-y-0 md:space-x-4 md:pb-0 md:mr-6'
+          >
+            <div id='link0'>
+              <Link to='/search'>Vendors</Link>
+            </div>
+            <div id='link1'>
+              <Link to='/2'>LINK2</Link>
+            </div>
+            <div id='link2'>
+              <Link to='/3'>LINK3</Link>
+            </div>
+            <div className='flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-4 items-center'>
+              {user ? (
+                <>
+                  <div id='link3'>
+                    <Link to='/albums/'>My albums</Link>
+                  </div>
+                  <Link id='link6' to='/' onClick={logoutUser}>
+                    Logout
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <div id='link4'>
+                    <Link to='/login'>Sign In</Link>
+                  </div>
+                  <div id='link5' className='border-2 rounded-md px-2 py-0.5'>
+                    <Link to='/register'>Sign Up</Link>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+      </nav>
+    </div>
   );
 };
 

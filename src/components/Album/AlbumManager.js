@@ -1,8 +1,8 @@
 import React from 'react';
-import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import { deleteAlbum, renameAlbum } from '../../actions/album';
 import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import ManagerButtons from './ManagerButtons';
 
 const AlbumManager = ({
   isCreator,
@@ -53,23 +53,11 @@ const AlbumManager = ({
         </form>
       )}
       {isCreator && (
-        <div className='flex space-x-2 mt-2'>
-          <AiOutlineEdit
-            onClick={handleToggleRenameAlbum}
-            size='2rem'
-            strokeWidth='-1rem'
-            className={
-              'hover:bg-blue-600 hover:text-white rounded-full transition-colors duration-100 p-0.5 ' +
-              (showRenameAlbum ? 'bg-blue-600 text-white' : 'text-blue-600')
-            }
-          />
-          <AiOutlineDelete
-            onClick={handleDeleteAlbum}
-            size='2rem'
-            strokeWidth='-1rem'
-            className='hover:bg-blue-600 text-blue-600 hover:text-white rounded-full transition-colors duration-100 p-0.5'
-          />
-        </div>
+        <ManagerButtons
+          showRename={showRenameAlbum}
+          handleToggleRename={handleToggleRenameAlbum}
+          deleteFunc={handleDeleteAlbum}
+        />
       )}
     </>
   );

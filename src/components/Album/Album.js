@@ -9,10 +9,13 @@ import {
 import { connect } from 'react-redux';
 import PhotoTile from './PhotoTile';
 import AlbumTile from './AlbumTile';
+import Tile from './Tile';
 import CreatorTile from './CreatorTile';
 import Preview from './Preview';
 import Loading from '../Loading';
 import AlbumApiErrors from './AlbumApiErrors';
+import AlbumManager from './AlbumManager';
+import BackButton from './BackButton';
 
 const Album = ({
   albumId: rootAlbumId,
@@ -21,17 +24,23 @@ const Album = ({
   error,
   data,
   getAlbum,
+  returnToMyAlbums,
 }) => {
-  const { images, childAlbums } = data || {};
+  const { images, childAlbums, name } = data || {};
   const { id: creatorId } = data?.creator || {};
   const parentAlbum = data?.parentAlbum || null;
   const [isCreator, setIsCreator] = useState(false);
   const [albumId, setAlbumId] = useState(rootAlbumId);
   const [showPreview, setShowPreview] = useState(false);
+  const [showRenameAlbum, setShowRenameAlbum] = useState(false);
+
+  const toggleShowRenameAlbum = () => {
+    setShowRenameAlbum((prev) => !prev);
+  };
 
   useEffect(() => {
     console.log('fetch album');
-    getAlbum(albumId);
+    albumId && getAlbum(albumId);
   }, [getAlbum, albumId]);
 
   useEffect(() => {
@@ -53,8 +62,40 @@ const Album = ({
           setShowPreview={setShowPreview}
         />
       )}
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 p-3 2xl:justify-between 2xl:px-0'>
-        <CreatorTile isCreator={isCreator} albumId={albumId} />
+      {name && returnToMyAlbums && (
+        <div className='bg-white shadow rounded-lg text-center py-3 mt-3 font-base text-lg text-gray-600'>
+          Current album:{' '}
+          <div className='inline-block font-medium text-xl'>{name}</div>
+          <div
+            className={
+              'w-52 mx-auto flex flex-col items-center justify-center' +
+              (showRenameAlbum ? ' mt-3' : '')
+            }
+          >
+            <AlbumManager
+              isCreator={isCreator}
+              albumId={albumId}
+              name={name}
+              showRenameAlbum={showRenameAlbum}
+              toggleShowRenameAlbum={toggleShowRenameAlbum}
+            />
+          </div>
+        </div>
+      )}
+      <div className='grid grid-cols-2 auto-rows-fr sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 p-3 2xl:justify-between 2xl:px-0'>
+        {returnToMyAlbums && (
+          <Tile>
+            <BackButton onClick={returnToMyAlbums} />
+            <div
+              onClick={returnToMyAlbums}
+              className='my-auto text-center flex items-center justify-center h-3/5 btn-border '
+            >
+              <div className='px-4 text-sm ssm:text-lg md:text-xl'>
+                Back to my albums
+              </div>
+            </div>
+          </Tile>
+        )}
         {parentAlbum && (
           <AlbumTile
             {...parentAlbum}
@@ -64,6 +105,7 @@ const Album = ({
             key={v4()}
           />
         )}
+        <CreatorTile isCreator={isCreator} albumId={albumId} />
         {childAlbums &&
           childAlbums.map((album) => {
             return (

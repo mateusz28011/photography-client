@@ -9,6 +9,9 @@ module.exports = {
       screens: {
         ssm: '450px',
       },
+      minHeight: {
+        tile: '20rem',
+      },
     },
   },
   variants: {

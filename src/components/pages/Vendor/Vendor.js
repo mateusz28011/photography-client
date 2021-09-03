@@ -67,7 +67,7 @@ const Vendor = ({ user, loading, error, data, getVendor }) => {
       <div className='bg-white shadow rounded-lg text-center py-3 mt-3 font-medium text-xl text-gray-600'>
         PORTFOLIO
       </div>
-      <Album albumId={portfolio} />
+      <Album albumId={portfolio} isPortfolio />
     </>
   ) : null;
 };

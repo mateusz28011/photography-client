@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Tile from './Tile';
 import { HiPhotograph } from 'react-icons/hi';
-import { FaChevronLeft } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import Loading from '../Loading';
 import AlbumManager from './AlbumManager';
+import BackButton from './BackButton';
 
 const AlbumTile = ({
   name,
@@ -32,24 +32,24 @@ const AlbumTile = ({
         <Loading />
       ) : (
         <>
-          {parent && <FaChevronLeft className='chevron-left' />}
-          <HiPhotograph className='w-full h-auto text-blue-600 filter drop-shadow-sm' />
-          <div className='w-full h-1/2 flex flex-col items-center justify-center'>
-            {!showRenameAlbum && (
-              <div className='text-center my-auto w-32 sm:w-36 lg:w-48 truncate '>
+          {!showRenameAlbum && (
+            <>
+              {parent && <BackButton />}
+              <HiPhotograph className='w-full h-auto text-blue-600 filter drop-shadow-sm' />
+              <div className='text-center my-auto pb-3 w-32 sm:w-36 lg:w-48 truncate'>
                 {name}
               </div>
-            )}
-            <div className={isCreator && parent && 'invisible'}>
-              <AlbumManager
-                isCreator={isCreator}
-                albumId={albumId}
-                name={name}
-                showRenameAlbum={showRenameAlbum}
-                toggleShowRenameAlbum={toggleShowRenameAlbum}
-              />
-            </div>
-          </div>
+            </>
+          )}
+          {!parent && (
+            <AlbumManager
+              isCreator={isCreator}
+              albumId={albumId}
+              name={name}
+              showRenameAlbum={showRenameAlbum}
+              toggleShowRenameAlbum={toggleShowRenameAlbum}
+            />
+          )}
         </>
       )}
     </Tile>

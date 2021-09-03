@@ -20,7 +20,7 @@
   }
 
   .chevron-left {
-    @apply left-1 top-2 w-5 h-auto text-blue-600 absolute cursor-pointer md:w-8;
+    @apply left-1 top-2 text-blue-600 absolute cursor-pointer z-20;
   }
 
   .loader {
