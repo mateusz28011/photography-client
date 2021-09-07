@@ -40,7 +40,7 @@ const PhotoTile = ({
                 alt={title}
                 className='rounded mx-auto shadow-sm mb-3'
               />
-              <div className='text-center my-auto w-32 sm:w-36 lg:w-48 flex items-center justify-center'>
+              <div className='text-center my-auto w-full flex items-center justify-center'>
                 <span className='truncate pr-1'>{title}</span>
               </div>
             </>

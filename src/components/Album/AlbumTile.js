@@ -41,7 +41,7 @@ const AlbumTile = ({
                 <AiOutlineLock className='my-auto text-blue-600 absolute right-1 top-2 w-8 h-8' />
               )}
               <HiPhotograph className='w-full h-auto text-blue-600 filter drop-shadow-sm' />
-              <div className='text-center my-auto pb-3 w-32 sm:w-36 lg:w-48 truncate'>
+              <div className='text-center my-auto pb-3 w-full truncate'>
                 {name}
               </div>
             </>

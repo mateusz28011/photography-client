@@ -8,10 +8,10 @@ import {
   createErrorMessageSelector,
 } from '../../../selectors';
 import NavigationNextPrevious from './NavigationNextPrevious';
-import queryString from 'query-string';
 import ApiError from '../../ApiError';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 import Loading from '../../Loading';
+import setQueryParams from '../../../utils/setQueryParams';
 
 const Search = ({ loading, error, data, searchProfiles }) => {
   const location = useLocation();
@@ -24,18 +24,11 @@ const Search = ({ loading, error, data, searchProfiles }) => {
   };
 
   const onSubmitSearch = ({ search }) => {
-    const parsed = queryString.parse(location.search);
-    parsed.page = undefined;
-    parsed.search = search ? search : undefined;
-    const query = queryString.stringify(parsed);
-    history.push(`${location.pathname}?${query}`);
+    setQueryParams(history, location, { search });
   };
 
   const onSubmitFilter = ({ ordering }) => {
-    const parsed = queryString.parse(location.search);
-    parsed.ordering = ordering ? ordering : undefined;
-    const query = queryString.stringify(parsed);
-    history.push(`${location.pathname}?${query}`);
+    setQueryParams(history, location, { ordering });
   };
 
   const showVendor = ({ id }) => {

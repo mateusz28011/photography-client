@@ -2,7 +2,8 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const PrivateRoute = ({ user, component: Component, ...rest }) => {
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const user = localStorage.getItem('user');
   console.log(user);
   return (
     <Route

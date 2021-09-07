@@ -15,6 +15,7 @@ import {
   GET_USER_FAILURE,
   LOGIN_ERROR_CLEAR,
   REGISTER_ERROR_CLEAR,
+  GET_USER_FROM_LOCAL_STORAGE,
 } from '../actions/types';
 
 export const registerUser = (userData) => async (dispach) => {
@@ -43,11 +44,13 @@ export const loginUser = (userData) => async (dispach) => {
     const response = await axios.post('/dj-rest-auth/login/', userData);
     const { user } = response.data;
     dispach({ type: LOGIN_SUCCESS, payload: user });
+    localStorage.setItem('user', JSON.stringify(user));
   } catch (error) {
     dispach({
       type: LOGIN_FAILURE,
       payload: error,
     });
+    localStorage.removeItem('user');
   }
 };
 
@@ -60,11 +63,13 @@ export const logoutUser = () => async (dispach) => {
     dispach({ type: LOGOUT_REQUEST });
     await axios.post('/dj-rest-auth/logout/');
     dispach({ type: LOGOUT_SUCCESS });
+    localStorage.removeItem('user');
   } catch (error) {
     dispach({
       type: LOGOUT_FAILURE,
       payload: error,
     });
+    localStorage.removeItem('user');
   }
 };
 
@@ -73,10 +78,17 @@ export const getUser = () => async (dispach) => {
     dispach({ type: GET_USER_REQUEST });
     const response = await axios.get('/dj-rest-auth/user/');
     dispach({ type: GET_USER_SUCCESS, payload: response.data });
+    localStorage.setItem('user', JSON.stringify(response.data));
   } catch (error) {
     dispach({
       type: GET_USER_FAILURE,
       payload: error,
     });
+    localStorage.removeItem('user');
   }
+};
+
+export const getUserFromLocalStorage = () => {
+  const user = localStorage.getItem('user');
+  if (user) return { type: GET_USER_FROM_LOCAL_STORAGE, payload: user };
 };

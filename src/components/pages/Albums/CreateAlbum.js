@@ -8,7 +8,7 @@ import { createLoadingSelector } from '../../../selectors';
 import Tile from '../../Album/Tile';
 import Loading from '../../Loading';
 import BackButton from '../../Album/BackButton';
-import React, { useState } from 'react';
+import React from 'react';
 
 const CreateAlbumTile = ({
   toggleShowCreateAlbum,

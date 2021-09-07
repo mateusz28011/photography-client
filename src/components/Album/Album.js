@@ -14,8 +14,8 @@ import CreatorTile from './CreatorTile';
 import Preview from './Preview';
 import Loading from '../Loading';
 import AlbumApiErrors from './AlbumApiErrors';
-import AlbumManager from './AlbumManager';
 import BackButton from './BackButton';
+import CurrentAlbumInfo from './CurrentAlbumInfo';
 
 const Album = ({
   albumId: rootAlbumId,
@@ -62,26 +62,14 @@ const Album = ({
           setShowPreview={setShowPreview}
         />
       )}
-      {name && returnToMyAlbums && (
-        <div className='bg-white shadow rounded-lg text-center py-3 mt-3 font-base text-lg text-gray-600'>
-          Current album:{' '}
-          <div className='inline-block font-medium text-xl'>{name}</div>
-          <div
-            className={
-              'w-52 mx-auto flex flex-col items-center justify-center' +
-              (showRenameAlbum ? ' mt-3' : '')
-            }
-          >
-            <AlbumManager
-              isCreator={isCreator}
-              albumId={albumId}
-              name={name}
-              showRenameAlbum={showRenameAlbum}
-              toggleShowRenameAlbum={toggleShowRenameAlbum}
-            />
-          </div>
-        </div>
-      )}
+      <CurrentAlbumInfo
+        albumId={albumId}
+        isCreator={isCreator}
+        name={name}
+        showRenameAlbum={showRenameAlbum}
+        toggleShowRenameAlbum={toggleShowRenameAlbum}
+        returnToMyAlbums={returnToMyAlbums}
+      />
       <div className='grid grid-cols-2 auto-rows-fr sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 p-3 2xl:justify-between 2xl:px-0'>
         {returnToMyAlbums && (
           <Tile>

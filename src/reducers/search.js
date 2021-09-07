@@ -10,7 +10,7 @@ const auth = (state = initialState, action) => {
     case SEARCH_SUCCESS:
       return { ...state, ...payload };
     case SEARCH_CREATE_ALBUM_SUCCESS:
-      const albums = state?.albums?.results;
+      let albums = state?.albums?.results;
       if (albums) {
         albums.unshift(payload);
       } else {
