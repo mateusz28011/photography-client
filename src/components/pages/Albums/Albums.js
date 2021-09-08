@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Album from '../../Album/Album';
 import { v4 } from 'uuid';
 import ApiError from '../../ApiError';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
   searchAlbums,
   searchCreateAlbumClearError,
 } from '../../../actions/search';
-import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import Loading from '../../Loading';
 import {

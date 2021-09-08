@@ -1,8 +1,15 @@
-import React from 'react';
-import { deleteAlbum, renameAlbum } from '../../actions/album';
+import React, { useState } from 'react';
+import {
+  deleteAlbum,
+  renameAlbum,
+  addAccessToAlbum,
+  removeAccessFromAlbum,
+} from '../../actions/album';
 import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import ManagerButtons from './ManagerButtons';
+import { motion } from 'framer-motion';
+import { AiOutlineUserAdd, AiOutlineUserDelete } from 'react-icons/ai';
 
 const AlbumManager = ({
   isCreator,
@@ -12,8 +19,14 @@ const AlbumManager = ({
   toggleShowRenameAlbum,
   deleteAlbum,
   renameAlbum,
+  addAccessToAlbum,
+  removeAccessFromAlbum,
+  isInsideAlbum,
+  setClickedDeleteToTrue,
 }) => {
   const { register, handleSubmit } = useForm();
+  const [showAddAccess, setAddAccess] = useState(false);
+  const [showRemoveAccess, setRemoveAccess] = useState(false);
 
   const handleRenameAlbum = (formData) => {
     renameAlbum(albumId, formData);
@@ -27,6 +40,7 @@ const AlbumManager = ({
 
   const handleDeleteAlbum = (e) => {
     e.stopPropagation();
+    setClickedDeleteToTrue();
     deleteAlbum(albumId);
   };
 
@@ -57,7 +71,36 @@ const AlbumManager = ({
           showRename={showRenameAlbum}
           handleToggleRename={handleToggleRenameAlbum}
           deleteFunc={handleDeleteAlbum}
-        />
+        >
+          {isInsideAlbum && (
+            <>
+              <motion.div
+                whileHover={{
+                  scale: 1.2,
+                }}
+              >
+                <AiOutlineUserAdd
+                  // onClick={deleteFunc}
+                  size='2rem'
+                  strokeWidth='-1rem'
+                  className='text-blue-600  rounded-full transition-colors cursor-pointer duration-100 p-0.5'
+                />
+              </motion.div>
+              <motion.div
+                whileHover={{
+                  scale: 1.2,
+                }}
+              >
+                <AiOutlineUserDelete
+                  // onClick={deleteFunc}
+                  size='2rem'
+                  strokeWidth='-1rem'
+                  className='text-blue-600  rounded-full transition-colors cursor-pointer duration-100 p-0.5'
+                />
+              </motion.div>
+            </>
+          )}
+        </ManagerButtons>
       )}
     </>
   );
@@ -66,4 +109,6 @@ const AlbumManager = ({
 export default connect(null, {
   deleteAlbum,
   renameAlbum,
+  addAccessToAlbum,
+  removeAccessFromAlbum,
 })(AlbumManager);

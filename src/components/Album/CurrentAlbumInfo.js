@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import AlbumManager from './AlbumManager';
 import Loading from '../Loading';
@@ -15,22 +15,35 @@ const CurrentAlbumInfo = ({
   loadingRenameAlbum,
   error,
 }) => {
+  const [clickedDelete, setClickedDelete] = useState(false);
+
+  const setClickedDeleteToTrue = () => {
+    setClickedDelete(true);
+  };
+
   useEffect(() => {
-    !error &&
+    clickedDelete &&
+      !error &&
       loadingDeleteAlbum &&
       loadingDeleteAlbum[String(albumId)] === false &&
       returnToMyAlbums();
-  }, [error, loadingDeleteAlbum, albumId, returnToMyAlbums]);
+  }, [clickedDelete, error, loadingDeleteAlbum, albumId, returnToMyAlbums]);
+
+  const isLoading = () => {
+    return (
+      (loadingDeleteAlbum && loadingDeleteAlbum[String(albumId)]) ||
+      (loadingRenameAlbum && loadingRenameAlbum[String(albumId)])
+    );
+  };
 
   return (
     <>
-      {(loadingDeleteAlbum && loadingDeleteAlbum[String(albumId)]) ||
-      (loadingRenameAlbum && loadingRenameAlbum[String(albumId)]) ? (
+      {isLoading() ? (
         <Loading className='py-32' />
       ) : (
         name &&
         returnToMyAlbums && (
-          <div className='bg-white shadow rounded-lg text-center py-3 mt-3 font-base text-lg text-gray-600'>
+          <div className='bg-white shadow rounded-lg text-center py-3 font-base text-lg text-gray-600'>
             Current album:
             <div className='inline-block font-medium text-xl ml-2 text-blue-600'>
               {name}
@@ -47,6 +60,8 @@ const CurrentAlbumInfo = ({
                 name={name}
                 showRenameAlbum={showRenameAlbum}
                 toggleShowRenameAlbum={toggleShowRenameAlbum}
+                isInsideAlbum
+                setClickedDeleteToTrue={setClickedDeleteToTrue}
               />
             </div>
           </div>

@@ -27,6 +27,14 @@ import {
   RENAME_ALBUM_SUCCESS,
   RENAME_ALBUM_FAILURE,
   RENAME_ALBUM_ERROR_CLEAR,
+  ADD_ACCESS_TO_ALBUM_REQUEST,
+  ADD_ACCESS_TO_ALBUM_SUCCESS,
+  ADD_ACCESS_TO_ALBUM_FAILURE,
+  ADD_ACCESS_TO_ALBUM_ERROR_CLEAR,
+  REMOVE_ACCESS_FROM_ALBUM_ERROR_CLEAR,
+  REMOVE_ACCESS_FROM_ALBUM_REQUEST,
+  REMOVE_ACCESS_FROM_ALBUM_SUCCESS,
+  REMOVE_ACCESS_FROM_ALBUM_FAILURE,
 } from '../actions/types';
 
 export const getAlbum = (albumId) => async (dispach) => {
@@ -95,6 +103,46 @@ export const renameAlbum = (albumId, formData) => async (dispach) => {
 
 export const renameAlbumClearError = () => async (dispach) => {
   dispach({ type: RENAME_ALBUM_ERROR_CLEAR });
+};
+
+export const addAccessToAlbum = (albumId, userId) => async (dispach) => {
+  try {
+    dispach({ type: ADD_ACCESS_TO_ALBUM_REQUEST });
+    await axios.patch(`/albums/${albumId}/access/${userId}/`);
+    dispach({
+      type: ADD_ACCESS_TO_ALBUM_SUCCESS,
+      // payload: { name: formData.name },
+    });
+  } catch (error) {
+    dispach({
+      type: ADD_ACCESS_TO_ALBUM_FAILURE,
+      payload: error,
+    });
+  }
+};
+
+export const addAccessToAlbumClearError = () => async (dispach) => {
+  dispach({ type: ADD_ACCESS_TO_ALBUM_ERROR_CLEAR });
+};
+
+export const removeAccessFromAlbum = (albumId, userId) => async (dispach) => {
+  try {
+    dispach({ type: REMOVE_ACCESS_FROM_ALBUM_REQUEST });
+    await axios.patch(`/albums/${albumId}/access/${userId}/`);
+    dispach({
+      type: REMOVE_ACCESS_FROM_ALBUM_SUCCESS,
+      // payload: { name: formData.name },
+    });
+  } catch (error) {
+    dispach({
+      type: REMOVE_ACCESS_FROM_ALBUM_FAILURE,
+      payload: error,
+    });
+  }
+};
+
+export const removeAccessFromAlbumClearError = () => async (dispach) => {
+  dispach({ type: REMOVE_ACCESS_FROM_ALBUM_ERROR_CLEAR });
 };
 
 export const uploadImageToAlbum = (albumId, image) => async (dispach) => {
