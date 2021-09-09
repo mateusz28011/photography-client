@@ -50,8 +50,8 @@ const CurrentAlbumInfo = ({
             </div>
             <div
               className={
-                'w-52 mx-auto flex flex-col items-center justify-center' +
-                (showRenameAlbum ? ' mt-3' : '')
+                'w-full flex flex-col items-center justify-center' +
+                (showRenameAlbum ? ' mt-3 space-y-3' : '')
               }
             >
               <AlbumManager

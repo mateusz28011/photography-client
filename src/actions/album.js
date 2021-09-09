@@ -105,13 +105,13 @@ export const renameAlbumClearError = () => async (dispach) => {
   dispach({ type: RENAME_ALBUM_ERROR_CLEAR });
 };
 
-export const addAccessToAlbum = (albumId, userId) => async (dispach) => {
+export const addAccessToAlbum = (albumId, user) => async (dispach) => {
   try {
     dispach({ type: ADD_ACCESS_TO_ALBUM_REQUEST });
-    await axios.patch(`/albums/${albumId}/access/${userId}/`);
+    await axios.put(`/albums/${albumId}/access/${user.id}/`);
     dispach({
       type: ADD_ACCESS_TO_ALBUM_SUCCESS,
-      // payload: { name: formData.name },
+      payload: user,
     });
   } catch (error) {
     dispach({
@@ -125,13 +125,13 @@ export const addAccessToAlbumClearError = () => async (dispach) => {
   dispach({ type: ADD_ACCESS_TO_ALBUM_ERROR_CLEAR });
 };
 
-export const removeAccessFromAlbum = (albumId, userId) => async (dispach) => {
+export const removeAccessFromAlbum = (albumId, user) => async (dispach) => {
   try {
     dispach({ type: REMOVE_ACCESS_FROM_ALBUM_REQUEST });
-    await axios.patch(`/albums/${albumId}/access/${userId}/`);
+    await axios.delete(`/albums/${albumId}/access/${user.id}/`);
     dispach({
       type: REMOVE_ACCESS_FROM_ALBUM_SUCCESS,
-      // payload: { name: formData.name },
+      payload: user,
     });
   } catch (error) {
     dispach({

@@ -4,7 +4,7 @@ import store from './store';
 import Navbar from './components/Navbar';
 import { Route, Switch } from 'react-router-dom';
 import { useEffect } from 'react';
-import { getUser, getUserFromLocalStorage } from './actions/auth';
+import { getUser } from './actions/auth';
 import doesHttpOnlyCookieExist from './utils/doesHttpOnlyCookieExist';
 import Search from './components/pages/Search/Search';
 import Vendor from './components/pages/Vendor/Vendor';
@@ -50,9 +50,5 @@ const App = () => {
     </Provider>
   );
 };
-
-{
-  /* <PrivateRoute component={Search} exact path='/vendor'></PrivateRoute> */
-}
 
 export default App;

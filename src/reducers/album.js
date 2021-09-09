@@ -6,6 +6,8 @@ import {
   RENAME_IMAGE_FROM_ALBUM_SUCCESS,
   DELETE_ALBUM_SUCCESS,
   RENAME_ALBUM_SUCCESS,
+  ADD_ACCESS_TO_ALBUM_SUCCESS,
+  REMOVE_ACCESS_FROM_ALBUM_SUCCESS,
 } from '../actions/types';
 
 const initialState = {
@@ -89,6 +91,24 @@ const album = (state = initialState, action) => {
             if (image.id === payload.imageId) image.title = payload.title;
             return image;
           }),
+        },
+      };
+    case ADD_ACCESS_TO_ALBUM_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          allowedUsers: [...state.data.allowedUsers, payload],
+        },
+      };
+    case REMOVE_ACCESS_FROM_ALBUM_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          allowedUsers: state.data.allowedUsers.filter(
+            (user) => user.id != payload.id
+          ),
         },
       };
     default:

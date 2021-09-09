@@ -10,6 +10,8 @@ import { useForm } from 'react-hook-form';
 import ManagerButtons from './ManagerButtons';
 import { motion } from 'framer-motion';
 import { AiOutlineUserAdd, AiOutlineUserDelete } from 'react-icons/ai';
+import CurrentAlbumAddAccess from './CurrentAlbumAddAccess';
+import CurrentAlbumRemoveAccess from './CurrentAlbumRemoveAccess';
 
 const AlbumManager = ({
   isCreator,
@@ -19,14 +21,24 @@ const AlbumManager = ({
   toggleShowRenameAlbum,
   deleteAlbum,
   renameAlbum,
-  addAccessToAlbum,
-  removeAccessFromAlbum,
   isInsideAlbum,
   setClickedDeleteToTrue,
 }) => {
   const { register, handleSubmit } = useForm();
-  const [showAddAccess, setAddAccess] = useState(false);
-  const [showRemoveAccess, setRemoveAccess] = useState(false);
+  const [showAddAccess, setShowAddAccess] = useState(false);
+  const [showRemoveAccess, setShowRemoveAccess] = useState(false);
+
+  const toggleShowAddAccess = () => {
+    showRemoveAccess && toggleShowRemoveAccess();
+    showRenameAlbum && toggleShowRenameAlbum();
+    setShowAddAccess((prev) => !prev);
+  };
+
+  const toggleShowRemoveAccess = () => {
+    showAddAccess && toggleShowAddAccess();
+    showRenameAlbum && toggleShowRenameAlbum();
+    setShowRemoveAccess((prev) => !prev);
+  };
 
   const handleRenameAlbum = (formData) => {
     renameAlbum(albumId, formData);
@@ -35,6 +47,8 @@ const AlbumManager = ({
 
   const handleToggleRenameAlbum = (e) => {
     e.stopPropagation();
+    showAddAccess && toggleShowAddAccess();
+    showRemoveAccess && toggleShowRemoveAccess();
     toggleShowRenameAlbum();
   };
 
@@ -66,11 +80,13 @@ const AlbumManager = ({
           />
         </form>
       )}
+      {showAddAccess && <CurrentAlbumAddAccess />}
+      {showRemoveAccess && <CurrentAlbumRemoveAccess />}
       {isCreator && (
         <ManagerButtons
           showRename={showRenameAlbum}
           handleToggleRename={handleToggleRenameAlbum}
-          deleteFunc={handleDeleteAlbum}
+          handleDeleteAlbum={handleDeleteAlbum}
         >
           {isInsideAlbum && (
             <>
@@ -80,10 +96,13 @@ const AlbumManager = ({
                 }}
               >
                 <AiOutlineUserAdd
-                  // onClick={deleteFunc}
+                  onClick={toggleShowAddAccess}
                   size='2rem'
                   strokeWidth='-1rem'
-                  className='text-blue-600  rounded-full transition-colors cursor-pointer duration-100 p-0.5'
+                  className={
+                    'rounded-full transition-colors cursor-pointer duration-100 p-0.5 ' +
+                    (showAddAccess ? 'bg-blue-600 text-white' : 'text-blue-600')
+                  }
                 />
               </motion.div>
               <motion.div
@@ -92,10 +111,15 @@ const AlbumManager = ({
                 }}
               >
                 <AiOutlineUserDelete
-                  // onClick={deleteFunc}
+                  onClick={toggleShowRemoveAccess}
                   size='2rem'
                   strokeWidth='-1rem'
-                  className='text-blue-600  rounded-full transition-colors cursor-pointer duration-100 p-0.5'
+                  className={
+                    'rounded-full transition-colors cursor-pointer duration-100 p-0.5 ' +
+                    (showRemoveAccess
+                      ? 'bg-blue-600 text-white'
+                      : 'text-blue-600')
+                  }
                 />
               </motion.div>
             </>
