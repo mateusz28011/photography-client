@@ -107,7 +107,7 @@ const album = (state = initialState, action) => {
         data: {
           ...state.data,
           allowedUsers: state.data.allowedUsers.filter(
-            (user) => user.id != payload.id
+            (user) => user.id !== payload.id
           ),
         },
       };

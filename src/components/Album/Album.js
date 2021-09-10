@@ -76,7 +76,7 @@ const Album = ({
             <BackButton onClick={returnToMyAlbums} />
             <div
               onClick={returnToMyAlbums}
-              className='my-auto text-center flex items-center justify-center h-3/5 btn-border '
+              className='my-auto text-center flex items-center justify-center h-3/5 btn-border  '
             >
               <div className='px-4 text-sm ssm:text-lg md:text-xl'>
                 Back to my albums

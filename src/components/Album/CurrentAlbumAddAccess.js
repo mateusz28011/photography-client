@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import {
   addAccessToAlbum,
   addAccessToAlbumClearError,
@@ -17,6 +17,9 @@ import {
 } from '../../selectors';
 import ApiError from '../ApiError';
 import Loading from '../Loading';
+import { AiOutlinePlus, AiOutlineCheck } from 'react-icons/ai';
+import { motion } from 'framer-motion';
+import NavigationNextPrevious from './../pages/Search/NavigationNextPrevious';
 
 const CurrentAlbumAddAccess = ({
   albumId,
@@ -34,6 +37,13 @@ const CurrentAlbumAddAccess = ({
 }) => {
   const { register, handleSubmit } = useForm();
   const isResult = useRef(false);
+  const [loadingUserId, setLoadingUserId] = useState(undefined);
+
+  useEffect(() => {
+    if (loadingUserId != undefined && loadingAddAccessToAlbum === false) {
+      setLoadingUserId(undefined);
+    }
+  }, [loadingAddAccessToAlbum, loadingUserId]);
 
   const onSubmitSearch = (data) => {
     error && addAccessToAlbumClearError();
@@ -104,24 +114,58 @@ const CurrentAlbumAddAccess = ({
             center
           />
           {data && (
-            <div className='self-start px-3'>
-              {data.results.map((user) => (
-                <div key={user.id} className='flex'>
-                  <div>{user.email}</div>
-                  {!isInAllowedUsers(user) && (
-                    <div
-                      onClick={() => {
-                        addAccessToAlbum(albumId, user);
-                        errorAddAccessToAlbum && addAccessToAlbumClearError();
-                      }}
-                      className='ml-2'
-                    >
-                      add
+            <>
+              <div className='self-start px-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 my-4'>
+                {data.results.map((user) => (
+                  <div
+                    key={user.id}
+                    className='flex items-center bg-orange-00 py-2 rounded-lg shadow ring-1 ring-gray-600'
+                  >
+                    <div className='text-left px-5 break-all'>
+                      <div className='text-base md:text-lg font-medium'>
+                        {user.email}
+                      </div>
+                      <div className='text-sm md:text-base'>{`${user.firstName} ${user.lastName}`}</div>
                     </div>
-                  )}
-                </div>
-              ))}
-            </div>
+                    {isInAllowedUsers(user) ? (
+                      <AiOutlineCheck className='ml-auto mr-5 text-green-500 h-9 w-9' />
+                    ) : loadingAddAccessToAlbum && loadingUserId === user.id ? (
+                      <div className='ml-auto mr-5'>
+                        <Loading size={9} borderWidth={4} />
+                      </div>
+                    ) : loadingAddAccessToAlbum ? null : (
+                      <motion.div
+                        whileHover={{
+                          scale: 1.2,
+                          x: 2,
+                        }}
+                        className='ml-auto'
+                      >
+                        <AiOutlinePlus
+                          onClick={() => {
+                            if (!loadingUserId) {
+                              addAccessToAlbum(albumId, user);
+                              errorAddAccessToAlbum &&
+                                addAccessToAlbumClearError();
+                              setLoadingUserId(user.id);
+                            }
+                          }}
+                          className='mr-5 h-9 w-9 cursor-pointer text-blue-600'
+                        />
+                      </motion.div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <div className='px-4 mb-2 mt-5'>
+                <NavigationNextPrevious
+                  className=' bg-orange-00 ring-1 ring-gray-600'
+                  previous={data.previous}
+                  next={data.next}
+                  searchFunc={searchUsers}
+                />
+              </div>
+            </>
           )}
         </div>
       )}

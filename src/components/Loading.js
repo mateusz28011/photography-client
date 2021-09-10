@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Loading = ({ className }) => {
+const Loading = ({ className, size = 32, borderWidth = 8 }) => {
   return (
     <div
       className={
@@ -8,7 +8,11 @@ const Loading = ({ className }) => {
         (typeof className === 'string' ? className : '')
       }
     >
-      <div className='border-8 loader rounded-full animate-spin w-32 h-32'></div>
+      <div
+        className={`border-${borderWidth} loader rounded-full animate-spin w-${parseInt(
+          size
+        )} h-${parseInt(size)}`}
+      ></div>
     </div>
   );
 };
