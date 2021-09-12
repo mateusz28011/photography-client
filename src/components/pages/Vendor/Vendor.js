@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getVendor } from '../../../actions/vendor';
 import {
@@ -9,14 +9,23 @@ import {
 import ApiError from '../../ApiError';
 import Album from '../../Album/Album';
 import Loading from '../../Loading';
+import getQueryParams from '../../../utils/getQueryParams';
 
 const Vendor = ({ user, loading, error, data, getVendor }) => {
+  const location = useLocation();
   const { vendorid } = useParams();
   const { portfolio, name, avatar, description } = data || {};
+  const [albumId, setAlbumId] = useState();
   const { email, id: ownerId, firstName, lastName } = data?.owner || {};
   const [isOwner, setIsOwner] = useState(false);
-
   const history = useHistory();
+  console.log(1, null, portfolio, albumId);
+
+  useEffect(() => {
+    const album = getQueryParams(location, ['album']).album;
+    album ? setAlbumId(album) : setAlbumId(portfolio);
+    // console.log(2, album, portfolio, albumId);
+  }, [location, portfolio]);
 
   const redirectToLogin = () => {
     history.push('/login');
@@ -67,7 +76,7 @@ const Vendor = ({ user, loading, error, data, getVendor }) => {
       <div className='bg-white shadow rounded-lg text-center py-3 mt-3 font-medium text-xl text-gray-600'>
         PORTFOLIO
       </div>
-      <Album albumId={portfolio} isPortfolio />
+      <Album albumId={albumId} isPortfolio />
     </>
   ) : null;
 };

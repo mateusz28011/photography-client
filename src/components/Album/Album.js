@@ -16,6 +16,9 @@ import Loading from '../Loading';
 import AlbumApiErrors from './AlbumApiErrors';
 import BackButton from './BackButton';
 import CurrentAlbumInfo from './CurrentAlbumInfo';
+import setQueryParams from '../../utils/setQueryParams';
+import { useLocation, useHistory } from 'react-router-dom';
+import getQueryParams from '../../utils/getQueryParams';
 
 const Album = ({
   albumId: rootAlbumId,
@@ -25,17 +28,34 @@ const Album = ({
   data,
   getAlbum,
   returnToMyAlbums,
+  isPortfolio,
 }) => {
   const { images, childAlbums, name } = data || {};
   const { id: creatorId } = data?.creator || {};
   const parentAlbum = data?.parentAlbum || null;
   const [isCreator, setIsCreator] = useState(false);
-  const [albumId, setAlbumId] = useState(rootAlbumId);
+  const [albumId, setAlbumId] = useState();
   const [showPreview, setShowPreview] = useState(false);
   const [showRenameAlbum, setShowRenameAlbum] = useState(false);
+  const history = useHistory();
+  const location = useLocation();
 
   const toggleShowRenameAlbum = () => {
     setShowRenameAlbum((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const album = getQueryParams(location, ['album']).album;
+    album
+      ? setAlbumId(album)
+      : isPortfolio
+      ? setAlbumId(rootAlbumId)
+      : returnToMyAlbums && returnToMyAlbums();
+  }, [location, rootAlbumId, isPortfolio, returnToMyAlbums]);
+
+  const handleSetAlbumId = (albumId) => {
+    setQueryParams(history, location, { album: albumId });
+    setAlbumId(albumId);
   };
 
   useEffect(() => {
@@ -89,7 +109,7 @@ const Album = ({
             {...parentAlbum}
             parent
             isCreator={isCreator}
-            setAlbumId={setAlbumId}
+            setAlbumId={handleSetAlbumId}
             key={v4()}
           />
         )}
@@ -100,7 +120,7 @@ const Album = ({
               <AlbumTile
                 {...album}
                 isCreator={isCreator}
-                setAlbumId={setAlbumId}
+                setAlbumId={handleSetAlbumId}
                 key={v4()}
               />
             );

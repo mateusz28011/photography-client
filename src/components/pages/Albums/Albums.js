@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Album from '../../Album/Album';
 import { v4 } from 'uuid';
 import ApiError from '../../ApiError';
-import { useLocation } from 'react-router-dom';
 import {
   searchAlbums,
   searchCreateAlbumClearError,
@@ -18,6 +17,9 @@ import AlbumTile from '../../Album/AlbumTile';
 import CreateAlbum from './CreateAlbum';
 import Tile from '../../Album/Tile';
 import AlbumsPanel from './AlbumsPanel';
+import setQueryParams from '../../../utils/setQueryParams';
+import getQueryParams from '../../../utils/getQueryParams';
+import { useLocation, useHistory } from 'react-router-dom';
 
 const Albums = ({
   loading,
@@ -28,10 +30,18 @@ const Albums = ({
   errorCreateAlbum,
   searchCreateAlbumClearError,
 }) => {
-  const albums = data?.results;
+  const history = useHistory();
   const location = useLocation();
-  const [albumId, setAlbumId] = useState();
+  const albums = data?.results;
+  const [albumId, setAlbumId] = useState(
+    getQueryParams(location, ['album']).album
+  );
   const [showCreateAlbum, setShowCreateAlbum] = useState(false);
+
+  const handleSetAlbumId = (albumId) => {
+    setQueryParams(history, location, { album: albumId });
+    setAlbumId(albumId);
+  };
 
   const toggleShowCreateAlbum = () => {
     setShowCreateAlbum((prev) => !prev);
@@ -39,10 +49,12 @@ const Albums = ({
 
   useEffect(() => {
     console.log('fetch my albums');
+    // const { album } = getQueryParams({ album });
     !albumId && searchAlbums(location.search);
   }, [searchAlbums, location, albumId]);
 
   const returnToMyAlbums = () => {
+    setQueryParams(history, location, { album: null });
     setAlbumId(null);
   };
 
@@ -83,7 +95,7 @@ const Albums = ({
                     return (
                       <AlbumTile
                         {...album}
-                        setAlbumId={setAlbumId}
+                        setAlbumId={handleSetAlbumId}
                         key={v4()}
                       />
                     );

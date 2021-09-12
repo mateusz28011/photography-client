@@ -3,8 +3,6 @@ import {
   removeAccessFromAlbum,
   removeAccessFromAlbumClearError,
 } from '../../actions/album';
-import { useForm } from 'react-hook-form';
-import queryString from 'query-string';
 import { connect } from 'react-redux';
 import {
   createLoadingSelector,
@@ -26,7 +24,7 @@ const CurrentAlbumRemoveAccess = ({
   const [loadingUserId, setLoadingUserId] = useState(undefined);
 
   useEffect(() => {
-    if (loadingUserId != undefined && loading === false) {
+    if (loadingUserId !== undefined && loading === false) {
       setLoadingUserId(undefined);
     }
   }, [loading, loadingUserId]);

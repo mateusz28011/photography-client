@@ -40,7 +40,7 @@ const CurrentAlbumAddAccess = ({
   const [loadingUserId, setLoadingUserId] = useState(undefined);
 
   useEffect(() => {
-    if (loadingUserId != undefined && loadingAddAccessToAlbum === false) {
+    if (loadingUserId !== undefined && loadingAddAccessToAlbum === false) {
       setLoadingUserId(undefined);
     }
   }, [loadingAddAccessToAlbum, loadingUserId]);
