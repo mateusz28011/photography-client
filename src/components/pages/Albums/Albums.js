@@ -48,9 +48,11 @@ const Albums = ({
   };
 
   useEffect(() => {
-    console.log('fetch my albums');
+    if (!albumId) {
+      console.log('fetch my albums');
+      searchAlbums(location.search);
+    }
     // const { album } = getQueryParams({ album });
-    !albumId && searchAlbums(location.search);
   }, [searchAlbums, location, albumId]);
 
   const returnToMyAlbums = () => {
@@ -95,7 +97,7 @@ const Albums = ({
                     return (
                       <AlbumTile
                         {...album}
-                        setAlbumId={handleSetAlbumId}
+                        handleSetAlbumId={handleSetAlbumId}
                         key={v4()}
                       />
                     );

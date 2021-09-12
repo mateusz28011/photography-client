@@ -11,7 +11,7 @@ const AlbumTile = ({
   name,
   id: albumId,
   isPublic,
-  setAlbumId,
+  handleSetAlbumId,
   parent,
   isCreator,
   loadingDeleteAlbum,
@@ -24,7 +24,7 @@ const AlbumTile = ({
   };
 
   const handleAlbumClick = () => {
-    setAlbumId(albumId);
+    handleSetAlbumId(albumId);
   };
 
   return (

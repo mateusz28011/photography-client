@@ -15,16 +15,14 @@ const Vendor = ({ user, loading, error, data, getVendor }) => {
   const location = useLocation();
   const { vendorid } = useParams();
   const { portfolio, name, avatar, description } = data || {};
-  const [albumId, setAlbumId] = useState();
+  const [albumId, setAlbumId] = useState(portfolio);
   const { email, id: ownerId, firstName, lastName } = data?.owner || {};
   const [isOwner, setIsOwner] = useState(false);
   const history = useHistory();
-  console.log(1, null, portfolio, albumId);
 
   useEffect(() => {
     const album = getQueryParams(location, ['album']).album;
     album ? setAlbumId(album) : setAlbumId(portfolio);
-    // console.log(2, album, portfolio, albumId);
   }, [location, portfolio]);
 
   const redirectToLogin = () => {
