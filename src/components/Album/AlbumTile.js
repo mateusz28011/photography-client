@@ -15,12 +15,12 @@ const AlbumTile = ({
   parent,
   isCreator,
   loadingDeleteAlbum,
-  loadingRenameAlbum,
+  loadingEditAlbum,
 }) => {
-  const [showRenameAlbum, setShowRenameAlbum] = useState(false);
+  const [showEditAlbum, setShowEditAlbum] = useState(false);
 
-  const toggleShowRenameAlbum = () => {
-    setShowRenameAlbum((prev) => !prev);
+  const toggleShowEditAlbum = () => {
+    setShowEditAlbum((prev) => !prev);
   };
 
   const handleAlbumClick = () => {
@@ -28,13 +28,13 @@ const AlbumTile = ({
   };
 
   return (
-    <Tile clickFunc={handleAlbumClick}>
+    <Tile clickFunc={!showEditAlbum && handleAlbumClick}>
       {(loadingDeleteAlbum && loadingDeleteAlbum[String(albumId)]) ||
-      (loadingRenameAlbum && loadingRenameAlbum[String(albumId)]) ? (
+      (loadingEditAlbum && loadingEditAlbum[String(albumId)]) ? (
         <Loading />
       ) : (
         <>
-          {!showRenameAlbum && (
+          {!showEditAlbum && (
             <>
               {parent && <BackButton />}
               {!isPublic && (
@@ -51,8 +51,9 @@ const AlbumTile = ({
               isCreator={isCreator}
               albumId={albumId}
               name={name}
-              showRenameAlbum={showRenameAlbum}
-              toggleShowRenameAlbum={toggleShowRenameAlbum}
+              isPublic={isPublic}
+              showEditAlbum={showEditAlbum}
+              toggleShowEditAlbum={toggleShowEditAlbum}
             />
           )}
         </>
@@ -63,7 +64,7 @@ const AlbumTile = ({
 
 const mapStateToProps = (state) => ({
   loadingDeleteAlbum: state.loading?.DELETE_ALBUM,
-  loadingRenameAlbum: state.loading?.RENAME_ALBUM,
+  loadingEditAlbum: state.loading?.EDIT_ALBUM,
 });
 
 export default connect(mapStateToProps)(AlbumTile);

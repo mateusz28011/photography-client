@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory, useLocation } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getVendor } from '../../../actions/vendor';
 import {
@@ -9,21 +9,13 @@ import {
 import ApiError from '../../ApiError';
 import Album from '../../Album/Album';
 import Loading from '../../Loading';
-import getQueryParams from '../../../utils/getQueryParams';
 
 const Vendor = ({ user, loading, error, data, getVendor }) => {
-  const location = useLocation();
   const { vendorid } = useParams();
   const { portfolio, name, avatar, description } = data || {};
-  const [albumId, setAlbumId] = useState(portfolio);
   const { email, id: ownerId, firstName, lastName } = data?.owner || {};
   const [isOwner, setIsOwner] = useState(false);
   const history = useHistory();
-
-  // useEffect(() => {
-  //   const album = getQueryParams(location, ['album']).album;
-  //   album ? setAlbumId(album) : setAlbumId(portfolio);
-  // }, [location, portfolio]);
 
   const redirectToLogin = () => {
     history.push('/login');

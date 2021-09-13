@@ -111,19 +111,22 @@ const Search = ({ loading, error, data, searchProfiles }) => {
           <Loading className='my-32' />
         ) : error ? (
           <ApiError error={error} center />
-        ) : (
+        ) : data && data.results.length !== 0 ? (
           <>
             <div className='mt-3 grid md:grid-cols-2 md:gap-x-3 auto-rows-max px-3 2xl:px-0'>
-              {data &&
-                data.results.map((vendor, index) => (
-                  <Vendor vendor={vendor} showVendor={showVendor} key={index} />
-                ))}
+              {data.results.map((vendor, index) => (
+                <Vendor vendor={vendor} showVendor={showVendor} key={index} />
+              ))}
             </div>
             <NavigationNextPrevious
               previous={data?.previous}
               next={data?.next}
             />
           </>
+        ) : (
+          <div className='w-full my-5 text-xl font-medium tracking-wide text-center'>
+            Nothing was found
+          </div>
         )}
       </div>
     </>

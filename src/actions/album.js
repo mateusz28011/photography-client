@@ -23,10 +23,10 @@ import {
   DELETE_ALBUM_SUCCESS,
   DELETE_ALBUM_FAILURE,
   DELETE_ALBUM_ERROR_CLEAR,
-  RENAME_ALBUM_REQUEST,
-  RENAME_ALBUM_SUCCESS,
-  RENAME_ALBUM_FAILURE,
-  RENAME_ALBUM_ERROR_CLEAR,
+  EDIT_ALBUM_REQUEST,
+  EDIT_ALBUM_SUCCESS,
+  EDIT_ALBUM_FAILURE,
+  EDIT_ALBUM_ERROR_CLEAR,
   ADD_ACCESS_TO_ALBUM_REQUEST,
   ADD_ACCESS_TO_ALBUM_SUCCESS,
   ADD_ACCESS_TO_ALBUM_FAILURE,
@@ -85,24 +85,24 @@ export const deleteAlbumClearError = () => async (dispach) => {
   dispach({ type: DELETE_ALBUM_ERROR_CLEAR });
 };
 
-export const renameAlbum = (albumId, formData) => async (dispach) => {
+export const editAlbum = (albumId, formData) => async (dispach) => {
   try {
-    dispach({ type: RENAME_ALBUM_REQUEST, payload: albumId });
+    dispach({ type: EDIT_ALBUM_REQUEST, payload: albumId });
     await axios.patch(`/albums/${albumId}/`, formData);
     dispach({
-      type: RENAME_ALBUM_SUCCESS,
-      payload: { albumId, name: formData.name },
+      type: EDIT_ALBUM_SUCCESS,
+      payload: { albumId, ...formData },
     });
   } catch (error) {
     dispach({
-      type: RENAME_ALBUM_FAILURE,
+      type: EDIT_ALBUM_FAILURE,
       payload: { error, albumId },
     });
   }
 };
 
-export const renameAlbumClearError = () => async (dispach) => {
-  dispach({ type: RENAME_ALBUM_ERROR_CLEAR });
+export const editAlbumClearError = () => async (dispach) => {
+  dispach({ type: EDIT_ALBUM_ERROR_CLEAR });
 };
 
 export const addAccessToAlbum = (albumId, user) => async (dispach) => {

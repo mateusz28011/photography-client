@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   deleteAlbum,
-  renameAlbum,
+  editAlbum,
   addAccessToAlbum,
   removeAccessFromAlbum,
 } from '../../actions/album';
@@ -17,10 +17,11 @@ const AlbumManager = ({
   isCreator,
   albumId,
   name,
-  showRenameAlbum,
-  toggleShowRenameAlbum,
+  isPublic,
+  showEditAlbum,
+  toggleShowEditAlbum,
   deleteAlbum,
-  renameAlbum,
+  editAlbum,
   isInsideAlbum,
   setClickedDeleteToTrue,
 }) => {
@@ -30,26 +31,26 @@ const AlbumManager = ({
 
   const toggleShowAddAccess = () => {
     showRemoveAccess && toggleShowRemoveAccess();
-    showRenameAlbum && toggleShowRenameAlbum();
+    showEditAlbum && toggleShowEditAlbum();
     setShowAddAccess((prev) => !prev);
   };
 
   const toggleShowRemoveAccess = () => {
     showAddAccess && toggleShowAddAccess();
-    showRenameAlbum && toggleShowRenameAlbum();
+    showEditAlbum && toggleShowEditAlbum();
     setShowRemoveAccess((prev) => !prev);
   };
 
-  const handleRenameAlbum = (formData) => {
-    renameAlbum(albumId, formData);
-    toggleShowRenameAlbum();
+  const handleEditAlbum = (formData) => {
+    editAlbum(albumId, formData);
+    toggleShowEditAlbum();
   };
 
-  const handleToggleRenameAlbum = (e) => {
+  const handleToggleEditAlbum = (e) => {
     e.stopPropagation();
     showAddAccess && toggleShowAddAccess();
     showRemoveAccess && toggleShowRemoveAccess();
-    toggleShowRenameAlbum();
+    toggleShowEditAlbum();
   };
 
   const handleDeleteAlbum = (e) => {
@@ -60,11 +61,11 @@ const AlbumManager = ({
 
   return (
     <>
-      {showRenameAlbum && (
+      {showEditAlbum && (
         <form
           className='space-y-3 my-auto'
           onClick={(e) => e.stopPropagation()}
-          onSubmit={handleSubmit(handleRenameAlbum)}
+          onSubmit={handleSubmit(handleEditAlbum)}
         >
           <input
             className='w-full'
@@ -73,6 +74,16 @@ const AlbumManager = ({
             defaultValue={name}
             {...register('name')}
           />
+          <div className='flex items-center'>
+            <label htmlFor='isPublic' className='font-medium text-gray-700'>
+              Is public
+            </label>
+            <input
+              type='checkbox'
+              defaultChecked={isPublic}
+              {...register('isPublic')}
+            />
+          </div>
           <input
             className='w-full btn-basic py-2 px-3'
             type='submit'
@@ -84,8 +95,8 @@ const AlbumManager = ({
       {showRemoveAccess && <CurrentAlbumRemoveAccess />}
       {isCreator && (
         <ManagerButtons
-          showRename={showRenameAlbum}
-          handleToggleRename={handleToggleRenameAlbum}
+          showEdit={showEditAlbum}
+          handleToggleEdit={handleToggleEditAlbum}
           handleDelete={handleDeleteAlbum}
         >
           {isInsideAlbum && (
@@ -132,7 +143,7 @@ const AlbumManager = ({
 
 export default connect(null, {
   deleteAlbum,
-  renameAlbum,
+  editAlbum,
   addAccessToAlbum,
   removeAccessFromAlbum,
 })(AlbumManager);

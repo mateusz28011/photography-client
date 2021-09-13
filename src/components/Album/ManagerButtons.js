@@ -4,7 +4,8 @@ import { motion } from 'framer-motion';
 
 const ManagerButtons = ({
   children,
-  showRename,
+  showEdit,
+  handleToggleEdit,
   handleToggleRename,
   handleDelete,
 }) => {
@@ -16,12 +17,12 @@ const ManagerButtons = ({
         }}
       >
         <AiOutlineEdit
-          onClick={handleToggleRename}
+          onClick={handleToggleEdit || handleToggleRename}
           size='2rem'
           strokeWidth='-1rem'
           className={
             ' rounded-full transition-colors duration-100 p-0.5 cursor-pointer ' +
-            (showRename ? 'bg-blue-600 text-white' : 'text-blue-600')
+            (showEdit ? 'bg-blue-600 text-white' : 'text-blue-600')
           }
         />
       </motion.div>

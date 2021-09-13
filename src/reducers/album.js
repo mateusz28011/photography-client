@@ -5,7 +5,7 @@ import {
   DELETE_IMAGE_FROM_ALBUM_SUCCESS,
   RENAME_IMAGE_FROM_ALBUM_SUCCESS,
   DELETE_ALBUM_SUCCESS,
-  RENAME_ALBUM_SUCCESS,
+  EDIT_ALBUM_SUCCESS,
   ADD_ACCESS_TO_ALBUM_SUCCESS,
   REMOVE_ACCESS_FROM_ALBUM_SUCCESS,
 } from '../actions/types';
@@ -38,11 +38,11 @@ const album = (state = initialState, action) => {
           ),
         },
       };
-    case RENAME_ALBUM_SUCCESS:
+    case EDIT_ALBUM_SUCCESS:
       let isChanged = false;
       childAlbums = state.data.childAlbums.map((album) => {
         if (album.id === payload.albumId) {
-          album.name = payload.name;
+          album = { ...album, name: payload.name, isPublic: payload.isPublic };
           isChanged = true;
         }
         return album;

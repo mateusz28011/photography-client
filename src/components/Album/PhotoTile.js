@@ -20,12 +20,12 @@ const PhotoTile = ({
     setShowRenameImage((prev) => !prev);
   };
 
-  const handleAlbumClick = () => {
+  const handlePhotoClick = () => {
     setShowPreview(index);
   };
 
   return (
-    <Tile clickFunc={handleAlbumClick}>
+    <Tile clickFunc={!showRenameImage && handlePhotoClick}>
       {(loadingDeleteImageFromAlbum &&
         loadingDeleteImageFromAlbum[String(imageId)]) ||
       (loadingRenameImageFromAlbum &&

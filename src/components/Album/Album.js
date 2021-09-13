@@ -36,12 +36,12 @@ const Album = ({
   const [isCreator, setIsCreator] = useState(false);
   const [albumId, setAlbumId] = useState();
   const [showPreview, setShowPreview] = useState(false);
-  const [showRenameAlbum, setShowRenameAlbum] = useState(false);
+  const [showEditAlbum, setShowEditAlbum] = useState(false);
   const history = useHistory();
   const location = useLocation();
 
-  const toggleShowRenameAlbum = () => {
-    setShowRenameAlbum((prev) => !prev);
+  const toggleShowEditAlbum = () => {
+    setShowEditAlbum((prev) => !prev);
   };
 
   useEffect(() => {
@@ -89,8 +89,8 @@ const Album = ({
         albumId={albumId}
         isCreator={isCreator}
         name={name}
-        showRenameAlbum={showRenameAlbum}
-        toggleShowRenameAlbum={toggleShowRenameAlbum}
+        showEditAlbum={showEditAlbum}
+        toggleShowEditAlbum={toggleShowEditAlbum}
         returnToMyAlbums={returnToMyAlbums}
       />
       <div className='grid grid-cols-2 auto-rows-fr sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 p-3 2xl:justify-between 2xl:px-0'>

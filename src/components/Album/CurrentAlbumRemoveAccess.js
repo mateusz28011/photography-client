@@ -36,12 +36,12 @@ const CurrentAlbumRemoveAccess = ({
         clearFunc={removeAccessFromAlbumClearError}
         center
       />
-      {allowedUsers && (
+      {allowedUsers && allowedUsers.length !== 0 ? (
         <div className='self-start px-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 my-4'>
           {allowedUsers.map((user) => (
             <div
               key={user.id}
-              className='flex items-center bg-orange-00 py-2 rounded-lg shadow ring-1 ring-gray-600'
+              className='flex items-center bg-orange-00 py-2 rounded-lg shadow ring-1 ring-blue-600'
             >
               <div className='text-left px-5 break-all'>
                 <div className='text-base md:text-lg font-medium'>
@@ -75,6 +75,10 @@ const CurrentAlbumRemoveAccess = ({
               )}
             </div>
           ))}
+        </div>
+      ) : (
+        <div className='w-full my-5 text-xl font-medium tracking-wide'>
+          No user has been granted access
         </div>
       )}
     </div>

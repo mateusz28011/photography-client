@@ -9,10 +9,10 @@ const CurrentAlbumInfo = ({
   returnToMyAlbums,
   isCreator,
   albumId,
-  showRenameAlbum,
-  toggleShowRenameAlbum,
+  showEditAlbum,
+  toggleShowEditAlbum,
   loadingDeleteAlbum,
-  loadingRenameAlbum,
+  loadingEditAlbum,
   error,
 }) => {
   const [clickedDelete, setClickedDelete] = useState(false);
@@ -32,40 +32,39 @@ const CurrentAlbumInfo = ({
   const isLoading = () => {
     return (
       (loadingDeleteAlbum && loadingDeleteAlbum[String(albumId)]) ||
-      (loadingRenameAlbum && loadingRenameAlbum[String(albumId)])
+      (loadingEditAlbum && loadingEditAlbum[String(albumId)])
     );
   };
 
   return (
     <>
-      {isLoading() ? (
-        <Loading className='py-32' />
-      ) : (
-        name &&
-        returnToMyAlbums && (
-          <div className='bg-white shadow rounded-lg text-center py-3 font-base text-lg text-gray-600'>
-            Current album:
-            <div className='inline-block font-medium text-xl ml-2 text-blue-600'>
-              {name}
-            </div>
+      {name && returnToMyAlbums && (
+        <div className='bg-white shadow rounded-lg text-center py-3 font-base text-lg text-gray-600'>
+          Current album:
+          <div className='inline-block font-medium text-xl ml-2 text-blue-600'>
+            {name}
+          </div>
+          {isLoading() ? (
+            <Loading className='py-8' />
+          ) : (
             <div
               className={
                 'w-full flex flex-col items-center justify-center' +
-                (showRenameAlbum ? ' mt-3 space-y-3' : '')
+                (showEditAlbum ? ' mt-3 space-y-3' : '')
               }
             >
               <AlbumManager
                 isCreator={isCreator}
                 albumId={albumId}
                 name={name}
-                showRenameAlbum={showRenameAlbum}
-                toggleShowRenameAlbum={toggleShowRenameAlbum}
+                showEditAlbum={showEditAlbum}
+                toggleShowEditAlbum={toggleShowEditAlbum}
                 isInsideAlbum
                 setClickedDeleteToTrue={setClickedDeleteToTrue}
               />
             </div>
-          </div>
-        )
+          )}
+        </div>
       )}
     </>
   );
@@ -75,7 +74,7 @@ const errorSelector = createErrorMessageSelector(['DELETE_ALBUM']);
 
 const mapStateToProps = (state) => ({
   loadingDeleteAlbum: state.loading?.DELETE_ALBUM,
-  loadingRenameAlbum: state.loading?.RENAME_ALBUM,
+  loadingEditAlbum: state.loading?.EDIT_ALBUM,
   error: errorSelector(state),
 });
 

@@ -113,13 +113,13 @@ const CurrentAlbumAddAccess = ({
             clearFunc={addAccessToAlbumClearError}
             center
           />
-          {data && (
+          {data && data.results.length !== 0 ? (
             <>
               <div className='self-start px-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 my-4'>
                 {data.results.map((user) => (
                   <div
                     key={user.id}
-                    className='flex items-center bg-orange-00 py-2 rounded-lg shadow ring-1 ring-gray-600'
+                    className='flex items-center bg-orange-00 py-2 rounded-lg shadow ring-1 ring-blue-600'
                   >
                     <div className='text-left px-5 break-all'>
                       <div className='text-base md:text-lg font-medium'>
@@ -159,13 +159,17 @@ const CurrentAlbumAddAccess = ({
               </div>
               <div className='px-4 mb-2 mt-5'>
                 <NavigationNextPrevious
-                  className=' bg-orange-00 ring-1 ring-gray-600'
+                  className=' bg-orange-00 ring-1 ring-blue-600'
                   previous={data.previous}
                   next={data.next}
                   searchFunc={searchUsers}
                 />
               </div>
             </>
+          ) : (
+            <div className='w-full my-5 text-xl font-medium tracking-wide'>
+              Nothing was found
+            </div>
           )}
         </div>
       )}
