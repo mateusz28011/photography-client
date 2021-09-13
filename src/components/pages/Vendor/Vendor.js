@@ -9,26 +9,28 @@ import {
 import ApiError from '../../ApiError';
 import Album from '../../Album/Album';
 import Loading from '../../Loading';
+import MakeOrder from './MakeOrder';
 
 const Vendor = ({ user, loading, error, data, getVendor }) => {
-  const { vendorid } = useParams();
+  const { profileid } = useParams();
   const { portfolio, name, avatar, description } = data || {};
   const { email, id: ownerId, firstName, lastName } = data?.owner || {};
   const [isOwner, setIsOwner] = useState(false);
+  const [showMakeOrder, setShowMakeOrder] = useState(false);
   const history = useHistory();
+
+  const toggleShowMakeOrder = () => {
+    setShowMakeOrder((prev) => !prev);
+  };
 
   const redirectToLogin = () => {
     history.push('/login');
   };
 
-  const redirectToMakeOrder = () => {
-    history.push(`/vendor/${vendorid}/makeorder`);
-  };
-
   useEffect(() => {
     console.log('fetch vendor');
-    getVendor(vendorid);
-  }, [getVendor, vendorid]);
+    getVendor(profileid);
+  }, [getVendor, profileid]);
 
   useEffect(() => {
     user?.id === ownerId ? setIsOwner(true) : setIsOwner(false);
@@ -52,9 +54,10 @@ const Vendor = ({ user, loading, error, data, getVendor }) => {
           <div className='text-sm'>{email}</div>
         </div>
         <div className=''>{description}</div>
-        {!isOwner && (
+        {showMakeOrder && <MakeOrder vendorId={ownerId} history={history} />}
+        {!isOwner && !showMakeOrder && (
           <button
-            onClick={user ? redirectToMakeOrder : redirectToLogin}
+            onClick={user ? toggleShowMakeOrder : redirectToLogin}
             className={
               'btn-basic py-2 w-full mt-6' + (user ? '' : ' opacity-60')
             }

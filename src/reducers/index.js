@@ -5,5 +5,14 @@ import error from './error';
 import search from './search';
 import vendor from './vendor';
 import album from './album';
+import order from './order';
 
-export default combineReducers({ auth, loading, error, search, vendor, album });
+export default combineReducers({
+  auth,
+  loading,
+  error,
+  search,
+  vendor,
+  album,
+  order,
+});

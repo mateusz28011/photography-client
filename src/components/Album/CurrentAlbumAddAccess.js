@@ -167,9 +167,11 @@ const CurrentAlbumAddAccess = ({
               </div>
             </>
           ) : (
-            <div className='w-full my-5 text-xl font-medium tracking-wide'>
-              Nothing was found
-            </div>
+            data !== undefined && (
+              <div className='w-full my-5 text-xl font-medium tracking-wide'>
+                Nothing was found
+              </div>
+            )
           )}
         </div>
       )}

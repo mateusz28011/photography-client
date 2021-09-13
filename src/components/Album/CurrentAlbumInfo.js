@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import AlbumManager from './AlbumManager';
 import Loading from '../Loading';
 import { createErrorMessageSelector } from '../../selectors';
+import { AiOutlineLock } from 'react-icons/ai';
 
 const CurrentAlbumInfo = ({
   name,
   returnToMyAlbums,
   isCreator,
+  isPublic,
   albumId,
   showEditAlbum,
   toggleShowEditAlbum,
@@ -40,9 +42,14 @@ const CurrentAlbumInfo = ({
     <>
       {name && returnToMyAlbums && (
         <div className='bg-white shadow rounded-lg text-center py-3 font-base text-lg text-gray-600'>
-          Current album:
-          <div className='inline-block font-medium text-xl ml-2 text-blue-600'>
-            {name}
+          <div className='flex items-center justify-center'>
+            Current album:
+            <div className='ml-2 font-medium text-xl  text-blue-600'>
+              {name}
+            </div>
+            {!isPublic && (
+              <AiOutlineLock className='ml-1.5 text-blue-600 w-5 h-5' />
+            )}
           </div>
           {isLoading() ? (
             <Loading className='py-8' />

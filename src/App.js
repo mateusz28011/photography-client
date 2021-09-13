@@ -38,7 +38,7 @@ const App = () => {
             <Route exact path='/search'>
               <Search />
             </Route>
-            <Route exact path='/vendor/:vendorid'>
+            <Route exact path='/vendor/:profileid'>
               <Vendor />
             </Route>
             <PrivateRoute exact path='/albums/' component={Albums} />

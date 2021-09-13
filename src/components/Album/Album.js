@@ -30,7 +30,7 @@ const Album = ({
   returnToMyAlbums,
   isPortfolio,
 }) => {
-  const { images, childAlbums, name } = data || {};
+  const { images, childAlbums, name, isPublic } = data || {};
   const { id: creatorId } = data?.creator || {};
   const parentAlbum = data?.parentAlbum || null;
   const [isCreator, setIsCreator] = useState(false);
@@ -89,6 +89,7 @@ const Album = ({
         albumId={albumId}
         isCreator={isCreator}
         name={name}
+        isPublic={isPublic}
         showEditAlbum={showEditAlbum}
         toggleShowEditAlbum={toggleShowEditAlbum}
         returnToMyAlbums={returnToMyAlbums}
