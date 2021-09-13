@@ -20,10 +20,10 @@ const Vendor = ({ user, loading, error, data, getVendor }) => {
   const [isOwner, setIsOwner] = useState(false);
   const history = useHistory();
 
-  useEffect(() => {
-    const album = getQueryParams(location, ['album']).album;
-    album ? setAlbumId(album) : setAlbumId(portfolio);
-  }, [location, portfolio]);
+  // useEffect(() => {
+  //   const album = getQueryParams(location, ['album']).album;
+  //   album ? setAlbumId(album) : setAlbumId(portfolio);
+  // }, [location, portfolio]);
 
   const redirectToLogin = () => {
     history.push('/login');
@@ -74,7 +74,7 @@ const Vendor = ({ user, loading, error, data, getVendor }) => {
       <div className='bg-white shadow rounded-lg text-center py-3 mt-3 font-medium text-xl text-gray-600'>
         PORTFOLIO
       </div>
-      <Album albumId={albumId} isPortfolio />
+      <Album albumId={portfolio} isPortfolio />
     </>
   ) : null;
 };

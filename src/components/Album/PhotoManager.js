@@ -60,7 +60,7 @@ const PhotoManager = ({
         <ManagerButtons
           showRename={showRenameImage}
           handleToggleRename={handleToggleRenameImage}
-          deleteFunc={handleDeleteImage}
+          handleDelete={handleDeleteImage}
         />
       )}
     </>

@@ -54,7 +54,7 @@ const AlbumManager = ({
 
   const handleDeleteAlbum = (e) => {
     e.stopPropagation();
-    setClickedDeleteToTrue();
+    setClickedDeleteToTrue && setClickedDeleteToTrue();
     deleteAlbum(albumId);
   };
 
@@ -86,7 +86,7 @@ const AlbumManager = ({
         <ManagerButtons
           showRename={showRenameAlbum}
           handleToggleRename={handleToggleRenameAlbum}
-          handleDeleteAlbum={handleDeleteAlbum}
+          handleDelete={handleDeleteAlbum}
         >
           {isInsideAlbum && (
             <>

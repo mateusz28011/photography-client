@@ -47,7 +47,7 @@ const Album = ({
   useEffect(() => {
     const album = getQueryParams(location, ['album']).album;
     album
-      ? setAlbumId(album)
+      ? setAlbumId(parseInt(album))
       : isPortfolio
       ? setAlbumId(rootAlbumId)
       : returnToMyAlbums && returnToMyAlbums();
@@ -55,7 +55,7 @@ const Album = ({
 
   const handleSetAlbumId = (albumId) => {
     setQueryParams(history, location, {
-      album: parentAlbum?.id === albumId ? null : albumId,
+      album: albumId,
     });
   };
 
@@ -112,7 +112,11 @@ const Album = ({
             {...parentAlbum}
             parent
             isCreator={isCreator}
-            handleSetAlbumId={handleSetAlbumId}
+            handleSetAlbumId={
+              isPortfolio && parentAlbum?.id === rootAlbumId
+                ? () => handleSetAlbumId(null)
+                : handleSetAlbumId
+            }
             key={v4()}
           />
         )}

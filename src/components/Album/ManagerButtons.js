@@ -6,7 +6,7 @@ const ManagerButtons = ({
   children,
   showRename,
   handleToggleRename,
-  handleDeleteAlbum,
+  handleDelete,
 }) => {
   return (
     <div className='flex space-x-2 pt-2 '>
@@ -31,7 +31,7 @@ const ManagerButtons = ({
         }}
       >
         <AiOutlineDelete
-          onClick={handleDeleteAlbum}
+          onClick={handleDelete}
           size='2rem'
           strokeWidth='-1rem'
           className='text-blue-600  rounded-full transition-colors cursor-pointer duration-100 p-0.5'

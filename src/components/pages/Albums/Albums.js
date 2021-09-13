@@ -34,7 +34,7 @@ const Albums = ({
   const location = useLocation();
   const albums = data?.results;
   const [albumId, setAlbumId] = useState(
-    getQueryParams(location, ['album']).album
+    parseInt(getQueryParams(location, ['album']).album) || undefined
   );
   const [showCreateAlbum, setShowCreateAlbum] = useState(false);
 
@@ -52,7 +52,6 @@ const Albums = ({
       console.log('fetch my albums');
       searchAlbums(location.search);
     }
-    // const { album } = getQueryParams({ album });
   }, [searchAlbums, location, albumId]);
 
   const returnToMyAlbums = () => {
