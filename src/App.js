@@ -13,6 +13,7 @@ import Register from './components/pages/Register/Register';
 import PrivateRoute from './PrivateRoute';
 import Footer from './components/Footer';
 import Albums from './components/pages/Albums/Albums';
+import Order from './components/pages/Order/Order';
 
 const App = () => {
   useEffect(() => {
@@ -38,9 +39,10 @@ const App = () => {
             <Route exact path='/search'>
               <Search />
             </Route>
-            <Route exact path='/vendor/:profileid'>
+            <Route exact path='/vendor/:profileId'>
               <Vendor />
             </Route>
+            <PrivateRoute exact path='/order/:orderId' component={Order} />
             <PrivateRoute exact path='/albums/' component={Albums} />
             <Route>CO</Route>
           </Switch>

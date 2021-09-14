@@ -12,7 +12,7 @@ import Loading from '../../Loading';
 import MakeOrder from './MakeOrder';
 
 const Vendor = ({ user, loading, error, data, getVendor }) => {
-  const { profileid } = useParams();
+  const { profileId } = useParams();
   const { portfolio, name, avatar, description } = data || {};
   const { email, id: ownerId, firstName, lastName } = data?.owner || {};
   const [isOwner, setIsOwner] = useState(false);
@@ -29,8 +29,8 @@ const Vendor = ({ user, loading, error, data, getVendor }) => {
 
   useEffect(() => {
     console.log('fetch vendor');
-    getVendor(profileid);
-  }, [getVendor, profileid]);
+    getVendor(profileId);
+  }, [getVendor, profileId]);
 
   useEffect(() => {
     user?.id === ownerId ? setIsOwner(true) : setIsOwner(false);
