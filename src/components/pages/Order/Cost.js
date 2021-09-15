@@ -29,31 +29,33 @@ const Cost = ({
   return loading ? (
     <Loading size={16} borderWidth={4} className='py-4' />
   ) : isVendor || cost ? (
-    <div className='font-medium'>
-      Cost:
-      {showEditCost ? (
-        <form onSubmit={handleSubmit(onSubmit)} className='flex'>
-          <div className='flex flex-col ssm:flex-row ssm:flex-wrap items-center'>
-            <input
-              type='text'
-              required
-              {...register('cost')}
-              className='w-28 m-2'
-            />
-            <input
-              type='submit'
-              value='Submit'
-              className='btn-basic py-1.5 px-7 m-2'
-            />
-          </div>
-          <AiOutlineClose
-            onClick={toggleShowEditCost}
-            size={48}
-            className='cursor-pointer my-auto m-2 text-red-600'
+    showEditCost ? (
+      <form onSubmit={handleSubmit(onSubmit)} className='flex'>
+        <div className='flex flex-col ssm:flex-row ssm:flex-wrap items-center '>
+          <div className='font-medium self-start my-auto'>Cost:</div>
+          <input
+            type='text'
+            required
+            {...register('cost')}
+            className='w-28 my-1 mx-2'
           />
-        </form>
-      ) : (
-        <div className='ml-2 inline-block font-normal text-blue-600'>
+          <input
+            type='submit'
+            value='Submit'
+            className='btn-basic w-28 py-1.5 px-7 my-1 mx-2'
+          />
+          <input
+            type='button'
+            value='Close'
+            onClick={toggleShowEditCost}
+            className='btn-basic w-28 py-1.5 px-7 my-1 mx-2'
+          />
+        </div>
+      </form>
+    ) : (
+      <div className='font-medium'>
+        Cost:
+        <div className='ml-2 inline-block text-lg text-blue-600'>
           {cost ? `${cost} ${currency}` : '-----'}
           {isVendor && [3, 4].includes(status) && (
             <AiOutlineEdit
@@ -63,8 +65,8 @@ const Cost = ({
             />
           )}
         </div>
-      )}
-    </div>
+      </div>
+    )
   ) : null;
 };
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { AiOutlineClose, AiOutlineEdit } from 'react-icons/ai';
+import { AiOutlineEdit } from 'react-icons/ai';
 import { connect } from 'react-redux';
 import { updateOrderStatus } from '../../../actions/order';
 import { createLoadingSelector } from '../../../selectors';
@@ -55,21 +55,14 @@ const Status = ({
   return loading ? (
     <Loading size={16} borderWidth={4} className='py-4' />
   ) : (
-    <div
-      className={
-        'text-lg flex flex-wrap ssm:text-center ssm:items-center ssm:justify-center' +
-        (showEditStatus ? ' my-2' : '')
-      }
-    >
-      <div className='mr-2 text-xl'>
-        {showEditStatus ? 'Set status:' : 'Status:'}
-      </div>
+    <div className={'text-lg text-center' + (showEditStatus ? ' my-2' : '')}>
       {showEditStatus ? (
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className=' w-8/12 sm:w-auto text-blue-600'
+          className='w-56 sm:w-auto text-blue-600'
         >
-          <div className='flex w-full justify-start flex-wrap items-center sm:px-3 sm:flex-nowrap'>
+          <div className='flex w-full justify-start sm:justify-center flex-wrap items-center sm:px-3 sm:flex-nowrap'>
+            <div className='mr-2 text-xl text-black t'>Set status:</div>
             <select
               name='status'
               {...register('status')}
@@ -84,27 +77,31 @@ const Status = ({
             <input
               type='submit'
               value='Submit'
+              className='btn-basic w-full sm:w-auto sm:ml-4 py-1.5 px-7 mt-2.5 sm:mt-1 sm:mb-0'
+            />
+            <input
+              type='button'
+              value='Close'
+              onClick={toggleShowEditStatus}
               className='btn-basic w-full sm:w-auto sm:ml-4 py-1.5 px-7 my-2.5 sm:mt-1 sm:mb-0'
             />
           </div>
         </form>
       ) : (
-        <div className='text-lg font-medium text-blue-600'>
-          {statusDisplay}
-          {statuses && (
-            <AiOutlineEdit
-              onClick={toggleShowEditStatus}
-              size={25}
-              className='inline-block cursor-pointer ml-2'
-            />
-          )}
-        </div>
+        <>
+          <div className='inline-block mr-2 text-xl text-black'>Status:</div>
+          <div className='inline-block text-lg font-medium text-blue-600'>
+            {statusDisplay}
+            {statuses && (
+              <AiOutlineEdit
+                onClick={toggleShowEditStatus}
+                size={25}
+                className='inline-block cursor-pointer ml-2'
+              />
+            )}
+          </div>
+        </>
       )}
-      <AiOutlineClose
-        onClick={toggleShowEditStatus}
-        size={48}
-        className='cursor-pointer my-auto m-2 text-red-600 mx-auto flex-1'
-      />
     </div>
   );
 };
