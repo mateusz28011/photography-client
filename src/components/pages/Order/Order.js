@@ -37,7 +37,7 @@ const Order = ({
   ) : error ? (
     <ApiError error={error} center />
   ) : data ? (
-    <>
+    <div className='space-y-3'>
       <div className='bg-white shadow rounded-b-lg p-5'>
         {errorUpdateOrderStatus && (
           <ApiError
@@ -115,7 +115,7 @@ const Order = ({
         </div>
       </div>
       <Notes orderId={orderId} isVendor={isVendor} />
-    </>
+    </div>
   ) : null;
 };
 

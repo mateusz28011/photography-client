@@ -8,7 +8,7 @@ import { getNotes } from '../../../actions/notes';
 import Loading from '../../Loading';
 import ApiError from '../../ApiError';
 import NavigationNextPrevious from '../Search/NavigationNextPrevious';
-import { get } from 'react-hook-form';
+import Message from './Message';
 
 const Notes = ({
   loading,
@@ -31,34 +31,43 @@ const Notes = ({
     <Loading className='py-32' />
   ) : error ? (
     <ApiError error={error} center />
-  ) : data ? (
+  ) : (
     <>
-      <div className='bg-white shadow rounded-lg p-5 space-y-3 my-3'>
-        {data.results.map((note, index) => (
-          <div
-            key={index}
-            className={
-              'py-3 px-4 rounded-xl sm:w-1/2' +
-              (userId === note.user ? ' bg-blue-100' : ' bg-gray-100 ml-auto')
-            }
-          >
-            <div className='text-blue-600 font-medium relative text-lg'>
-              {userId === note.user ? 'Me' : isVendor ? 'Client' : 'Vendor'}
-              <div className='absolute right-0 top-0.5 text-base font-normal'>
-                {new Date(note.created).toLocaleString()}
+      {data?.results?.length !== 0 && (
+        <>
+          <div className='bg-white shadow rounded-lg p-5 flex flex-col-reverse'>
+            {data?.results.map((note, index) => (
+              <div
+                key={index}
+                className={
+                  'py-3 px-4 rounded-xl sm:w-1/2 my-3' +
+                  (userId === note.user
+                    ? ' bg-blue-100'
+                    : ' bg-gray-100 ml-auto')
+                }
+              >
+                <div className='text-blue-600 font-medium relative text-lg'>
+                  {userId === note.user ? 'Me' : isVendor ? 'Client' : 'Vendor'}
+                  <div className='absolute right-0 top-0.5 text-base font-normal'>
+                    {new Date(note.created).toLocaleString()}
+                  </div>
+                </div>
+                {note.note}
               </div>
-            </div>
-            {note.note}
+            ))}
           </div>
-        ))}
-      </div>
-      <NavigationNextPrevious
-        next={data.next}
-        previous={data.previous}
-        searchFunc={handlePagination}
-      />
+          {(data?.previous || data?.next) && (
+            <NavigationNextPrevious
+              next={data.previous}
+              previous={data.next}
+              searchFunc={handlePagination}
+            />
+          )}
+        </>
+      )}
+      <Message orderId={orderId} />
     </>
-  ) : null;
+  );
 };
 
 const loadingSelector = createLoadingSelector(['GET_NOTES']);

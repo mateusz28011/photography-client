@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { AiOutlineEdit, AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineEdit } from 'react-icons/ai';
 import { connect } from 'react-redux';
 import { updateOrderCost } from '../../../actions/order';
 import { createLoadingSelector } from '../../../selectors';
