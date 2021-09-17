@@ -37,6 +37,7 @@ const Albums = ({
     parseInt(getQueryParams(location, ['album']).album) || undefined
   );
   const [showCreateAlbum, setShowCreateAlbum] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   const handleSetAlbumId = (albumId) => {
     setQueryParams(history, location, { album: albumId });
@@ -51,8 +52,9 @@ const Albums = ({
     if (!albumId) {
       console.log('fetch my albums');
       searchAlbums(location.search);
+      dataLoaded === false && setDataLoaded(true);
     }
-  }, [searchAlbums, location, albumId]);
+  }, [searchAlbums, location, albumId, dataLoaded]);
 
   const returnToMyAlbums = () => {
     setQueryParams(history, location, { album: null });
@@ -66,7 +68,7 @@ const Albums = ({
         <Loading className='py-32' />
       ) : error ? (
         <ApiError center error={error} />
-      ) : (
+      ) : dataLoaded ? (
         <>
           <ApiError
             center
@@ -112,7 +114,7 @@ const Albums = ({
             <Album albumId={albumId} returnToMyAlbums={returnToMyAlbums} />
           )}
         </>
-      )}
+      ) : null}
     </>
   );
 };

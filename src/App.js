@@ -14,6 +14,7 @@ import PrivateRoute from './PrivateRoute';
 import Footer from './components/Footer';
 import Albums from './components/pages/Albums/Albums';
 import Order from './components/pages/Order/Order';
+import Orders from './components/pages/Orders/Orders';
 
 const App = () => {
   useEffect(() => {
@@ -42,6 +43,7 @@ const App = () => {
             <Route exact path='/vendor/:profileId'>
               <Vendor />
             </Route>
+            <PrivateRoute exact path='/orders/' component={Orders} />
             <PrivateRoute exact path='/order/:orderId' component={Order} />
             <PrivateRoute exact path='/albums/' component={Albums} />
             <Route>CO</Route>

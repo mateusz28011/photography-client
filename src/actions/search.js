@@ -26,6 +26,19 @@ export const searchAlbums = (query) => async (dispach) => {
   }
 };
 
+export const searchOrders = (query) => async (dispach) => {
+  try {
+    dispach({ type: SEARCH_REQUEST });
+    const response = await axios.get(`/orders/${query}`);
+    dispach({ type: SEARCH_SUCCESS, payload: { orders: response.data } });
+  } catch (error) {
+    dispach({
+      type: SEARCH_FAILURE,
+      payload: error,
+    });
+  }
+};
+
 export const searchCreateAlbum = (formData) => async (dispach) => {
   try {
     dispach({ type: SEARCH_CREATE_ALBUM_REQUEST });

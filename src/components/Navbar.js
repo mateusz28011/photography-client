@@ -45,13 +45,13 @@ const Navbar = ({ user, logoutUser }) => {
           'menu',
           'menuBtn',
           'menuLinks',
-          'link0',
+          'vendors',
           'link1',
           'link2',
-          'link3',
+          'albums',
           'link4',
-          'link5',
-          'link6',
+          'login',
+          'register',
         ].includes(e.target.id)
       ) {
         setIsMenuOpen(false);
@@ -87,7 +87,7 @@ const Navbar = ({ user, logoutUser }) => {
             id='menuLinks'
             className='flex space-y-3 pb-5 uppercase flex-col md:normal-case md:flex-row md:items-center md:text-lg md:space-y-0 md:space-x-4 md:pb-0 md:mr-6'
           >
-            <div id='link0'>
+            <div id='vendors'>
               <Link to='/search'>Vendors</Link>
             </div>
             <div id='link1'>
@@ -99,19 +99,25 @@ const Navbar = ({ user, logoutUser }) => {
             <div className='flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-4 items-center'>
               {user ? (
                 <>
-                  <div id='link3'>
+                  <div id='orders'>
+                    <Link to='/orders/'>My orders</Link>
+                  </div>
+                  <div id='albums'>
                     <Link to='/albums/'>My albums</Link>
                   </div>
-                  <Link id='link6' to='/' onClick={logoutUser}>
+                  <Link id='logout' to='/' onClick={logoutUser}>
                     Logout
                   </Link>
                 </>
               ) : (
                 <>
-                  <div id='link4'>
+                  <div id='login'>
                     <Link to='/login'>Sign In</Link>
                   </div>
-                  <div id='link5' className='border-2 rounded-md px-2 py-0.5'>
+                  <div
+                    id='register'
+                    className='border-2 rounded-md px-2 py-0.5'
+                  >
                     <Link to='/register'>Sign Up</Link>
                   </div>
                 </>

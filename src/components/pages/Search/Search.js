@@ -18,6 +18,7 @@ const Search = ({ loading, error, data, searchProfiles }) => {
   const history = useHistory();
   const { register, handleSubmit } = useForm();
   const [showOrdering, setShowOrdering] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   const toggleShowOrdering = () => {
     setShowOrdering((prev) => !prev);
@@ -38,7 +39,8 @@ const Search = ({ loading, error, data, searchProfiles }) => {
   useEffect(() => {
     console.log('fetch vendors');
     searchProfiles(location.search);
-  }, [searchProfiles, location]);
+    dataLoaded === false && setDataLoaded(true);
+  }, [searchProfiles, location, dataLoaded]);
 
   return (
     <>
@@ -111,23 +113,25 @@ const Search = ({ loading, error, data, searchProfiles }) => {
           <Loading className='my-32' />
         ) : error ? (
           <ApiError error={error} center />
-        ) : data && data.results.length !== 0 ? (
-          <>
-            <div className='mt-3 grid md:grid-cols-2 md:gap-x-3 auto-rows-max px-3 2xl:px-0'>
-              {data.results.map((vendor, index) => (
-                <Vendor vendor={vendor} showVendor={showVendor} key={index} />
-              ))}
+        ) : dataLoaded ? (
+          data && data.results.length !== 0 ? (
+            <>
+              <div className='mt-3 grid md:grid-cols-2 md:gap-x-3 auto-rows-max px-3 2xl:px-0'>
+                {data.results.map((vendor, index) => (
+                  <Vendor vendor={vendor} showVendor={showVendor} key={index} />
+                ))}
+              </div>
+              <NavigationNextPrevious
+                previous={data?.previous}
+                next={data?.next}
+              />
+            </>
+          ) : (
+            <div className='w-full my-5 text-xl font-medium tracking-wide text-center'>
+              Nothing was found
             </div>
-            <NavigationNextPrevious
-              previous={data?.previous}
-              next={data?.next}
-            />
-          </>
-        ) : (
-          <div className='w-full my-5 text-xl font-medium tracking-wide text-center'>
-            Nothing was found
-          </div>
-        )}
+          )
+        ) : null}
       </div>
     </>
   );
