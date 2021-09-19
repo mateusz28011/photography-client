@@ -3,6 +3,10 @@ import {
   GET_VENDOR_REQUEST,
   GET_VENDOR_SUCCESS,
   GET_VENDOR_FAILURE,
+  EDIT_VENDOR_REQUEST,
+  EDIT_VENDOR_SUCCESS,
+  EDIT_VENDOR_FAILURE,
+  EDIT_VENDOR_ERROR_CLEAR,
 } from '../actions/types';
 
 export const getVendor = (vendorId) => async (dispach) => {
@@ -16,4 +20,21 @@ export const getVendor = (vendorId) => async (dispach) => {
       payload: error,
     });
   }
+};
+
+export const editVendor = (vendorId, data) => async (dispach) => {
+  try {
+    dispach({ type: EDIT_VENDOR_REQUEST });
+    const response = await axios.get(`/profiles/${vendorId}/`, data);
+    dispach({ type: EDIT_VENDOR_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispach({
+      type: EDIT_VENDOR_FAILURE,
+      payload: error,
+    });
+  }
+};
+
+export const editVendorClearError = () => async (dispach) => {
+  dispach({ type: EDIT_VENDOR_ERROR_CLEAR });
 };

@@ -16,6 +16,10 @@ import {
   LOGIN_ERROR_CLEAR,
   REGISTER_ERROR_CLEAR,
   GET_USER_FROM_LOCAL_STORAGE,
+  EDIT_USER_REQUEST,
+  EDIT_USER_SUCCESS,
+  EDIT_USER_FAILURE,
+  EDIT_USER_ERROR_CLEAR,
 } from '../actions/types';
 
 export const registerUser = (userData) => async (dispach) => {
@@ -91,4 +95,22 @@ export const getUser = () => async (dispach) => {
 export const getUserFromLocalStorage = () => {
   const user = localStorage.getItem('user');
   if (user) return { type: GET_USER_FROM_LOCAL_STORAGE, payload: user };
+};
+
+export const editUser = (data) => async (dispach) => {
+  try {
+    dispach({ type: EDIT_USER_REQUEST });
+    const response = await axios.patch('/dj-rest-auth/user/', data);
+    dispach({ type: EDIT_USER_SUCCESS, payload: response.data });
+    localStorage.setItem('user', JSON.stringify(response.data));
+  } catch (error) {
+    dispach({
+      type: EDIT_USER_FAILURE,
+      payload: error,
+    });
+  }
+};
+
+export const editUserClearError = () => async (dispach) => {
+  dispach({ type: EDIT_USER_ERROR_CLEAR });
 };

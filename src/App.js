@@ -15,6 +15,8 @@ import Footer from './components/Footer';
 import Albums from './components/pages/Albums/Albums';
 import Order from './components/pages/Order/Order';
 import Orders from './components/pages/Orders/Orders';
+import Home from './components/pages/Home/Home';
+import Account from './components/pages/Account/Account';
 
 const App = () => {
   useEffect(() => {
@@ -29,7 +31,7 @@ const App = () => {
           {/* <div className='px-3 py-3 md:'> */}
           <Switch>
             <Route exact path='/'>
-              CO
+              <Home />
             </Route>
             <Route exact path='/login'>
               <Login />
@@ -46,7 +48,10 @@ const App = () => {
             <PrivateRoute exact path='/orders/' component={Orders} />
             <PrivateRoute exact path='/order/:orderId' component={Order} />
             <PrivateRoute exact path='/albums/' component={Albums} />
-            <Route>CO</Route>
+            <PrivateRoute exact path='/account/' component={Account} />
+            <Route>
+              <Home />
+            </Route>
           </Switch>
           <Footer />
         </div>

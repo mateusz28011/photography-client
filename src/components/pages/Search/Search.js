@@ -94,6 +94,7 @@ const Search = ({ loading, error, data, searchProfiles }) => {
                 {...register('ordering')}
                 className='w-56 flex-shrink'
               >
+                <option value=''>-----</option>
                 <option value='name'>name - ascending</option>
                 <option value='-name'>name - descending</option>
                 <option value='created'>created - ascending</option>

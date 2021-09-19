@@ -49,7 +49,7 @@ const Navbar = ({ user, logoutUser }) => {
           'link1',
           'link2',
           'albums',
-          'link4',
+          'account',
           'login',
           'register',
         ].includes(e.target.id)
@@ -99,6 +99,9 @@ const Navbar = ({ user, logoutUser }) => {
             <div className='flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-4 items-center'>
               {user ? (
                 <>
+                  <div id='account'>
+                    <Link to='/account/'>My account</Link>
+                  </div>
                   <div id='orders'>
                     <Link to='/orders/'>My orders</Link>
                   </div>

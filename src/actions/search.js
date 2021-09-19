@@ -72,7 +72,7 @@ export const searchProfiles = (query) => async (dispach) => {
 export const searchUsers = (query) => async (dispach) => {
   try {
     dispach({ type: SEARCH_USERS_REQUEST });
-    const response = await axios.get(`/users/${query}`);
+    const response = await axios.get(`/dj-rest-auth/users/${query}`);
     dispach({ type: SEARCH_USERS_SUCCESS, payload: { users: response.data } });
   } catch (error) {
     dispach({

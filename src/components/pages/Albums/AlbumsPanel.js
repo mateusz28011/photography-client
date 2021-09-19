@@ -17,16 +17,10 @@ const AlbumsPanel = ({ albumId, location }) => {
     setQueryParams(history, location, { search });
   };
 
-  const onSubmitFilter = ({
-    ordering,
-    isPublic: is_public,
-    createdOrAccessed,
-  }) => {
+  const onSubmitFilter = ({ ordering, isPublic: is_public }) => {
     setQueryParams(history, location, {
       ordering,
       is_public,
-      created: createdOrAccessed === 'created' ? true : undefined,
-      accessed: createdOrAccessed === 'accessed' ? true : undefined,
     });
   };
 
@@ -109,33 +103,6 @@ const AlbumsPanel = ({ albumId, location }) => {
                       />
                     </div>
                   </div>
-                  {/* <div>
-                    <div className='flex items-center mt-2.5 ssm:mt-0'>
-                      <label>All</label>
-                      <input
-                        type='radio'
-                        value={undefined}
-                        defaultChecked
-                        {...register('createdOrAccessed')}
-                      />
-                    </div>
-                    <div className='flex items-center'>
-                      <label>Created</label>
-                      <input
-                        type='radio'
-                        value='created'
-                        {...register('createdOrAccessed')}
-                      />
-                    </div>
-                    <div className='flex items-center'>
-                      <label>Accessed</label>
-                      <input
-                        type='radio'
-                        value='accessed'
-                        {...register('createdOrAccessed')}
-                      />
-                    </div>
-                  </div> */}
                 </div>
               </div>
               <div>
@@ -150,6 +117,7 @@ const AlbumsPanel = ({ albumId, location }) => {
                   {...register('ordering')}
                   className='w-56 flex-shrink mb-2.5'
                 >
+                  <option value=''>-----</option>
                   <option value='name'>name - ascending</option>
                   <option value='-name'>name - descending</option>
                   <option value='created'>created - ascending</option>

@@ -15,12 +15,12 @@ const OrdersPanel = ({ location, history }) => {
     setQueryParams(history, location, { search });
   };
 
-  const onSubmitFilter = ({ ordering, status, createdOrAccessed }) => {
+  const onSubmitFilter = ({ ordering, status, isVendorOrClient }) => {
     setQueryParams(history, location, {
       ordering,
       status,
-      created: createdOrAccessed === 'created' ? true : undefined,
-      accessed: createdOrAccessed === 'accessed' ? true : undefined,
+      is_client: isVendorOrClient === 'client' ? true : undefined,
+      is_vendor: isVendorOrClient === 'vendor' ? true : undefined,
     });
   };
 
@@ -69,14 +69,44 @@ const OrdersPanel = ({ location, history }) => {
           )}
         </label>
         {showFiltering && (
-          <div className='flex flex-col sm:flex-row sm:items-center'>
-            <div className='flex flex-col justify-start sm:pb-5 px-3 text-base ssm:flex-row ssm:space-x-8'>
+          <div className='flex flex-col md:flex-row md:items-center'>
+            <div className='flex flex-col justify-start md:pb-5 px-3 text-base md:flex-row md:space-x-8'>
+              <div className='flex'>
+                <div className='text-gray-600 font-medium'>Show:</div>
+                <div className='ml-3'>
+                  <div className='flex items-center'>
+                    <label>Both</label>
+                    <input
+                      type='radio'
+                      value={undefined}
+                      defaultChecked
+                      {...register('isVendorOrClient')}
+                    />
+                  </div>
+                  <div className='flex items-center'>
+                    <label>Client</label>
+                    <input
+                      type='radio'
+                      value='client'
+                      {...register('isVendorOrClient')}
+                    />
+                  </div>
+                  <div className='flex items-center'>
+                    <label>Vendor</label>
+                    <input
+                      type='radio'
+                      value='vendor'
+                      {...register('isVendorOrClient')}
+                    />
+                  </div>
+                </div>
+              </div>
               <div>
                 <label
                   htmlFor='status'
                   className='mt-3 text-gray-600 font-medium'
                 >
-                  Show:
+                  Status:
                 </label>
                 <select
                   name='status'
@@ -94,7 +124,6 @@ const OrdersPanel = ({ location, history }) => {
                   <option value='6'>Finished</option>
                 </select>
               </div>
-
               <div>
                 <label
                   htmlFor='ordering'
@@ -107,6 +136,7 @@ const OrdersPanel = ({ location, history }) => {
                   {...register('ordering')}
                   className='w-56 flex-shrink mb-2.5'
                 >
+                  <option value=''>-----</option>
                   <option value='created'>created - ascending</option>
                   <option value='-created'>created - descending</option>
                   <option value='status'>status - ascending</option>
@@ -119,7 +149,7 @@ const OrdersPanel = ({ location, history }) => {
             <input
               type='submit'
               value='Filter'
-              className='btn-basic w-56 py-1.5 px-7 ml-3 mb-3 mt-1 sm:h-10 sm:w-28 sm:m-0 sm:mb-0.5'
+              className='btn-basic w-56 py-1.5 px-7 ml-3 mb-3 mt-1 md:h-10 md:w-28 md:m-0 md:mb-0.5'
             />
           </div>
         )}

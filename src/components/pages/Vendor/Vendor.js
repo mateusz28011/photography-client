@@ -11,8 +11,9 @@ import Album from '../../Album/Album';
 import Loading from '../../Loading';
 import MakeOrder from './MakeOrder';
 
-const Vendor = ({ user, loading, error, data, getVendor }) => {
-  const { profileId } = useParams();
+const Vendor = ({ user, loading, error, data, getVendor, profileId }) => {
+  const params = useParams();
+  profileId = profileId || params.profileId;
   const { portfolio, name, avatar, description } = data || {};
   const { email, id: ownerId, firstName, lastName } = data?.owner || {};
   const [isOwner, setIsOwner] = useState(false);
