@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { v4 } from 'uuid';
 
 export const Error = ({ error, center }) => {
-  if (typeof error === 'object') error = error[Object.keys(error)[0]];
+  while (typeof error === 'object') error = error[Object.keys(error)[0]];
 
   return error ? (
     <div
@@ -26,7 +26,7 @@ const ApiError = ({ error, name, center, clearFunc }) => {
   }, [error, clearFunc]);
 
   return error ? (
-    <div className='my-3 space-y-3'>
+    <div className='my-3 space-y-3 w-full'>
       {Array.isArray(error) ? (
         error.map((error) => <Error error={error} center={center} key={v4()} />)
       ) : (

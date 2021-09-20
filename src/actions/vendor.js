@@ -25,7 +25,11 @@ export const getVendor = (vendorId) => async (dispach) => {
 export const editVendor = (vendorId, data) => async (dispach) => {
   try {
     dispach({ type: EDIT_VENDOR_REQUEST });
-    const response = await axios.get(`/profiles/${vendorId}/`, data);
+    const formData = new FormData();
+    for (let key in data) {
+      formData.append(key, data[key]);
+    }
+    const response = await axios.patch(`/profiles/${vendorId}/`, formData);
     dispach({ type: EDIT_VENDOR_SUCCESS, payload: response.data });
   } catch (error) {
     dispach({
