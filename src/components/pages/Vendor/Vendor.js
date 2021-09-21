@@ -115,7 +115,7 @@ const Vendor = ({
               />
               {showEdit && (
                 <>
-                  <div className='absolute flex text-blue-600 top-0 bg-gray-100 bg-opacity-70 w-full h-full'>
+                  <div className='absolute flex cursor-pointer text-blue-600 top-0 bg-gray-100 bg-opacity-70 w-full h-full'>
                     <AiOutlineCloudUpload size='8rem' className='m-auto' />
                   </div>
                   <input
@@ -170,7 +170,9 @@ const Vendor = ({
                     {...register('paymentInfo')}
                   />
                 ) : (
-                  <div className='self-start'>{paymentInfo}</div>
+                  <div className='self-start'>
+                    {paymentInfo ? paymentInfo : 'Empty'}
+                  </div>
                 )}
                 <button
                   className='self-start btn-basic py-2 w-44 mt-4'

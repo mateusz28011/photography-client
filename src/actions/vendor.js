@@ -7,6 +7,10 @@ import {
   EDIT_VENDOR_SUCCESS,
   EDIT_VENDOR_FAILURE,
   EDIT_VENDOR_ERROR_CLEAR,
+  CREATE_VENDOR_PROFILE_REQUEST,
+  CREATE_VENDOR_PROFILE_SUCCESS,
+  CREATE_VENDOR_PROFILE_FAILURE,
+  CREATE_VENDOR_PROFILE_ERROR_CLEAR,
 } from '../actions/types';
 
 export const getVendor = (vendorId) => async (dispach) => {
@@ -41,4 +45,25 @@ export const editVendor = (vendorId, data) => async (dispach) => {
 
 export const editVendorClearError = () => async (dispach) => {
   dispach({ type: EDIT_VENDOR_ERROR_CLEAR });
+};
+
+export const createVendorProfile = (data) => async (dispach) => {
+  try {
+    dispach({ type: CREATE_VENDOR_PROFILE_REQUEST });
+    const formData = new FormData();
+    for (let key in data) {
+      formData.append(key, data[key]);
+    }
+    const response = await axios.post(`/profiles/`, formData);
+    dispach({ type: CREATE_VENDOR_PROFILE_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispach({
+      type: CREATE_VENDOR_PROFILE_FAILURE,
+      payload: error,
+    });
+  }
+};
+
+export const createVendorProfileClearError = () => async (dispach) => {
+  dispach({ type: CREATE_VENDOR_PROFILE_ERROR_CLEAR });
 };

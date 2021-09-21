@@ -105,9 +105,11 @@ const Navbar = ({ user, logoutUser }) => {
                   <div id='orders'>
                     <Link to='/orders/'>My orders</Link>
                   </div>
-                  <div id='albums'>
-                    <Link to='/albums/'>My albums</Link>
-                  </div>
+                  {user.isVendor && (
+                    <div id='albums'>
+                      <Link to='/albums/'>My albums</Link>
+                    </div>
+                  )}
                   <Link id='logout' to='/' onClick={logoutUser}>
                     Logout
                   </Link>

@@ -85,15 +85,18 @@ const Album = ({
           setShowPreview={setShowPreview}
         />
       )}
-      <CurrentAlbumInfo
-        albumId={albumId}
-        isCreator={isCreator}
-        name={name}
-        isPublic={isPublic}
-        showEditAlbum={showEditAlbum}
-        toggleShowEditAlbum={toggleShowEditAlbum}
-        returnToMyAlbums={returnToMyAlbums}
-      />
+      {name && !isPortfolio && (
+        <CurrentAlbumInfo
+          albumId={albumId}
+          isCreator={isCreator}
+          name={name}
+          isPublic={isPublic}
+          history={history}
+          showEditAlbum={showEditAlbum}
+          toggleShowEditAlbum={toggleShowEditAlbum}
+          returnToMyAlbums={returnToMyAlbums}
+        />
+      )}
       <div className='grid grid-cols-2 auto-rows-fr sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 p-3 2xl:justify-between 2xl:px-0'>
         {returnToMyAlbums && (
           <Tile>

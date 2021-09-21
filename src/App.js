@@ -17,6 +17,7 @@ import Order from './components/pages/Order/Order';
 import Orders from './components/pages/Orders/Orders';
 import Home from './components/pages/Home/Home';
 import Account from './components/pages/Account/Account';
+import Album from './components/Album/Album';
 
 const App = () => {
   useEffect(() => {
@@ -28,7 +29,6 @@ const App = () => {
       <div className='min-h-screen '>
         <Navbar />
         <div className='max-w-screen-2xl flex flex-col mx-auto'>
-          {/* <div className='px-3 py-3 md:'> */}
           <Switch>
             <Route exact path='/'>
               <Home />
@@ -47,8 +47,14 @@ const App = () => {
             </Route>
             <PrivateRoute exact path='/orders/' component={Orders} />
             <PrivateRoute exact path='/order/:orderId' component={Order} />
-            <PrivateRoute exact path='/albums/' component={Albums} />
+            <PrivateRoute
+              exact
+              path='/albums/'
+              component={Albums}
+              isVendorRoute
+            />
             <PrivateRoute exact path='/account/' component={Account} />
+            <Route exact path='/album/' component={Album} />
             <Route>
               <Home />
             </Route>

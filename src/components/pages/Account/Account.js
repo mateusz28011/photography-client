@@ -9,6 +9,7 @@ import {
 import ApiError from '../../ApiError';
 import Loading from '../../Loading';
 import Vendor from '../Vendor/Vendor';
+import CreateVendorProfile from './CreateVendorProfile';
 
 const Account = ({
   user,
@@ -100,7 +101,11 @@ const Account = ({
           </>
         )}
       </div>
-      <Vendor profileId={user.profile} />
+      {user.isVendor ? (
+        <Vendor profileId={user.profile} />
+      ) : (
+        <CreateVendorProfile />
+      )}
     </>
   ) : null;
 };

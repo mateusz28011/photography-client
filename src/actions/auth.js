@@ -93,7 +93,7 @@ export const getUser = () => async (dispach) => {
 };
 
 export const getUserFromLocalStorage = () => {
-  const user = localStorage.getItem('user');
+  const user = JSON.parse(localStorage.getItem('user'));
   if (user) return { type: GET_USER_FROM_LOCAL_STORAGE, payload: user };
 };
 

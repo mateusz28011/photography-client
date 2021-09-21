@@ -11,6 +11,7 @@ const CurrentAlbumInfo = ({
   isCreator,
   isPublic,
   albumId,
+  history,
   showEditAlbum,
   toggleShowEditAlbum,
   loadingDeleteAlbum,
@@ -24,12 +25,22 @@ const CurrentAlbumInfo = ({
   };
 
   useEffect(() => {
-    clickedDelete &&
+    if (
+      clickedDelete &&
       !error &&
       loadingDeleteAlbum &&
-      loadingDeleteAlbum[String(albumId)] === false &&
-      returnToMyAlbums();
-  }, [clickedDelete, error, loadingDeleteAlbum, albumId, returnToMyAlbums]);
+      loadingDeleteAlbum[String(albumId)] === false
+    ) {
+      returnToMyAlbums ? returnToMyAlbums() : history.push('/');
+    }
+  }, [
+    clickedDelete,
+    error,
+    loadingDeleteAlbum,
+    albumId,
+    returnToMyAlbums,
+    history,
+  ]);
 
   const isLoading = () => {
     return (
@@ -40,39 +51,35 @@ const CurrentAlbumInfo = ({
 
   return (
     <>
-      {name && returnToMyAlbums && (
-        <div className='bg-white shadow rounded-lg text-center py-3 font-base text-lg text-gray-600'>
-          <div className='flex items-center justify-center'>
-            Current album:
-            <div className='ml-2 font-medium text-xl  text-blue-600'>
-              {name}
-            </div>
-            {!isPublic && (
-              <AiOutlineLock className='ml-1.5 text-blue-600 w-5 h-5' />
-            )}
-          </div>
-          {isLoading() ? (
-            <Loading className='py-8' />
-          ) : (
-            <div
-              className={
-                'w-full flex flex-col items-center justify-center' +
-                (showEditAlbum ? ' mt-3 space-y-3' : '')
-              }
-            >
-              <AlbumManager
-                isCreator={isCreator}
-                albumId={albumId}
-                name={name}
-                showEditAlbum={showEditAlbum}
-                toggleShowEditAlbum={toggleShowEditAlbum}
-                isInsideAlbum
-                setClickedDeleteToTrue={setClickedDeleteToTrue}
-              />
-            </div>
+      <div className='bg-white shadow rounded-lg text-center py-3 font-base text-lg text-gray-600'>
+        <div className='flex items-center justify-center'>
+          Current album:
+          <div className='ml-2 font-medium text-xl  text-blue-600'>{name}</div>
+          {!isPublic && (
+            <AiOutlineLock className='ml-1.5 text-blue-600 w-5 h-5' />
           )}
         </div>
-      )}
+        {isLoading() ? (
+          <Loading className='py-8' />
+        ) : (
+          <div
+            className={
+              'w-full flex flex-col items-center justify-center' +
+              (showEditAlbum ? ' mt-3 space-y-3' : '')
+            }
+          >
+            <AlbumManager
+              isCreator={isCreator}
+              albumId={albumId}
+              name={name}
+              showEditAlbum={showEditAlbum}
+              toggleShowEditAlbum={toggleShowEditAlbum}
+              isInsideAlbum
+              setClickedDeleteToTrue={setClickedDeleteToTrue}
+            />
+          </div>
+        )}
+      </div>
     </>
   );
 };

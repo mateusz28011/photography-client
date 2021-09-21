@@ -72,7 +72,7 @@ const OrdersPanel = ({ location, history }) => {
           <div className='flex flex-col md:flex-row md:items-center'>
             <div className='flex flex-col justify-start md:pb-5 px-3 text-base md:flex-row md:space-x-8'>
               <div className='flex'>
-                <div className='text-gray-600 font-medium'>Show:</div>
+                <div className='text-gray-600 font-medium'>Am:</div>
                 <div className='ml-3'>
                   <div className='flex items-center'>
                     <label>Both</label>
