@@ -10,6 +10,8 @@ import {
 import NavigationNextPrevious from '../Search/NavigationNextPrevious';
 import OrdersPanel from './OrdersPanel';
 import { useLocation, useHistory } from 'react-router-dom';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
 const Orders = ({ loading, error, data, user, searchOrders }) => {
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -27,10 +29,6 @@ const Orders = ({ loading, error, data, user, searchOrders }) => {
     history.push(`/order/${orderId}`);
   };
 
-  const isVendor = (order) => order.vendor.id === user.id;
-
-  const isClient = (order) => order.client.id === user.id;
-
   return (
     <>
       <OrdersPanel location={location} history={history} />
@@ -41,58 +39,57 @@ const Orders = ({ loading, error, data, user, searchOrders }) => {
       ) : dataLoaded ? (
         orders && orders?.length !== 0 ? (
           <>
-            <div className='bg-whiterounded-lgshadow py-4 sm:px-4 2xl:px-0 overflow-x-scroll ssm:overflow-x-hidden'>
-              <table className='table-auto bg-white w-full text-center text-base shadow'>
-                <thead>
-                  <tr className='bg-blue-600 text-base md:text-lg text-white'>
-                    <th className='py-1 pl-2.5 md:pl-0'>Vendor</th>
-                    <th className='pl-2.5 md:pl-0'>Client</th>
-                    <th className='pl-2.5 md:pl-0'>Cost</th>
-                    <th className='pl-2.5 md:pl-0'>Order date</th>
-                    <th className='pl-2.5 md:pl-0'>Status</th>
-                    <th className='pl-2.5 md:pl-0 pr-2.5 md:pr-0'></th>
-                  </tr>
-                </thead>
-                <tbody className='divide-y divide-solid divide-blue-200'>
+            <div className='bg-white rounded-lg my-4 shadow py-4 sm:px-4 '>
+              <Table className='table-auto bg-white w-full text-center text-base sm:shadow'>
+                <Thead>
+                  <Tr className='bg-blue-600 text-base md:text-lg text-white'>
+                    <Th className='py-2'>Vendor</Th>
+                    <Th>Client</Th>
+                    <Th>Cost</Th>
+                    <Th>Order date</Th>
+                    <Th>Status</Th>
+                    <Th></Th>
+                  </Tr>
+                </Thead>
+                <Tbody className='border-t border-b border-blue-200 sm:border-0 divide-y divide-solid divide-blue-200'>
                   {orders.map((order, index) => (
-                    <tr key={index} className=''>
-                      <td
-                        className={
-                          'py-1 pl-2.5 md:pl-0' +
-                          (isVendor(order) ? ' text-blue-600 font-medium' : '')
-                        }
+                    <Tr className='border-0' key={index}>
+                      <Td className='py-1'>
+                        {order.vendor.id === user.id ? (
+                          <span className=' text-blue-600 font-medium'>Me</span>
+                        ) : (
+                          order.profileName
+                        )}
+                      </Td>
+                      <Td>
+                        {order.client.id === user.id ? (
+                          <span className=' text-blue-600 font-medium'>Me</span>
+                        ) : (
+                          `${order.client.firstName} ${order.client.lastName}`
+                        )}
+                      </Td>
+                      <Td>{order.cost && `${order.cost} ${order.currency}`}</Td>
+                      <Td>{new Date(order.created).toLocaleString()}</Td>
+                      <Td>
+                        <span className='text-blue-600 font-medium uppercase tracking-wid'>
+                          {order.statusDisplay}
+                        </span>
+                      </Td>
+                      <Td
+
+                      // className='font-medium text-gray-800'
                       >
-                        {isVendor(order) ? 'Me' : order.profileName}
-                      </td>
-                      <td
-                        className={
-                          'pl-2.5 md:pl-0' +
-                          (isClient(order) ? ' text-blue-600 font-medium' : '')
-                        }
-                      >
-                        {isClient(order)
-                          ? 'Me'
-                          : `${order.client.firstName} ${order.client.lastName}`}
-                      </td>
-                      <td className='pl-2.5 md:pl-0'>
-                        {order.cost && `${order.cost} ${order.currency}`}
-                      </td>
-                      <td className='pl-2.5 md:pl-0'>
-                        {new Date(order.created).toLocaleString()}
-                      </td>
-                      <td className='pl-2.5 md:pl-0 text-blue-600 font-medium uppercase tracking-wide'>
-                        {order.statusDisplay}
-                      </td>
-                      <td
-                        onClick={() => goToOrder(order.id)}
-                        className='cursor-pointer font-medium text-gray-800 pl-2.5 md:pl-0 pr-2.5 md:pr-0'
-                      >
-                        SHOW
-                      </td>
-                    </tr>
+                        <button
+                          onClick={() => goToOrder(order.id)}
+                          className='bg-blue-600 cursor-pointer active:bg-blue-500 px-2 py-1.5 my-1 sm:py-1 sm:my-0.5 w-full rounded-md shadow-sm font-medium text-white'
+                        >
+                          SHOW
+                        </button>
+                      </Td>
+                    </Tr>
                   ))}
-                </tbody>
-              </table>
+                </Tbody>
+              </Table>
             </div>
             <NavigationNextPrevious
               previous={data?.previous}

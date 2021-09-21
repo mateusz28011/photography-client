@@ -43,7 +43,7 @@ const Notes = ({
                   'py-3 px-4 rounded-xl sm:w-1/2 my-3' +
                   (userId === note.user
                     ? ' bg-blue-100'
-                    : ' bg-gray-100 ml-auto')
+                    : ' bg-gray-100 sm:ml-auto')
                 }
               >
                 <div className='text-blue-600 font-medium relative text-lg'>
