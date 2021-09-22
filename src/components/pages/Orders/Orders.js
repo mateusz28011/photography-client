@@ -68,17 +68,16 @@ const Orders = ({ loading, error, data, user, searchOrders }) => {
                           `${order.client.firstName} ${order.client.lastName}`
                         )}
                       </Td>
-                      <Td>{order.cost && `${order.cost} ${order.currency}`}</Td>
+                      <Td>
+                        {order.cost ? `${order.cost} ${order.currency}` : '-'}
+                      </Td>
                       <Td>{new Date(order.created).toLocaleString()}</Td>
                       <Td>
                         <span className='text-blue-600 font-medium uppercase tracking-wid'>
                           {order.statusDisplay}
                         </span>
                       </Td>
-                      <Td
-
-                      // className='font-medium text-gray-800'
-                      >
+                      <Td>
                         <button
                           onClick={() => goToOrder(order.id)}
                           className='bg-blue-600 cursor-pointer active:bg-blue-500 px-2 py-1.5 my-1 sm:py-1 sm:my-0.5 w-full rounded-md shadow-sm font-medium text-white'

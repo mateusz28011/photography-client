@@ -72,6 +72,7 @@ const CurrentAlbumInfo = ({
               isCreator={isCreator}
               albumId={albumId}
               name={name}
+              isPublic={isPublic}
               showEditAlbum={showEditAlbum}
               toggleShowEditAlbum={toggleShowEditAlbum}
               isInsideAlbum

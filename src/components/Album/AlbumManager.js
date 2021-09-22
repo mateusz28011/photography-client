@@ -9,9 +9,14 @@ import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import ManagerButtons from './ManagerButtons';
 import { motion } from 'framer-motion';
-import { AiOutlineUserAdd, AiOutlineUserDelete } from 'react-icons/ai';
+import {
+  AiOutlineUserAdd,
+  AiOutlineUserDelete,
+  AiOutlineShareAlt,
+} from 'react-icons/ai';
 import CurrentAlbumAddAccess from './CurrentAlbumAddAccess';
 import CurrentAlbumRemoveAccess from './CurrentAlbumRemoveAccess';
+import CurrentAlbumShare from './CurrentAlbumShare';
 
 const AlbumManager = ({
   isCreator,
@@ -28,17 +33,27 @@ const AlbumManager = ({
   const { register, handleSubmit } = useForm();
   const [showAddAccess, setShowAddAccess] = useState(false);
   const [showRemoveAccess, setShowRemoveAccess] = useState(false);
+  const [showShare, setShowShare] = useState(false);
 
   const toggleShowAddAccess = () => {
     showRemoveAccess && toggleShowRemoveAccess();
     showEditAlbum && toggleShowEditAlbum();
+    showShare && toggleShowShare();
     setShowAddAccess((prev) => !prev);
   };
 
   const toggleShowRemoveAccess = () => {
     showAddAccess && toggleShowAddAccess();
     showEditAlbum && toggleShowEditAlbum();
+    showShare && toggleShowShare();
     setShowRemoveAccess((prev) => !prev);
+  };
+
+  const toggleShowShare = () => {
+    showAddAccess && toggleShowAddAccess();
+    showRemoveAccess && toggleShowRemoveAccess();
+    showEditAlbum && toggleShowEditAlbum();
+    setShowShare((prev) => !prev);
   };
 
   const handleEditAlbum = (formData) => {
@@ -50,6 +65,7 @@ const AlbumManager = ({
     e.stopPropagation();
     showAddAccess && toggleShowAddAccess();
     showRemoveAccess && toggleShowRemoveAccess();
+    showShare && toggleShowShare();
     toggleShowEditAlbum();
   };
 
@@ -93,6 +109,7 @@ const AlbumManager = ({
       )}
       {showAddAccess && <CurrentAlbumAddAccess />}
       {showRemoveAccess && <CurrentAlbumRemoveAccess />}
+      {showShare && <CurrentAlbumShare albumId={albumId} />}
       {isCreator && (
         <ManagerButtons
           showEdit={showEditAlbum}
@@ -101,35 +118,56 @@ const AlbumManager = ({
         >
           {isInsideAlbum && (
             <>
+              {!isPublic && (
+                <>
+                  <motion.div
+                    whileHover={{
+                      scale: 1.2,
+                    }}
+                  >
+                    <AiOutlineUserAdd
+                      onClick={toggleShowAddAccess}
+                      size='2rem'
+                      strokeWidth='-1rem'
+                      className={
+                        'rounded-full transition-colors cursor-pointer duration-100 p-0.5 ' +
+                        (showAddAccess
+                          ? 'bg-blue-600 text-white'
+                          : 'text-blue-600')
+                      }
+                    />
+                  </motion.div>
+                  <motion.div
+                    whileHover={{
+                      scale: 1.2,
+                    }}
+                  >
+                    <AiOutlineUserDelete
+                      onClick={toggleShowRemoveAccess}
+                      size='2rem'
+                      strokeWidth='-1rem'
+                      className={
+                        'rounded-full transition-colors cursor-pointer duration-100 p-0.5 ' +
+                        (showRemoveAccess
+                          ? 'bg-blue-600 text-white'
+                          : 'text-blue-600')
+                      }
+                    />
+                  </motion.div>
+                </>
+              )}
               <motion.div
                 whileHover={{
                   scale: 1.2,
                 }}
               >
-                <AiOutlineUserAdd
-                  onClick={toggleShowAddAccess}
+                <AiOutlineShareAlt
+                  onClick={toggleShowShare}
                   size='2rem'
                   strokeWidth='-1rem'
                   className={
                     'rounded-full transition-colors cursor-pointer duration-100 p-0.5 ' +
-                    (showAddAccess ? 'bg-blue-600 text-white' : 'text-blue-600')
-                  }
-                />
-              </motion.div>
-              <motion.div
-                whileHover={{
-                  scale: 1.2,
-                }}
-              >
-                <AiOutlineUserDelete
-                  onClick={toggleShowRemoveAccess}
-                  size='2rem'
-                  strokeWidth='-1rem'
-                  className={
-                    'rounded-full transition-colors cursor-pointer duration-100 p-0.5 ' +
-                    (showRemoveAccess
-                      ? 'bg-blue-600 text-white'
-                      : 'text-blue-600')
+                    (showShare ? 'bg-blue-600 text-white' : 'text-blue-600')
                   }
                 />
               </motion.div>

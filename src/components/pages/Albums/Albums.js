@@ -49,6 +49,7 @@ const Albums = ({
   };
 
   useEffect(() => {
+    if (albumId && !dataLoaded) setDataLoaded(true);
     if (!albumId) {
       console.log('fetch my albums');
       searchAlbums(location.search);
