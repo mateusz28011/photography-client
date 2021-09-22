@@ -31,24 +31,34 @@ const Cost = ({
   ) : isVendor || cost ? (
     showEditCost ? (
       <form onSubmit={handleSubmit(onSubmit)} className='flex'>
-        <div className='flex flex-col ssm:flex-row ssm:flex-wrap items-center '>
+        <div className='flex flex-col md:flex-row md:flex-wrap items-center '>
           <div className='font-medium self-start my-auto'>Cost:</div>
           <input
             type='text'
             required
             {...register('cost')}
-            className='w-28 my-1 mx-2'
+            className='w-60 md:w-28 my-1 mx-2'
           />
+          <select
+            name='currency'
+            {...register('currency')}
+            defaultValue={currency}
+            className='w-60 flex-shrink my-1 mx-2'
+          >
+            <option value='PLN'>PLN - Polish zloty</option>
+            <option value='EUR'>EUR - Euro</option>
+            <option value='USD'>USD - United States dollar</option>
+          </select>
           <input
             type='submit'
             value='Submit'
-            className='btn-basic w-28 py-1.5 px-7 my-1 mx-2'
+            className='btn-basic w-60 md:w-28 py-1.5 px-7 my-1 mx-2'
           />
           <input
             type='button'
             value='Close'
             onClick={toggleShowEditCost}
-            className='btn-basic w-28 py-1.5 px-7 my-1 mx-2'
+            className='btn-basic w-60 md:w-28 py-1.5 px-7 my-1 mx-2'
           />
         </div>
       </form>
