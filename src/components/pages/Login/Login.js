@@ -9,6 +9,7 @@ import {
   loginUserClearError,
   loginFacebook,
   loginFacebookClearError,
+  loginGoogle,
 } from '../../../actions/auth';
 import {
   createLoadingSelector,
@@ -18,7 +19,9 @@ import ApiError, { Error } from '../../ApiError';
 import { Redirect } from 'react-router-dom';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { AiFillFacebook } from 'react-icons/ai';
+import { FcGoogle } from 'react-icons/fc';
 import Loading from '../../Loading';
+import GoogleLogin from 'react-google-login';
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -37,6 +40,7 @@ const Login = ({
   loginFacebookError,
   loginFacebook,
   loginFacebookClearError,
+  loginGoogle,
 }) => {
   const {
     register,
@@ -116,6 +120,21 @@ const Login = ({
                 </button>
               )}
             />
+            <GoogleLogin
+              clientId='832445217588-npj6ir770cepiv0g6nup5cfc9ak9rv92.apps.googleusercontent.com'
+              responseType='code'
+              cookiePolicy={'single_host_origin'}
+              onSuccess={(response) => loginGoogle(response)}
+              render={(renderProps) => (
+                <button
+                  onClick={renderProps.onClick}
+                  className='w-full flex items-center justify-center text-lg rounded-md shadow-sm border font-medium text-gray-600 py-2 mt-3'
+                >
+                  <FcGoogle className='mr-3' size='1.75rem' />
+                  Sign in with Google
+                </button>
+              )}
+            />
           </div>
         </div>
       </>
@@ -143,4 +162,5 @@ export default connect(mapStateToProps, {
   loginUserClearError,
   loginFacebook,
   loginFacebookClearError,
+  loginGoogle,
 })(Login);

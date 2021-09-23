@@ -24,6 +24,10 @@ import {
   LOGIN_FACEBOOK_SUCCESS,
   LOGIN_FACEBOOK_FAILURE,
   LOGIN_FACEBOOK_ERROR_CLEAR,
+  LOGIN_GOOGLE_REQUEST,
+  LOGIN_GOOGLE_ERROR_CLEAR,
+  LOGIN_GOOGLE_FAILURE,
+  LOGIN_GOOGLE_SUCCESS,
 } from '../actions/types';
 
 export const registerUser = (userData) => async (dispach) => {
@@ -135,4 +139,22 @@ export const loginFacebook = (data) => async (dispach) => {
 
 export const loginFacebookClearError = () => async (dispach) => {
   dispach({ type: LOGIN_FACEBOOK_ERROR_CLEAR });
+};
+
+export const loginGoogle = (data) => async (dispach) => {
+  try {
+    dispach({ type: LOGIN_GOOGLE_REQUEST });
+    const response = await axios.post('/dj-rest-auth/google/', data);
+    dispach({ type: LOGIN_GOOGLE_SUCCESS, payload: response.data.user });
+    localStorage.setItem('user', JSON.stringify(response.data.user));
+  } catch (error) {
+    dispach({
+      type: LOGIN_GOOGLE_FAILURE,
+      payload: error,
+    });
+  }
+};
+
+export const loginGoogleClearError = () => async (dispach) => {
+  dispach({ type: LOGIN_GOOGLE_ERROR_CLEAR });
 };
