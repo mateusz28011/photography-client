@@ -4,13 +4,21 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { loginUser, loginUserClearError } from '../../../actions/auth';
+import {
+  loginUser,
+  loginUserClearError,
+  loginFacebook,
+  loginFacebookClearError,
+} from '../../../actions/auth';
 import {
   createLoadingSelector,
   createErrorMessageSelector,
 } from '../../../selectors';
 import ApiError, { Error } from '../../ApiError';
 import { Redirect } from 'react-router-dom';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import { AiFillFacebook } from 'react-icons/ai';
+import Loading from '../../Loading';
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -20,7 +28,16 @@ const loginSchema = yup.object().shape({
   password: yup.string().required('Password is required.'),
 });
 
-const Login = ({ user, loading, error, loginUser, loginUserClearError }) => {
+const Login = ({
+  user,
+  loading,
+  error,
+  loginUser,
+  loginUserClearError,
+  loginFacebookError,
+  loginFacebook,
+  loginFacebookClearError,
+}) => {
   const {
     register,
     handleSubmit,
@@ -31,7 +48,7 @@ const Login = ({ user, loading, error, loginUser, loginUserClearError }) => {
 
   if (!user) {
     return loading ? (
-      <p>loading</p>
+      <Loading />
     ) : (
       <>
         <div className='text-4xl font-black text-center mb-12 font-roboto mt-16 md:mt-28'>
@@ -48,7 +65,13 @@ const Login = ({ user, loading, error, loginUser, loginUserClearError }) => {
         </div>
 
         <div className='w-full mx-auto max-w-md py-8 px-6 bg-white rounded-lg shadow mb-16 md:mb-28'>
-          <ApiError error={error} clearFunc={loginUserClearError} />
+          {error && <ApiError error={error} clearFunc={loginUserClearError} />}
+          {loginFacebookError && (
+            <ApiError
+              error={loginFacebookError}
+              clearFunc={loginFacebookClearError}
+            />
+          )}
           <form className='space-y-6' onSubmit={handleSubmit(loginUser)}>
             <div>
               <label htmlFor='email' className='font-medium text-gray-700'>
@@ -71,6 +94,29 @@ const Login = ({ user, loading, error, loginUser, loginUserClearError }) => {
               disabled={loading ? true : false}
             />
           </form>
+          <div>
+            <div className='flex justify-center font-medium my-3 text-center text-xl text-gray-600 relative'>
+              <div className='bg-white px-3 z-20'>OR</div>
+              <span className='border-t-2 w-full block absolute top-1/2 z-0'></span>
+            </div>
+            <FacebookLogin
+              appId='265833262067939'
+              callback={(response) => {
+                loginFacebookError && loginFacebookClearError();
+                loginFacebook(response);
+              }}
+              render={(renderProps) => (
+                <button
+                  onClick={renderProps.onClick}
+                  style={{ backgroundColor: 'rgb(59,89,152)' }}
+                  className='w-full flex items-center justify-center text-lg rounded-md shadow-sm font-medium text-white py-2'
+                >
+                  <AiFillFacebook className='mr-3' size='1.75rem' />
+                  Sign in with Facebook
+                </button>
+              )}
+            />
+          </div>
         </div>
       </>
     );
@@ -79,15 +125,22 @@ const Login = ({ user, loading, error, loginUser, loginUserClearError }) => {
   }
 };
 
-const loadingSelector = createLoadingSelector(['LOGIN']);
+const loadingSelector = createLoadingSelector(['LOGIN', 'LOGIN_FACEBOOK']);
 const errorSelector = createErrorMessageSelector(['LOGIN']);
+const loginFacebookErrorSelector = createErrorMessageSelector([
+  'LOGIN_FACEBOOK',
+]);
 
 const mapStateToProps = (state) => ({
   loading: loadingSelector(state),
   error: errorSelector(state),
+  loginFacebookError: loginFacebookErrorSelector(state),
   user: state.auth.user,
 });
 
-export default connect(mapStateToProps, { loginUser, loginUserClearError })(
-  Login
-);
+export default connect(mapStateToProps, {
+  loginUser,
+  loginUserClearError,
+  loginFacebook,
+  loginFacebookClearError,
+})(Login);

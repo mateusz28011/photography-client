@@ -5,7 +5,7 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = 'https://localhost:8000';
 axios.defaults.withCredentials = true;
 axios.interceptors.response.use(
   function (response) {

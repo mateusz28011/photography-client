@@ -6,6 +6,7 @@ import {
   GET_USER_SUCCESS,
   GET_USER_FROM_LOCAL_STORAGE,
   EDIT_USER_SUCCESS,
+  LOGIN_FACEBOOK_SUCCESS,
 } from '../actions/types';
 
 const initialState = {
@@ -26,6 +27,8 @@ const auth = (state = initialState, action) => {
     case LOGOUT_SUCCESS:
       return initialState;
     case GET_USER_SUCCESS:
+      return { ...state, user: payload };
+    case LOGIN_FACEBOOK_SUCCESS:
       return { ...state, user: payload };
     case GET_USER_FROM_LOCAL_STORAGE:
       return { ...state, user: payload };

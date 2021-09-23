@@ -20,6 +20,10 @@ import {
   EDIT_USER_SUCCESS,
   EDIT_USER_FAILURE,
   EDIT_USER_ERROR_CLEAR,
+  LOGIN_FACEBOOK_REQUEST,
+  LOGIN_FACEBOOK_SUCCESS,
+  LOGIN_FACEBOOK_FAILURE,
+  LOGIN_FACEBOOK_ERROR_CLEAR,
 } from '../actions/types';
 
 export const registerUser = (userData) => async (dispach) => {
@@ -113,4 +117,22 @@ export const editUser = (data) => async (dispach) => {
 
 export const editUserClearError = () => async (dispach) => {
   dispach({ type: EDIT_USER_ERROR_CLEAR });
+};
+
+export const loginFacebook = (data) => async (dispach) => {
+  try {
+    dispach({ type: LOGIN_FACEBOOK_REQUEST });
+    const response = await axios.post('/dj-rest-auth/facebook/', data);
+    dispach({ type: LOGIN_FACEBOOK_SUCCESS, payload: response.data.user });
+    localStorage.setItem('user', JSON.stringify(response.data.user));
+  } catch (error) {
+    dispach({
+      type: LOGIN_FACEBOOK_FAILURE,
+      payload: error,
+    });
+  }
+};
+
+export const loginFacebookClearError = () => async (dispach) => {
+  dispach({ type: LOGIN_FACEBOOK_ERROR_CLEAR });
 };
