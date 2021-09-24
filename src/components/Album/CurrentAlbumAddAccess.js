@@ -131,7 +131,7 @@ const CurrentAlbumAddAccess = ({
                       <AiOutlineCheck className='ml-auto mr-5 text-green-500 h-9 w-9' />
                     ) : loadingAddAccessToAlbum && loadingUserId === user.id ? (
                       <div className='ml-auto mr-5'>
-                        <Loading size={9} borderWidth={4} />
+                        <Loading size={2.9} stroke={56} />
                       </div>
                     ) : loadingAddAccessToAlbum ? null : (
                       <motion.div

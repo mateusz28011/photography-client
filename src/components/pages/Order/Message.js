@@ -56,7 +56,7 @@ const Message = ({
           <textarea className='w-full h-60' {...register('note')} required />
           <div className='h-16'>
             {loading ? (
-              <Loading size={10} borderWidth={4} className='py-2' />
+              <Loading size={3.5} stroke={48} className='py-2' />
             ) : (
               <input
                 className='w-full btn-basic py-2 mt-3'

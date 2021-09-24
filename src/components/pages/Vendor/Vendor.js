@@ -84,105 +84,99 @@ const Vendor = ({
     <ApiError error={error} center />
   ) : data ? (
     <>
-      <div className='px-5 py-9 mt-3 mx-3 flex flex-col bg-white shadow rounded-lg items-center md:px-10 md:w-2/3 md:mx-auto xl:w-1/2 xl:mx-auto '>
+      <div className='px-5 py-9 mt-3 mx-3 flex flex-col bg-white shadow rounded-lg items-center md:px-10 md:w-2/3 md:mx-auto xl:w-1/2 xl:mx-auto relative'>
         <ApiError
           error={errorEditVendor}
           clearFunc={editVendorClearError}
           center
         />
-        {loadingEditVendor ? (
-          <Loading className='py-16' />
-        ) : (
-          <>
-            <div className='text-xl font-semibold text-center'>
-              {showEdit ? (
-                <input
-                  type='text'
-                  defaultValue={name}
-                  required
-                  {...register('name')}
-                />
-              ) : (
-                name
-              )}
-            </div>
+        {loadingEditVendor && <Loading className='rounded-lg z-20' cover />}
 
-            <label className='relative mt-6 mb-8'>
-              <img
-                src={previewAvatar ? previewAvatar : avatar}
-                alt={`${name}'s avatar`}
-                className='shadow rounded h-64'
+        <div className='text-xl font-semibold text-center'>
+          {showEdit ? (
+            <input
+              type='text'
+              defaultValue={name}
+              required
+              {...register('name')}
+            />
+          ) : (
+            name
+          )}
+        </div>
+
+        <label className='relative mt-6 mb-8'>
+          <img
+            src={previewAvatar ? previewAvatar : avatar}
+            alt={`${name}'s avatar`}
+            className='shadow rounded h-64'
+          />
+          {showEdit && (
+            <>
+              <div className='absolute flex cursor-pointer text-blue-600 top-0 bg-gray-100 bg-opacity-70 w-full h-full'>
+                <AiOutlineCloudUpload size='8rem' className='m-auto' />
+              </div>
+              <input
+                type='file'
+                accept='image/png, image/jpeg'
+                className='hidden'
+                {...register('avatar')}
               />
-              {showEdit && (
-                <>
-                  <div className='absolute flex cursor-pointer text-blue-600 top-0 bg-gray-100 bg-opacity-70 w-full h-full'>
-                    <AiOutlineCloudUpload size='8rem' className='m-auto' />
-                  </div>
-                  <input
-                    type='file'
-                    accept='image/png, image/jpeg'
-                    className='hidden'
-                    {...register('avatar')}
-                  />
-                </>
-              )}
-            </label>
+            </>
+          )}
+        </label>
 
-            <div className='self-start text-blue-600 text-lg font-medium mb-5'>
-              <div className=''>{`${firstName} ${lastName}`}</div>
-              <div className='text-sm'>{email}</div>
-            </div>
-            <div className='w-full '>
-              {isOwner && (
-                <div className='self-start mt-4 font-medium'>Description:</div>
-              )}
-              {showEdit ? (
-                <TextareaAutosize
-                  className=''
-                  defaultValue={description}
-                  required
-                  {...register('description')}
-                />
-              ) : (
-                description
-              )}
-            </div>
-            {showMakeOrder && (
-              <MakeOrder vendorId={ownerId} history={history} />
+        <div className='self-start text-blue-600 text-lg font-medium mb-5'>
+          <div className=''>{`${firstName} ${lastName}`}</div>
+          <div className='text-sm'>{email}</div>
+        </div>
+        <div className='w-full '>
+          {isOwner && (
+            <div className='self-start mt-4 font-medium'>Description:</div>
+          )}
+          {showEdit ? (
+            <TextareaAutosize
+              className=''
+              defaultValue={description}
+              required
+              {...register('description')}
+            />
+          ) : (
+            description
+          )}
+        </div>
+        {showMakeOrder && <MakeOrder vendorId={ownerId} history={history} />}
+        {!isOwner && !showMakeOrder && (
+          <button
+            onClick={user ? toggleShowMakeOrder : redirectToLogin}
+            className={
+              'btn-basic py-2 w-full mt-6' + (user ? '' : ' opacity-60')
+            }
+          >
+            {user ? 'Make Order' : 'Sign in to make order'}
+          </button>
+        )}
+        {isOwner && (
+          <>
+            <div className='self-start mt-4 font-medium'>Payment info:</div>
+            {showEdit ? (
+              <TextareaAutosize
+                defaultValue={paymentInfo}
+                required
+                {...register('paymentInfo')}
+              />
+            ) : (
+              <div className='self-start'>
+                {paymentInfo ? paymentInfo : 'Empty'}
+              </div>
             )}
-            {!isOwner && !showMakeOrder && (
-              <button
-                onClick={user ? toggleShowMakeOrder : redirectToLogin}
-                className={
-                  'btn-basic py-2 w-full mt-6' + (user ? '' : ' opacity-60')
-                }
-              >
-                {user ? 'Make Order' : 'Sign in to make order'}
-              </button>
-            )}
-            {isOwner && (
-              <>
-                <div className='self-start mt-4 font-medium'>Payment info:</div>
-                {showEdit ? (
-                  <TextareaAutosize
-                    defaultValue={paymentInfo}
-                    required
-                    {...register('paymentInfo')}
-                  />
-                ) : (
-                  <div className='self-start'>
-                    {paymentInfo ? paymentInfo : 'Empty'}
-                  </div>
-                )}
-                <button
-                  className='self-start btn-basic py-2 w-44 mt-4'
-                  type='button'
-                  onClick={showEdit ? handleSubmit(handleEdit) : toggleShowEdit}
-                >
-                  {showEdit ? 'SUBMIT' : 'EDIT'}
-                </button>
-              </>
-            )}
+            <button
+              className='self-start btn-basic py-2 w-44 mt-4'
+              type='button'
+              onClick={showEdit ? handleSubmit(handleEdit) : toggleShowEdit}
+            >
+              {showEdit ? 'SUBMIT' : 'EDIT'}
+            </button>
           </>
         )}
       </div>

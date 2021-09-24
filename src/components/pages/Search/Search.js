@@ -111,7 +111,7 @@ const Search = ({ loading, error, data, searchProfiles }) => {
       </div>
       <div className=''>
         {loading ? (
-          <Loading className='my-32' />
+          <Loading />
         ) : error ? (
           <ApiError error={error} center />
         ) : dataLoaded ? (

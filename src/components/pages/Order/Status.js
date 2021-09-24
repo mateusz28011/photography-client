@@ -52,57 +52,58 @@ const Status = ({
     toggleShowEditStatus();
   };
 
-  return loading ? (
-    <Loading size={16} borderWidth={4} className='py-4' />
-  ) : (
-    <div className={'text-lg text-center' + (showEditStatus ? ' my-2' : '')}>
-      {showEditStatus ? (
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className='w-56 sm:w-auto text-blue-600'
-        >
-          <div className='flex w-full justify-start sm:justify-center flex-wrap items-center sm:px-3 sm:flex-nowrap'>
-            <div className='mr-2 text-xl text-black t'>Set status:</div>
-            <select
-              name='status'
-              {...register('status')}
-              className='w-full sm:w-52 flex-shrink'
-            >
-              {statuses.map((status, index) => (
-                <option value={status[0]} key={index}>
-                  {status[1]}
-                </option>
-              ))}
-            </select>
-            <input
-              type='submit'
-              value='Submit'
-              className='btn-basic w-full sm:w-auto sm:ml-4 py-1.5 px-7 mt-2.5 sm:mt-1 sm:mb-0'
-            />
-            <input
-              type='button'
-              value='Close'
-              onClick={toggleShowEditStatus}
-              className='btn-basic w-full sm:w-auto sm:ml-4 py-1.5 px-7 my-2.5 sm:mt-1 sm:mb-0'
-            />
-          </div>
-        </form>
-      ) : (
-        <>
-          <div className='inline-block mr-2 text-xl text-black'>Status:</div>
-          <div className='inline-block text-lg font-medium text-blue-600'>
-            {statusDisplay}
-            {statuses && (
-              <AiOutlineEdit
-                onClick={toggleShowEditStatus}
-                size={25}
-                className='inline-block cursor-pointer ml-2'
+  return (
+    <>
+      {loading && <Loading className='rounded-b-lg' cover />}
+      <div className={'text-lg text-center' + (showEditStatus ? ' my-2' : '')}>
+        {showEditStatus ? (
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className='w-56 sm:w-auto text-blue-600'
+          >
+            <div className='flex w-full justify-start sm:justify-center flex-wrap items-center sm:px-3 sm:flex-nowrap'>
+              <div className='mr-2 text-xl text-black t'>Set status:</div>
+              <select
+                name='status'
+                {...register('status')}
+                className='w-full sm:w-52 flex-shrink'
+              >
+                {statuses.map((status, index) => (
+                  <option value={status[0]} key={index}>
+                    {status[1]}
+                  </option>
+                ))}
+              </select>
+              <input
+                type='submit'
+                value='Submit'
+                className='btn-basic w-full sm:w-auto sm:ml-4 py-1.5 px-7 mt-2.5 sm:mt-1 sm:mb-0'
               />
-            )}
-          </div>
-        </>
-      )}
-    </div>
+              <input
+                type='button'
+                value='Close'
+                onClick={toggleShowEditStatus}
+                className='btn-basic w-full sm:w-auto sm:ml-4 py-1.5 px-7 my-2.5 sm:mt-1 sm:mb-0'
+              />
+            </div>
+          </form>
+        ) : (
+          <>
+            <div className='inline-block mr-2 text-xl text-black'>Status:</div>
+            <div className='inline-block text-lg font-medium text-blue-600'>
+              {statusDisplay}
+              {statuses && (
+                <AiOutlineEdit
+                  onClick={toggleShowEditStatus}
+                  size={25}
+                  className='inline-block cursor-pointer ml-2'
+                />
+              )}
+            </div>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

@@ -51,7 +51,7 @@ const CurrentAlbumRemoveAccess = ({
               </div>
               {loading && loadingUserId === user.id ? (
                 <div className='ml-auto mr-5'>
-                  <Loading size={9} borderWidth={4} />
+                  <Loading size={2.9} stroke={56} />
                 </div>
               ) : loading ? null : (
                 <motion.div

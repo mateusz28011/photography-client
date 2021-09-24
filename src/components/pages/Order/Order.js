@@ -38,7 +38,7 @@ const Order = ({
     <ApiError error={error} center />
   ) : data ? (
     <div className='space-y-3'>
-      <div className='bg-white shadow rounded-b-lg p-5'>
+      <div className='bg-white shadow rounded-b-lg p-5 relative'>
         {errorUpdateOrderStatus && (
           <ApiError
             error={errorUpdateOrderStatus}

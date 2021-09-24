@@ -26,35 +26,30 @@ const CreateAlbumTile = ({
 
   return (
     <Tile>
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          <BackButton onClick={toggleShowCreateAlbum} />
-          <form
-            className='space-y-6 my-auto pt-6'
-            onSubmit={handleSubmit(handleCreateAlbum)}
-          >
-            <div>
-              <label htmlFor='Name' className='font-medium text-gray-700'>
-                Name
-              </label>
-              <input type='text' required {...register('name')} />
-            </div>
-            <div className='flex items-center'>
-              <label htmlFor='isPublic' className='font-medium text-gray-700'>
-                Is public
-              </label>
-              <input type='checkbox' defaultChecked {...register('isPublic')} />
-            </div>
-            <input
-              className='w-full btn-basic py-2'
-              type='submit'
-              value='Create album'
-            />
-          </form>
-        </>
-      )}
+      {loading && <Loading className='rounded-lg' cover />}
+      <BackButton onClick={toggleShowCreateAlbum} />
+      <form
+        className='space-y-6 my-auto pt-6'
+        onSubmit={handleSubmit(handleCreateAlbum)}
+      >
+        <div>
+          <label htmlFor='Name' className='font-medium text-gray-700'>
+            Name
+          </label>
+          <input type='text' required {...register('name')} />
+        </div>
+        <div className='flex items-center'>
+          <label htmlFor='isPublic' className='font-medium text-gray-700'>
+            Is public
+          </label>
+          <input type='checkbox' defaultChecked {...register('isPublic')} />
+        </div>
+        <input
+          className='w-full btn-basic py-2'
+          type='submit'
+          value='Create album'
+        />
+      </form>
     </Tile>
   );
 };

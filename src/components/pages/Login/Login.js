@@ -51,9 +51,7 @@ const Login = ({
   });
 
   if (!user) {
-    return loading ? (
-      <Loading />
-    ) : (
+    return (
       <>
         <div className='text-4xl font-black text-center mb-12 font-roboto mt-16 md:mt-28'>
           Sign in to your account
@@ -68,7 +66,8 @@ const Login = ({
           </div>
         </div>
 
-        <div className='w-full mx-auto max-w-md py-8 px-6 bg-white rounded-lg shadow mb-16 md:mb-28'>
+        <div className='w-full mx-auto max-w-md py-8 px-6 bg-white rounded-lg shadow mb-16 md:mb-28 relative'>
+          {loading && <Loading className='rounded-lg z-30' cover />}
           {error && <ApiError error={error} clearFunc={loginUserClearError} />}
           {loginFacebookError && (
             <ApiError

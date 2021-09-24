@@ -29,10 +29,9 @@ const MakeOrder = ({
     createOrder(formData, redirectToOrder);
   };
 
-  return loading ? (
-    <Loading className='py-16' />
-  ) : (
+  return (
     <form className='w-full mt-8' onSubmit={handleSubmit(handleMakeOrder)}>
+      {loading && <Loading className='rounded-lg' cover />}
       {error && (
         <ApiError error={error} clearFunc={createOrderClearError} center />
       )}

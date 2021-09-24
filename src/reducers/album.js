@@ -61,7 +61,7 @@ const album = (state = initialState, action) => {
           ...state,
           data: {
             ...state.data,
-            name: payload.name,
+            ...payload,
           },
         };
       }

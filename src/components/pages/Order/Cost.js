@@ -26,57 +26,58 @@ const Cost = ({
     toggleShowEditCost();
   };
 
-  return loading ? (
-    <Loading size={16} borderWidth={4} className='py-4' />
-  ) : isVendor || cost ? (
-    showEditCost ? (
-      <form onSubmit={handleSubmit(onSubmit)} className='flex'>
-        <div className='flex flex-col md:flex-row md:flex-wrap items-center '>
-          <div className='font-medium self-start my-auto'>Cost:</div>
-          <input
-            type='text'
-            required
-            {...register('cost')}
-            className='w-60 md:w-28 my-1 mx-2'
-          />
-          <select
-            name='currency'
-            {...register('currency')}
-            defaultValue={currency}
-            className='w-60 flex-shrink my-1 mx-2'
-          >
-            <option value='PLN'>PLN - Polish zloty</option>
-            <option value='EUR'>EUR - Euro</option>
-            <option value='USD'>USD - United States dollar</option>
-          </select>
-          <input
-            type='submit'
-            value='Submit'
-            className='btn-basic w-60 md:w-28 py-1.5 px-7 my-1 mx-2'
-          />
-          <input
-            type='button'
-            value='Close'
-            onClick={toggleShowEditCost}
-            className='btn-basic w-60 md:w-28 py-1.5 px-7 my-1 mx-2'
-          />
-        </div>
-      </form>
-    ) : (
-      <div className='font-medium'>
-        Cost:
-        <div className='ml-2 inline-block text-lg text-blue-600'>
-          {cost ? `${cost} ${currency}` : '-----'}
-          {isVendor && [3, 4].includes(status) && (
-            <AiOutlineEdit
-              onClick={toggleShowEditCost}
-              size={25}
-              className='inline-block cursor-pointer ml-3'
+  return isVendor || cost ? (
+    <>
+      {loading && <Loading className='rounded-b-lg' cover />}
+      {showEditCost ? (
+        <form onSubmit={handleSubmit(onSubmit)} className='flex'>
+          <div className='flex flex-col md:flex-row md:flex-wrap items-center '>
+            <div className='font-medium self-start my-auto'>Cost:</div>
+            <input
+              type='text'
+              required
+              {...register('cost')}
+              className='w-60 md:w-28 my-1 mx-2'
             />
-          )}
+            <select
+              name='currency'
+              {...register('currency')}
+              defaultValue={currency}
+              className='w-60 flex-shrink my-1 mx-2'
+            >
+              <option value='PLN'>PLN - Polish zloty</option>
+              <option value='EUR'>EUR - Euro</option>
+              <option value='USD'>USD - United States dollar</option>
+            </select>
+            <input
+              type='submit'
+              value='Submit'
+              className='btn-basic w-60 md:w-28 py-1.5 px-7 my-1 mx-2'
+            />
+            <input
+              type='button'
+              value='Close'
+              onClick={toggleShowEditCost}
+              className='btn-basic w-60 md:w-28 py-1.5 px-7 my-1 mx-2'
+            />
+          </div>
+        </form>
+      ) : (
+        <div className='font-medium'>
+          Cost:
+          <div className='ml-2 inline-block text-lg text-blue-600'>
+            {cost ? `${cost} ${currency}` : '-----'}
+            {isVendor && [3, 4].includes(status) && (
+              <AiOutlineEdit
+                onClick={toggleShowEditCost}
+                size={25}
+                className='inline-block cursor-pointer ml-3'
+              />
+            )}
+          </div>
         </div>
-      </div>
-    )
+      )}
+    </>
   ) : null;
 };
 

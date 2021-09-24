@@ -35,71 +35,64 @@ const Account = ({
   };
 
   return loading ? (
-    <Loading className='py-32' />
+    <Loading />
   ) : error ? (
     <ApiError error={error} center />
   ) : user ? (
     <>
       <ApiError error={errorEditUser} clearFunc={editUserClearError} center />
-      <div className='px-5 py-9 mt-3 mx-3 flex flex-col bg-white shadow rounded-lg md:px-10 md:w-2/3 md:mx-auto xl:w-1/2 xl:mx-auto font-medium'>
+      <div className='px-5 py-9 mt-3 mx-3 flex flex-col bg-white shadow rounded-lg md:px-10 md:w-2/3 md:mx-auto xl:w-1/2 xl:mx-auto font-medium relative'>
+        {loadingEditUser && <Loading cover className='rounded-lg' />}
         <div className='text-2xl mb-8 font-bold self-center'>My account</div>
-        {loadingEditUser ? (
-          <Loading className='py-8' />
-        ) : (
-          <>
-            <div>
-              Email:
-              <div className='ml-2 inline-block text-blue-600'>
-                {user.email}
-              </div>
-            </div>
-            <div>
-              First name:
-              <div className='ml-2 inline-block text-blue-600'>
-                {showEdit ? (
-                  <input
-                    type='text'
-                    className='my-2'
-                    defaultValue={user.firstName}
-                    required
-                    {...register('firstName')}
-                  />
-                ) : (
-                  user.firstName
-                )}
-              </div>
-            </div>
-            <div>
-              Last name:
-              <div className='ml-2 inline-block text-blue-600'>
-                {showEdit ? (
-                  <input
-                    type='text'
-                    className='mb-2'
-                    defaultValue={user.lastName}
-                    required
-                    {...register('lastName')}
-                  />
-                ) : (
-                  user.lastName
-                )}
-              </div>
-            </div>
-            <div>
-              Join date:
-              <div className='ml-2 inline-block text-blue-600'>
-                {new Date(user.joinDate).toLocaleDateString()}
-              </div>
-            </div>
-            <button
-              className='btn-basic py-2 w-44 mt-4'
-              type='button'
-              onClick={showEdit ? handleSubmit(handleEdit) : toggleShowEdit}
-            >
-              {showEdit ? 'SUBMIT' : 'EDIT'}
-            </button>
-          </>
-        )}
+        <div>
+          Email:
+          <div className='ml-2 inline-block text-blue-600'>{user.email}</div>
+        </div>
+        <div>
+          First name:
+          <div className='ml-2 inline-block text-blue-600'>
+            {showEdit ? (
+              <input
+                type='text'
+                className='my-2'
+                defaultValue={user.firstName}
+                required
+                {...register('firstName')}
+              />
+            ) : (
+              user.firstName
+            )}
+          </div>
+        </div>
+        <div>
+          Last name:
+          <div className='ml-2 inline-block text-blue-600'>
+            {showEdit ? (
+              <input
+                type='text'
+                className='mb-2'
+                defaultValue={user.lastName}
+                required
+                {...register('lastName')}
+              />
+            ) : (
+              user.lastName
+            )}
+          </div>
+        </div>
+        <div>
+          Join date:
+          <div className='ml-2 inline-block text-blue-600'>
+            {new Date(user.joinDate).toLocaleDateString()}
+          </div>
+        </div>
+        <button
+          className='btn-basic py-2 w-44 mt-4'
+          type='button'
+          onClick={showEdit ? handleSubmit(handleEdit) : toggleShowEdit}
+        >
+          {showEdit ? 'SUBMIT' : 'EDIT'}
+        </button>
       </div>
       {user.isVendor ? (
         <Vendor profileId={user.profile} />

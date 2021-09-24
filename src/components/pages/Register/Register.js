@@ -12,6 +12,7 @@ import ApiError, { Error } from '../../ApiError';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import Success from '../../Success';
+import Loading from '../../Loading';
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required('First name is required.'),
@@ -67,9 +68,7 @@ const Register = ({
     };
   }, [user, history, registeredSuccessfully]);
 
-  return loading ? (
-    <p>loading</p>
-  ) : (
+  return (
     <>
       <div className='text-4xl font-black text-center mb-12 mt-16 md:mt-28'>
         Create your account
@@ -80,7 +79,8 @@ const Register = ({
           </Link>
         </div>
       </div>
-      <div className='w-full mx-auto max-w-md py-8 px-6 bg-white rounded-lg shadow mb-16 md:mb-28'>
+      <div className='w-full mx-auto max-w-md py-8 px-6 bg-white rounded-lg shadow mb-16 md:mb-28  relative'>
+        {loading && <Loading className='rounded-lg' cover />}
         {registeredSuccessfully && (
           <Success
             success={

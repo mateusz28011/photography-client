@@ -51,7 +51,7 @@ const CurrentAlbumInfo = ({
 
   return (
     <>
-      <div className='bg-white shadow rounded-lg text-center py-3 font-base text-lg text-gray-600'>
+      <div className='bg-white shadow rounded-lg text-center py-3 font-base text-lg text-gray-600 relative'>
         <div className='flex items-center justify-center'>
           Current album:
           <div className='ml-2 font-medium text-xl  text-blue-600'>{name}</div>
@@ -59,27 +59,24 @@ const CurrentAlbumInfo = ({
             <AiOutlineLock className='ml-1.5 text-blue-600 w-5 h-5' />
           )}
         </div>
-        {isLoading() ? (
-          <Loading className='py-8' />
-        ) : (
-          <div
-            className={
-              'w-full flex flex-col items-center justify-center' +
-              (showEditAlbum ? ' mt-3 space-y-3' : '')
-            }
-          >
-            <AlbumManager
-              isCreator={isCreator}
-              albumId={albumId}
-              name={name}
-              isPublic={isPublic}
-              showEditAlbum={showEditAlbum}
-              toggleShowEditAlbum={toggleShowEditAlbum}
-              isInsideAlbum
-              setClickedDeleteToTrue={setClickedDeleteToTrue}
-            />
-          </div>
-        )}
+        {isLoading() && <Loading className='rounded-lg' size={7} cover />}
+        <div
+          className={
+            'w-full flex flex-col items-center justify-center' +
+            (showEditAlbum ? ' mt-3 space-y-3' : '')
+          }
+        >
+          <AlbumManager
+            isCreator={isCreator}
+            albumId={albumId}
+            name={name}
+            isPublic={isPublic}
+            showEditAlbum={showEditAlbum}
+            toggleShowEditAlbum={toggleShowEditAlbum}
+            isInsideAlbum
+            setClickedDeleteToTrue={setClickedDeleteToTrue}
+          />
+        </div>
       </div>
     </>
   );

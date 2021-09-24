@@ -29,9 +29,14 @@ const CreateVendorProfile = ({
   const [fileName, setFileName] = useState();
 
   const handleCreateProfile = (formData) => {
+    console.log(formData);
     if (formData.avatar) {
       formData.avatar = formData.avatar[0];
+      if (formData.avatar === undefined) {
+        delete formData.avatar;
+      }
     }
+    console.log(formData);
     error && createVendorProfileClearError();
     createVendorProfile(formData);
   };
@@ -42,103 +47,83 @@ const CreateVendorProfile = ({
   }, [vendorProfile, user, getUser]);
 
   return (
-    <div className='px-5 py-9 mt-3 mx-3 flex flex-col bg-white shadow rounded-lg md:px-10 md:w-2/3 md:mx-auto xl:w-1/2 xl:mx-auto '>
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          {error && (
-            <ApiError
-              error={error}
-              clearFunc={createVendorProfileClearError}
-              center
-            />
-          )}
-          <span className='text-lg '>
-            If you want to become a vendor and start offering photography
-            services all you need to do is create your vendor profile.
-          </span>
-          <form
-            className='space-y-6 my-auto pt-6'
-            onSubmit={handleSubmit(handleCreateProfile)}
-          >
-            <div className=''>
-              <label htmlFor='avatar' className='font-medium text-gray-700'>
-                Avatar
-              </label>
-              <div
-                onClick={() => avatarRef.current.click()}
-                className='w-40 mt-0.5 text-center font-medium text-lg text-blue-600 rounded border-2 border-blue-600 hover:bg-blue-600 hover:text-white cursor-pointer transition duration-100'
-              >
-                Upload an avatar
-              </div>
-              <div className='mt-1 text-blue-600 font-medium'>{fileName}</div>
-
-              <input
-                type='file'
-                accept='image/png, image/jpeg'
-                className='hidden'
-                {...avatar}
-                onChange={(e) => {
-                  avatar.onChange(e);
-                  setFileName(e.target.files[0].name);
-                }}
-                ref={(e) => {
-                  avatar.ref(e);
-                  avatarRef.current = e;
-                }}
-              />
-            </div>
-            {/* <label className='block bg-blue-600 cursor-pointer active:bg-blue-500 rounded-md shadow-sm font-medium text-white px-3 py-1'>
-              Upload an avatar
-              <input
-                type='file'
-                accept='image/png, image/jpeg'
-                className='hidden'
-                {...register('avatar')}
-              />
-            </label> */}
-            <div>
-              <label htmlFor='name' className='font-medium text-gray-700'>
-                Name <span className='text-red-600'>*</span>
-              </label>
-              <input type='text' required {...register('name')} />
-            </div>
-            <div>
-              <label
-                htmlFor='description'
-                className='font-medium text-gray-700'
-              >
-                Description <span className='text-red-600'>*</span>
-              </label>
-              <TextareaAutosize
-                placeholder='You can write here about yourself and what kinds of services you offer.'
-                minRows={7}
-                required
-                {...register('description')}
-              />
-            </div>
-            <div>
-              <label
-                htmlFor='paymentInfo'
-                className='font-medium text-gray-700'
-              >
-                Payment info
-              </label>
-              <TextareaAutosize
-                placeholder='Describe the methods by which you will receive payments for services. You can change it any time and leave it empty for now.'
-                minRows={7}
-                {...register('paymentInfo')}
-              />
-            </div>
-            <input
-              className='w-full btn-basic py-2'
-              type='submit'
-              value='Create Profile'
-            />
-          </form>
-        </>
+    <div className='px-5 py-9 mt-3 mx-3 flex flex-col bg-white shadow rounded-lg md:px-10 md:w-2/3 md:mx-auto xl:w-1/2 xl:mx-auto relative'>
+      {loading && <Loading className='rounded-lg' cover />}
+      {error && (
+        <ApiError
+          error={error}
+          clearFunc={createVendorProfileClearError}
+          center
+        />
       )}
+      <span className='text-lg '>
+        If you want to become a vendor and start offering photography services
+        all you need to do is create your vendor profile.
+      </span>
+      <form
+        className='space-y-6 my-auto pt-6'
+        onSubmit={handleSubmit(handleCreateProfile)}
+      >
+        <div className=''>
+          <label htmlFor='avatar' className='font-medium text-gray-700'>
+            Avatar
+          </label>
+          <div
+            onClick={() => avatarRef.current.click()}
+            className='w-40 mt-0.5 text-center font-medium text-lg text-blue-600 rounded border-2 border-blue-600 hover:bg-blue-600 hover:text-white cursor-pointer transition duration-100'
+          >
+            Upload an avatar
+          </div>
+          <div className='mt-1 text-blue-600 font-medium'>{fileName}</div>
+
+          <input
+            type='file'
+            accept='image/png, image/jpeg'
+            className='hidden'
+            {...avatar}
+            onChange={(e) => {
+              avatar.onChange(e);
+              setFileName(e.target.files[0].name);
+            }}
+            ref={(e) => {
+              avatar.ref(e);
+              avatarRef.current = e;
+            }}
+          />
+        </div>
+        <div>
+          <label htmlFor='name' className='font-medium text-gray-700'>
+            Name <span className='text-red-600'>*</span>
+          </label>
+          <input type='text' required {...register('name')} />
+        </div>
+        <div>
+          <label htmlFor='description' className='font-medium text-gray-700'>
+            Description <span className='text-red-600'>*</span>
+          </label>
+          <TextareaAutosize
+            placeholder='You can write here about yourself and what kinds of services you offer.'
+            minRows={7}
+            required
+            {...register('description')}
+          />
+        </div>
+        <div>
+          <label htmlFor='paymentInfo' className='font-medium text-gray-700'>
+            Payment info
+          </label>
+          <TextareaAutosize
+            placeholder='Describe the methods by which you will receive payments for services. You can change it any time and leave it empty for now.'
+            minRows={7}
+            {...register('paymentInfo')}
+          />
+        </div>
+        <input
+          className='w-full btn-basic py-2'
+          type='submit'
+          value='Create Profile'
+        />
+      </form>
     </div>
   );
 };

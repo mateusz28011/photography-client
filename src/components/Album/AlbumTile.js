@@ -28,7 +28,7 @@ const AlbumTile = ({
   };
 
   return (
-    <Tile clickFunc={!showEditAlbum && handleAlbumClick}>
+    <Tile clickFunc={!showEditAlbum ? handleAlbumClick : undefined}>
       {(loadingDeleteAlbum && loadingDeleteAlbum[String(albumId)]) ||
       (loadingEditAlbum && loadingEditAlbum[String(albumId)]) ? (
         <Loading />
