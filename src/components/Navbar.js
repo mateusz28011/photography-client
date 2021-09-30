@@ -46,8 +46,6 @@ const Navbar = ({ user, logoutUser }) => {
           'menuBtn',
           'menuLinks',
           'vendors',
-          'link1',
-          'link2',
           'albums',
           'account',
           'login',
@@ -67,14 +65,17 @@ const Navbar = ({ user, logoutUser }) => {
   }, []);
 
   return (
-    <div className='bg-blue-600 shadow'>
+    <div className='bg-blue-600 shadow flex-initial'>
       <nav
         id='menu'
-        className='flex flex-col md:flex-row items-center w-full mx-auto text-center text-xl  text-white  md:justify-between md:py-3 2xl:container'
+        className='flex flex-col md:flex-row items-center w-full mx-auto text-center  text-white  md:justify-between md:py-3 lg:py-6 2xl:container'
       >
-        <div className='flex w-full md:w-auto justify-between mx-3 mt-1 md:ml-6 2xl:ml-2'>
-          <Link to='/' className='text-4xl m-2 md:m-0 font-medium'>
-            Photo
+        <div className='flex w-full md:w-auto justify-between mx-3 mt-1 md:ml-6 lg:ml-10'>
+          <Link
+            to='/'
+            className='text-3xl lg:text-5xl m-2 md:m-0 font-medium flex items-center'
+          >
+            PhotoBay
           </Link>
           <NavbarMenuBtn
             className='focus:outline-none m-5 md:hidden transform scale-150'
@@ -85,29 +86,23 @@ const Navbar = ({ user, logoutUser }) => {
         {(isMenuOpen || !isSmallScreen) && (
           <div
             id='menuLinks'
-            className='flex space-y-3 pb-5 uppercase flex-col md:normal-case md:flex-row md:items-center md:text-lg md:space-y-0 md:space-x-4 md:pb-0 md:mr-6'
+            className='flex space-y-3 pb-5 uppercase flex-col md:normal-case md:flex-row md:text-2xl lg:text-3xl md:space-y-0 md:space-x-4 md:pb-0 md:mr-6 lg:mr-10'
           >
             <div id='vendors'>
               <Link to='/search'>Vendors</Link>
             </div>
-            <div id='link1'>
-              <Link to='/2'>LINK2</Link>
-            </div>
-            <div id='link2'>
-              <Link to='/3'>LINK3</Link>
-            </div>
-            <div className='flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-4 items-center'>
+            <div className='flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-4'>
               {user ? (
                 <>
                   <div id='account'>
-                    <Link to='/account/'>My account</Link>
+                    <Link to='/account/'>Account</Link>
                   </div>
                   <div id='orders'>
-                    <Link to='/orders/'>My orders</Link>
+                    <Link to='/orders/'>Orders</Link>
                   </div>
                   {user.isVendor && (
                     <div id='albums'>
-                      <Link to='/albums/'>My albums</Link>
+                      <Link to='/albums/'>Albums</Link>
                     </div>
                   )}
                   <Link id='logout' to='/' onClick={logoutUser}>

@@ -26,42 +26,42 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <div className='min-h-screen '>
+      {/* <div className='h-screen'> */}
+      <div className='h-screen max-w-screen-2xl mx-auto flex flex-col'>
         <Navbar />
-        <div className='max-w-screen-2xl flex flex-col mx-auto'>
-          <Switch>
-            <Route exact path='/'>
-              <Home />
-            </Route>
-            <Route exact path='/login'>
-              <Login />
-            </Route>
-            <Route exact path='/register'>
-              <Register />
-            </Route>
-            <Route exact path='/search'>
-              <Search />
-            </Route>
-            <Route exact path='/vendor/:profileId'>
-              <Vendor />
-            </Route>
-            <PrivateRoute exact path='/orders/' component={Orders} />
-            <PrivateRoute exact path='/order/:orderId' component={Order} />
-            <PrivateRoute
-              exact
-              path='/albums/'
-              component={Albums}
-              isVendorRoute
-            />
-            <PrivateRoute exact path='/account/' component={Account} />
-            <Route exact path='/album/' component={Album} />
-            <Route>
-              <Home />
-            </Route>
-          </Switch>
-          <Footer />
-        </div>
+        <Switch>
+          <Route exact path='/'>
+            <Home />
+          </Route>
+          <Route exact path='/login'>
+            <Login />
+          </Route>
+          <Route exact path='/register'>
+            <Register />
+          </Route>
+          <Route exact path='/search'>
+            <Search />
+          </Route>
+          <Route exact path='/vendor/:profileId'>
+            <Vendor />
+          </Route>
+          <PrivateRoute exact path='/orders/' component={Orders} />
+          <PrivateRoute exact path='/order/:orderId' component={Order} />
+          <PrivateRoute
+            exact
+            path='/albums/'
+            component={Albums}
+            isVendorRoute
+          />
+          <PrivateRoute exact path='/account/' component={Account} />
+          <Route exact path='/album/' component={Album} />
+          <Route>
+            <Home />
+          </Route>
+        </Switch>
       </div>
+      <Footer />
+      {/* </div> */}
     </Provider>
   );
 };
