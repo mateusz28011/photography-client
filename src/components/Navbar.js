@@ -65,10 +65,10 @@ const Navbar = ({ user, logoutUser }) => {
   }, []);
 
   return (
-    <div className='bg-blue-600 shadow flex-initial'>
+    <div className='bg-blue-600 shadow z-20'>
       <nav
         id='menu'
-        className='flex flex-col md:flex-row items-center w-full mx-auto text-center  text-white  md:justify-between md:py-3 lg:py-6 2xl:container'
+        className='flex flex-col md:flex-row items-center w-full mx-auto text-center  text-white  md:justify-between md:py-3 lg:py-4 2xl:container'
       >
         <div className='flex w-full md:w-auto justify-between mx-3 mt-1 md:ml-6 lg:ml-10'>
           <Link

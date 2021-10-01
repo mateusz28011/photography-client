@@ -27,7 +27,7 @@ const App = () => {
   return (
     <Provider store={store}>
       {/* <div className='h-screen'> */}
-      <div className='h-screen max-w-screen-2xl mx-auto flex flex-col'>
+      <div className='max-w-screen-2xl mx-auto'>
         <Navbar />
         <Switch>
           <Route exact path='/'>
@@ -59,8 +59,8 @@ const App = () => {
             <Home />
           </Route>
         </Switch>
+        {/* <Footer /> */}
       </div>
-      <Footer />
       {/* </div> */}
     </Provider>
   );
