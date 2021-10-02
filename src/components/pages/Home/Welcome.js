@@ -3,16 +3,16 @@ import welcomeGraphic from './graphics/undraw_fashion_photoshoot_mtq8.svg';
 
 const Welcome = () => {
   return (
-    <div
+    <section
       style={{ maxHeight: '76rem' }}
       className='p-5 md:p-10 flex flex-col justify-evenly lg:grid grid-cols-6 grid-rows-6 items-center overflow-x-hidden relative min-h-screen'
     >
-      <div className='text-center text-5xl md:text-6xl xl:text-7xl font-medium font-sans col-start-1 col-end-5 row-start-1 row-end-3 z-10'>
+      <h1 className='text-center text-5xl md:text-6xl xl:text-7xl font-medium font-sans col-start-1 col-end-5 row-start-1 row-end-3 z-10'>
         Welcome to <span className='text-blue-600 font-bold'>PhotoBay</span>
-        <div className='text-base md:text-lg  lg:text-xl mt-4 md:mt-3 text-gray-600'>
+        <h3 className='text-base md:text-lg  lg:text-xl mt-4 md:mt-3 text-gray-600'>
           Place where photographers and their customers can drop the anchor
-        </div>
-      </div>
+        </h3>
+      </h1>
       <img
         src={welcomeGraphic}
         alt=''
@@ -25,7 +25,7 @@ const Welcome = () => {
       >
         <path d='M0 40h1680V30S1340 0 840 0 0 30 0 30z' fill='#2563EB'></path>
       </svg>
-    </div>
+    </section>
   );
 };
 
