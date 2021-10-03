@@ -20,7 +20,7 @@ const NavigationNextPrevious = ({ next, previous, searchFunc, className }) => {
   return (
     <div
       className={
-        'flex w-full bg-white shadow rounded-lg items-center justify-center py-4 text-2xl space-x-12 text-blue-600' +
+        'flex w-full bg-white shadow rounded-lg items-center justify-center mb-3 py-4 text-2xl space-x-12 text-blue-600' +
         (className ? ` ${className}` : ' ')
       }
     >

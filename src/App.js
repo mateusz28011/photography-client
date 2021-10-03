@@ -26,9 +26,8 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      {/* <div className='h-screen'> */}
-      <div className='max-w-screen-2xl mx-auto'>
-        <Navbar />
+      <Navbar />
+      <div className='max-w-screen-2xl mx-auto w-full'>
         <Switch>
           <Route exact path='/'>
             <Home />
@@ -59,9 +58,8 @@ const App = () => {
             <Home />
           </Route>
         </Switch>
-        {/* <Footer /> */}
       </div>
-      {/* </div> */}
+      <Footer />
     </Provider>
   );
 };

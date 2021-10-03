@@ -68,14 +68,14 @@ const Navbar = ({ user, logoutUser }) => {
     <div className='bg-blue-600 shadow z-20'>
       <nav
         id='menu'
-        className='flex flex-col md:flex-row items-center w-full mx-auto text-center  text-white  md:justify-between md:py-3 lg:py-4 2xl:container'
+        className='flex flex-col md:flex-row items-center w-full mx-auto text-center text-white md:justify-between  2xl:container'
       >
-        <div className='flex w-full md:w-auto justify-between mx-3 mt-1 md:ml-6 lg:ml-10'>
+        <div className='flex w-full md:w-auto justify-between mx-3 md:ml-6 lg:ml-8'>
           <Link
             to='/'
-            className='text-3xl lg:text-5xl m-2 md:m-0 font-medium flex items-center'
+            className='text-3xl md:text-4xl m-2 md:m-0 font-medium flex items-center'
           >
-            PhotoBay
+            <span>PhotoBay</span>
           </Link>
           <NavbarMenuBtn
             className='focus:outline-none m-5 md:hidden transform scale-150'
@@ -86,24 +86,26 @@ const Navbar = ({ user, logoutUser }) => {
         {(isMenuOpen || !isSmallScreen) && (
           <div
             id='menuLinks'
-            className='flex space-y-3 pb-5 uppercase flex-col md:normal-case md:flex-row md:text-2xl lg:text-3xl md:space-y-0 md:space-x-4 md:pb-0 md:mr-6 lg:mr-10'
+            className='flex space-y-3 py-5 uppercase text-2xl flex-col  md:normal-case md:flex-row md:space-y-0 md:space-x-4  md:mr-6 lg:text-2xl lg:mr-8 '
           >
-            <div id='vendors'>
-              <Link to='/search'>Vendors</Link>
-            </div>
-            <div className='flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-4'>
+            <div className='flex flex-col space-y-3 md:space-y-0 md:flex-row md:space-x-4 items-center'>
+              <Link id='vendors' to='/search'>
+                Vendors
+              </Link>
               {user ? (
                 <>
-                  <div id='account'>
-                    <Link to='/account/'>Account</Link>
-                  </div>
-                  <div id='orders'>
-                    <Link to='/orders/'>Orders</Link>
-                  </div>
+                  <Link id='account' to='/account/'>
+                    Account
+                  </Link>
+
+                  <Link id='orders' to='/orders/'>
+                    Orders
+                  </Link>
+
                   {user.isVendor && (
-                    <div id='albums'>
-                      <Link to='/albums/'>Albums</Link>
-                    </div>
+                    <Link id='albums' to='/albums/'>
+                      Albums
+                    </Link>
                   )}
                   <Link id='logout' to='/' onClick={logoutUser}>
                     Logout
@@ -111,12 +113,12 @@ const Navbar = ({ user, logoutUser }) => {
                 </>
               ) : (
                 <>
-                  <div id='login'>
-                    <Link to='/login'>Sign In</Link>
-                  </div>
+                  <Link id='login' to='/login'>
+                    Sign In
+                  </Link>
                   <div
                     id='register'
-                    className='border-2 rounded-md px-2 py-0.5'
+                    className='border-2 rounded-md px-2 py-0.5 mb-4'
                   >
                     <Link to='/register'>Sign Up</Link>
                   </div>
