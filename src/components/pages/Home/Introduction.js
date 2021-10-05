@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import account from './graphics/undraw_Access_account_re_8spm.svg';
 import album from './graphics/undraw_photo_album_re_31c2.svg';
 import feedback from './graphics/undraw_Begin_chat_re_v0lw.svg';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const renderSwitch = (param) => {
   switch (param) {
     case 1:
-      return <FirstStep />;
+      return <FirstStep key={1} />;
     case 2:
-      return <SecondStep />;
+      return <SecondStep key={2} />;
     case 3:
-      return <ThirdStep />;
+      return <ThirdStep key={3} />;
     default:
       return null;
   }
@@ -42,19 +43,20 @@ const Introduction = () => {
         <path d='M0 40h1680V30S1340 0 840 0 0 30 0 30z' fill='#2563EB'></path>
       </svg>
       <div className='px-5 md:px-10 py-6 bg-white flex-auto flex flex-col justify-evenly text-gray-600 text-lg sm:text-xl md:text-2xl lg:text-3xl sm:flex-row sm:items-center'>
-        {renderSwitch(step)}
+        <AnimatePresence exitBeforeEnter>{renderSwitch(step)}</AnimatePresence>
       </div>
     </section>
   );
 };
 
 const Number = ({ number, step, setStep }) => {
+  const isSelected = number === step;
   return (
     <div
-      onClick={number === step ? undefined : () => setStep(number)}
+      onClick={isSelected ? undefined : () => setStep(number)}
       className={
-        'h-16 w-16 sm:h-24 sm:w-24 md:h-28 md:w-28 xl:h-32 xl:w-32 border-2 xl:border-4 rounded-full flex items-center justify-center mx-auto border-white ' +
-        (number === step ? 'text-blue-600 bg-white' : 'cursor-pointer')
+        'h-16 w-16 sm:h-24 sm:w-24 md:h-28 md:w-28 xl:h-32 xl:w-32 border-2 xl:border-4 rounded-full flex items-center justify-center mx-auto border-white transition-colors ' +
+        (isSelected ? 'text-blue-600 bg-white' : 'cursor-pointer')
       }
     >
       <div className='text-2xl sm:text-4xl md:text-5xl xl:text-7xl'>
@@ -70,18 +72,29 @@ const Line = () => {
   );
 };
 
+const stepAnimation = {
+  initial: { x: '-50%', opacity: 0 },
+  animate: {
+    x: 0,
+    opacity: 1,
+    transition: { type: 'spring', duration: 0.5 },
+  },
+  exit: { x: '50%', opacity: 0 },
+};
+
 const FirstStep = () => {
   return (
     <>
-      <p className='pb-12 sm:pr-5'>
+      <motion.p className='pb-12 sm:pr-5' {...stepAnimation}>
         <span className='text-blue-600 font-medium'>Firstly</span>, create your
         account for free. If you want to become a vendor, you additionally need
         to create your vendor profile in the account tab.
-      </p>
-      <img
+      </motion.p>
+      <motion.img
         className='filter drop-shadow-md sm:w-1/2 flex-shrink '
         src={account}
         alt=''
+        {...stepAnimation}
       />
     </>
   );
@@ -90,7 +103,10 @@ const FirstStep = () => {
 const SecondStep = () => {
   return (
     <>
-      <div className='text-base sm:text-xl md:text-2xl lg:text-3xl sm:w-1/2 sm:pr-10'>
+      <motion.div
+        className='text-base sm:text-xl md:text-2xl lg:text-3xl sm:w-1/2 sm:pr-10'
+        {...stepAnimation}
+      >
         <p className='pb-6 sm:pb-12 '>
           As <span className='text-blue-600 font-medium'>a buyer</span> you can
           see all available vendors, their portfolios and descriptions to then
@@ -102,8 +118,13 @@ const SecondStep = () => {
           represent yourself. Also you can create photo albums and share them
           for certain users or create public link.
         </p>
-      </div>
-      <img className='filter drop-shadow-md sm:w-1/2' src={album} alt='' />
+      </motion.div>
+      <motion.img
+        className='filter drop-shadow-md sm:w-1/2'
+        src={album}
+        alt=''
+        {...stepAnimation}
+      />
     </>
   );
 };
@@ -111,13 +132,18 @@ const SecondStep = () => {
 const ThirdStep = () => {
   return (
     <>
-      <p className='pb-12 sm:pr-5'>
+      <motion.p className='pb-12 sm:pr-5' {...stepAnimation}>
         We care very much about{' '}
         <span className='text-blue-600 font-medium'>contact</span> with users,
         so if you have any suggestions for changes or noticed any problems while
         using the website, please let us know.
-      </p>
-      <img className='filter drop-shadow-md sm:w-1/2' src={feedback} alt='' />
+      </motion.p>
+      <motion.img
+        className='filter drop-shadow-md sm:w-1/2'
+        src={feedback}
+        alt=''
+        {...stepAnimation}
+      />
     </>
   );
 };

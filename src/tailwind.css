@@ -8,8 +8,7 @@
   }
 
   body {
-    @apply font-roboto bg-blueGray-50 mx-auto;
-    height: 100%;
+    @apply font-roboto bg-blueGray-50 mx-auto overflow-x-hidden;
   }
 
   #root {
