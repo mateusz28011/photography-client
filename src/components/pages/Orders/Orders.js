@@ -12,6 +12,8 @@ import OrdersPanel from './OrdersPanel';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+import pageAnimation from '../pageAnimation';
+import { motion } from 'framer-motion';
 
 const Orders = ({ loading, error, data, user, searchOrders }) => {
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -30,7 +32,7 @@ const Orders = ({ loading, error, data, user, searchOrders }) => {
   };
 
   return (
-    <>
+    <motion.div {...pageAnimation}>
       <OrdersPanel location={location} history={history} />
       {loading ? (
         <Loading className='py-32' />
@@ -101,7 +103,7 @@ const Orders = ({ loading, error, data, user, searchOrders }) => {
           </div>
         )
       ) : null}
-    </>
+    </motion.div>
   );
 };
 const loadingSelector = createLoadingSelector(['SEARCH']);

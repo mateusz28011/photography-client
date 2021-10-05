@@ -12,6 +12,8 @@ import ApiError from '../../ApiError';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 import Loading from '../../Loading';
 import setQueryParams from '../../../utils/setQueryParams';
+import { motion } from 'framer-motion';
+import pageAnimation from '../pageAnimation';
 
 const Search = ({ loading, error, data, searchProfiles }) => {
   const location = useLocation();
@@ -43,7 +45,7 @@ const Search = ({ loading, error, data, searchProfiles }) => {
   }, [searchProfiles, location, dataLoaded]);
 
   return (
-    <>
+    <motion.div {...pageAnimation}>
       <div className='bg-white rounded-b-lg shadow'>
         <form
           onSubmit={handleSubmit(onSubmitSearch)}
@@ -134,7 +136,7 @@ const Search = ({ loading, error, data, searchProfiles }) => {
           )
         ) : null}
       </div>
-    </>
+    </motion.div>
   );
 };
 

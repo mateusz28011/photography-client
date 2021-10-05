@@ -22,6 +22,8 @@ import { AiFillFacebook } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import Loading from '../../Loading';
 import GoogleLogin from 'react-google-login';
+import { motion } from 'framer-motion';
+import pageAnimation from '../pageAnimation';
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -52,7 +54,7 @@ const Login = ({
 
   if (!user) {
     return (
-      <>
+      <motion.div {...pageAnimation}>
         <div className='text-4xl font-black text-center mb-12 font-roboto mt-16 md:mt-28'>
           Sign in to your account
           <div className='font-medium text-base text-gray-500 mt-4'>
@@ -136,7 +138,7 @@ const Login = ({
             />
           </div>
         </div>
-      </>
+      </motion.div>
     );
   } else {
     return <Redirect to='/' />;

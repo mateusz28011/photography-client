@@ -19,6 +19,8 @@ import CurrentAlbumInfo from './CurrentAlbumInfo';
 import setQueryParams from '../../utils/setQueryParams';
 import { useLocation, useHistory } from 'react-router-dom';
 import getQueryParams from '../../utils/getQueryParams';
+import { motion } from 'framer-motion';
+import pageAnimation from '../pages/pageAnimation';
 
 const Album = ({
   albumId: rootAlbumId,
@@ -76,7 +78,7 @@ const Album = ({
   ) : error ? (
     <ApiError error={error} center />
   ) : data ? (
-    <>
+    <motion.div {...pageAnimation}>
       <AlbumApiErrors />
       {(showPreview || showPreview === 0) && (
         <Preview
@@ -149,7 +151,7 @@ const Album = ({
             );
           })}
       </div>
-    </>
+    </motion.div>
   ) : null;
 };
 

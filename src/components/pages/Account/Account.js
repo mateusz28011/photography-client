@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
@@ -8,6 +9,7 @@ import {
 } from '../../../selectors';
 import ApiError from '../../ApiError';
 import Loading from '../../Loading';
+import pageAnimation from '../pageAnimation';
 import Vendor from '../Vendor/Vendor';
 import CreateVendorProfile from './CreateVendorProfile';
 
@@ -39,7 +41,7 @@ const Account = ({
   ) : error ? (
     <ApiError error={error} center />
   ) : user ? (
-    <>
+    <motion.div {...pageAnimation}>
       <ApiError error={errorEditUser} clearFunc={editUserClearError} center />
       <div className='px-5 py-9 mt-3 mx-3 flex flex-col bg-white shadow rounded-lg md:px-10 md:w-2/3 md:mx-auto xl:w-1/2 xl:mx-auto font-medium relative'>
         {loadingEditUser && <Loading cover className='rounded-lg' />}
@@ -99,7 +101,7 @@ const Account = ({
       ) : (
         <CreateVendorProfile />
       )}
-    </>
+    </motion.div>
   ) : null;
 };
 const loadingSelector = createLoadingSelector(['GET_USER']);

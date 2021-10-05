@@ -8,9 +8,10 @@ import {
   AiOutlineMail,
 } from 'react-icons/ai';
 import { GoLocation } from 'react-icons/go';
+
 const Footer = () => {
   return (
-    <footer className='mt-auto w-full bg-blue-600 text-white '>
+    <footer className='mt-auto w-full bg-blue-600 text-white z-50'>
       <div className='max-w-screen-2xl mx-auto flex flex-wrap gap-y-10 px-10 py-10 text-sm gap-x-10 md:justify-around 2xl:justify-evenly sm:text-base md:py-5'>
         <div className='w-full md:w-52 lg:w-64 xl:w-80 '>
           <Header>ABOUT</Header>
@@ -50,7 +51,7 @@ const Header = ({ children }) => {
 
 const IconWithText = ({ text, Icon, children }) => {
   return (
-    <div className='mt-1.5 flex'>
+    <div className='mt-1 flex'>
       <Icon className='w-6 h-6 md:w-7 md:h-7' />
       {children ? (
         children
