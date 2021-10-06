@@ -3,6 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import pageAnimation from '../pageAnimation';
 
 const NavigationNextPrevious = ({ next, previous, searchFunc, className }) => {
   const location = useLocation();
@@ -18,11 +19,13 @@ const NavigationNextPrevious = ({ next, previous, searchFunc, className }) => {
   };
 
   return (
-    <div
+    <motion.div
+      layout
       className={
         'flex w-full bg-white shadow rounded-lg items-center justify-center mb-3 py-4 text-2xl space-x-12 text-blue-600' +
         (className ? ` ${className}` : ' ')
       }
+      {...pageAnimation}
     >
       {
         <motion.div
@@ -58,7 +61,7 @@ const NavigationNextPrevious = ({ next, previous, searchFunc, className }) => {
           />
         </motion.div>
       }
-    </div>
+    </motion.div>
   );
 };
 

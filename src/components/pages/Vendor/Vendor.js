@@ -17,6 +17,9 @@ import MakeOrder from './MakeOrder';
 import { useForm } from 'react-hook-form';
 import TextareaAutosize from 'react-textarea-autosize';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
+import pageAnimation from '../pageAnimation';
+import { motion, useAnimation, AnimatePresence } from 'framer-motion';
+
 const Vendor = ({
   user,
   loading,
@@ -40,6 +43,9 @@ const Vendor = ({
   const { register, handleSubmit, watch } = useForm();
   const uploadedAvatar = watch('avatar');
   const [previewAvatar, setPreviewAvatar] = useState();
+  const [sentEditRequest, setSentEditRequest] = useState(false);
+  const controls = useAnimation();
+  const controlsTextArea = useAnimation();
 
   const toggleShowEdit = () => {
     setShowEdit((prev) => !prev);
@@ -50,10 +56,17 @@ const Vendor = ({
       data.avatar = data.avatar[0];
     }
     editVendor(profileId, data);
-    toggleShowEdit();
+    setSentEditRequest(true);
     error && editVendorClearError();
     previewAvatar && setPreviewAvatar(undefined);
   };
+
+  useEffect(() => {
+    if (sentEditRequest === true && loadingEditVendor === false) {
+      setSentEditRequest(true);
+      toggleShowEdit();
+    }
+  }, [sentEditRequest, loadingEditVendor]);
 
   const toggleShowMakeOrder = () => {
     setShowMakeOrder((prev) => !prev);
@@ -78,13 +91,36 @@ const Vendor = ({
     }
   }, [uploadedAvatar]);
 
+  const animateMakeOrder = () => {
+    showMakeOrder &&
+      controls.start({
+        x: 0,
+        opacity: 1,
+      });
+  };
+
+  const animateTextArea = () => {
+    controlsTextArea.start({
+      x: 0,
+      opacity: 1,
+    });
+  };
+
   return loading ? (
     <Loading className='py-32' />
   ) : error ? (
     <ApiError error={error} center />
   ) : data ? (
     <>
-      <div className='px-5 py-9 mt-3 mx-3 flex flex-col bg-white shadow rounded-lg items-center md:px-10 md:w-2/3 md:mx-auto xl:w-1/2 xl:mx-auto relative'>
+      <motion.div
+        layout
+        onLayoutAnimationComplete={() => {
+          animateMakeOrder();
+          animateTextArea();
+        }}
+        className='px-5 py-9 mt-3 mx-3 flex flex-col bg-white shadow rounded-lg items-center md:px-10 md:w-2/3 md:mx-auto xl:w-1/2 xl:mx-auto relative'
+        {...pageAnimation}
+      >
         <ApiError
           error={errorEditVendor}
           clearFunc={editVendorClearError}
@@ -92,30 +128,40 @@ const Vendor = ({
         />
         {loadingEditVendor && <Loading className='rounded-lg z-20' cover />}
 
-        <div className='text-xl font-semibold text-center'>
+        <motion.div className='text-xl font-semibold text-center'>
           {showEdit ? (
-            <input
+            <motion.input
+              layoutId='nameAccount'
+              layout
               type='text'
               defaultValue={name}
               required
               {...register('name')}
             />
           ) : (
-            name
+            <motion.div layout='position' layoutId='nameAccount'>
+              {name}
+            </motion.div>
           )}
-        </div>
+        </motion.div>
 
-        <label className='relative mt-6 mb-8'>
-          <img
+        <motion.label layout className='relative mt-6 mb-8'>
+          <motion.img
+            layout
             src={previewAvatar ? previewAvatar : avatar}
             alt={`${name}'s avatar`}
             className='shadow rounded h-64'
           />
           {showEdit && (
             <>
-              <div className='absolute flex cursor-pointer text-blue-600 top-0 bg-gray-100 bg-opacity-70 w-full h-full'>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                layout
+                className='absolute flex cursor-pointer text-blue-600 top-0 bg-gray-100 bg-opacity-70 w-full h-full'
+              >
                 <AiOutlineCloudUpload size='8rem' className='m-auto' />
-              </div>
+              </motion.div>
               <input
                 type='file'
                 accept='image/png, image/jpeg'
@@ -124,28 +170,55 @@ const Vendor = ({
               />
             </>
           )}
-        </label>
+        </motion.label>
 
-        <div className='self-start text-blue-600 text-lg font-medium mb-5'>
+        <motion.div
+          layout
+          className='self-start text-blue-600 text-lg font-medium mb-5'
+        >
           <div className=''>{`${firstName} ${lastName}`}</div>
           <div className='text-sm'>{email}</div>
-        </div>
-        <div className='w-full '>
+        </motion.div>
+        <motion.div className='w-full '>
           {isOwner && (
-            <div className='self-start mt-4 font-medium'>Description:</div>
+            <motion.div
+              layout='position'
+              className='self-start mt-4 font-medium'
+            >
+              Description:
+            </motion.div>
           )}
-          {showEdit ? (
-            <TextareaAutosize
-              className=''
-              defaultValue={description}
-              required
-              {...register('description')}
-            />
-          ) : (
-            description
-          )}
-        </div>
-        {showMakeOrder && <MakeOrder vendorId={ownerId} history={history} />}
+          <AnimatePresence exitBeforeEnter>
+            {showEdit && (
+              <motion.div
+                key='descriptionAccountTextArea'
+                initial={{ x: '-50px', opacity: 0 }}
+                animate={controlsTextArea}
+                exit={{ x: '50px', opacity: 0 }}
+              >
+                <TextareaAutosize
+                  defaultValue={description}
+                  required
+                  {...register('description')}
+                />
+              </motion.div>
+            )}
+            {!showEdit && (
+              <motion.div
+                className='break-all'
+                key='descriptionAccount'
+                initial={{ x: '-50px', opacity: 0 }}
+                animate={controlsTextArea}
+                exit={{ x: '50px', opacity: 0 }}
+              >
+                {description}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+        {showMakeOrder && (
+          <MakeOrder vendorId={ownerId} history={history} controls={controls} />
+        )}
         {!isOwner && !showMakeOrder && (
           <button
             onClick={user ? toggleShowMakeOrder : redirectToLogin}
@@ -158,31 +231,66 @@ const Vendor = ({
         )}
         {isOwner && (
           <>
-            <div className='self-start mt-4 font-medium'>Payment info:</div>
-            {showEdit ? (
-              <TextareaAutosize
-                defaultValue={paymentInfo}
-                required
-                {...register('paymentInfo')}
-              />
-            ) : (
-              <div className='self-start'>
-                {paymentInfo ? paymentInfo : 'Empty'}
-              </div>
-            )}
-            <button
-              className='self-start btn-basic py-2 w-44 mt-4'
-              type='button'
-              onClick={showEdit ? handleSubmit(handleEdit) : toggleShowEdit}
+            <motion.div layout className='self-start mt-4 font-medium'>
+              Payment info:
+            </motion.div>
+            <AnimatePresence exitBeforeEnter>
+              {showEdit ? (
+                <motion.div
+                  className='w-full'
+                  key='paymentInfoAccountTextArea'
+                  initial={{ x: '-50px', opacity: 0 }}
+                  animate={controlsTextArea}
+                  exit={{ x: '50px', opacity: 0 }}
+                >
+                  <TextareaAutosize
+                    defaultValue={paymentInfo}
+                    required
+                    {...register('paymentInfo')}
+                  />
+                </motion.div>
+              ) : (
+                <motion.div
+                  className='self-start break-all'
+                  key='paymentInfoAccount'
+                  initial={{ x: '-50px', opacity: 0 }}
+                  animate={controlsTextArea}
+                  exit={{ x: '50px', opacity: 0 }}
+                >
+                  {paymentInfo ? paymentInfo : 'Empty'}
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <motion.div
+              layout
+              className='flex w-full justify-start flex-wrap items-center gap-2 mt-3'
             >
-              {showEdit ? 'SUBMIT' : 'EDIT'}
-            </button>
+              <button
+                className='btn-basic w-44 py-1.5 px-7'
+                type='button'
+                onClick={showEdit ? handleSubmit(handleEdit) : toggleShowEdit}
+              >
+                {showEdit ? 'Confirm' : 'Edit'}
+              </button>
+              {showEdit && (
+                <input
+                  type='button'
+                  value='Close'
+                  onClick={toggleShowEdit}
+                  className='btn-basic w-44 py-1.5 px-7'
+                />
+              )}
+            </motion.div>
           </>
         )}
-      </div>
-      <div className='bg-white shadow rounded-lg text-center py-3 mt-3 font-medium text-xl text-gray-600'>
+      </motion.div>
+      <motion.div
+        layout
+        className='bg-white shadow rounded-lg text-center py-3 mt-3 font-medium text-xl text-gray-600'
+        {...pageAnimation}
+      >
         PORTFOLIO
-      </div>
+      </motion.div>
       <Album albumId={portfolio} isPortfolio />
     </>
   ) : null;

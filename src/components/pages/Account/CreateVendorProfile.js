@@ -13,6 +13,8 @@ import {
 import Loading from '../../Loading';
 import ApiError from '../../ApiError';
 import { getUser } from '../../../actions/auth';
+import { motion } from 'framer-motion';
+import pageAnimation from '../pageAnimation';
 
 const CreateVendorProfile = ({
   user,
@@ -47,7 +49,10 @@ const CreateVendorProfile = ({
   }, [vendorProfile, user, getUser]);
 
   return (
-    <div className='px-5 py-9 mt-3 mx-3 flex flex-col bg-white shadow rounded-lg md:px-10 md:w-2/3 md:mx-auto xl:w-1/2 xl:mx-auto relative'>
+    <motion.div
+      className='px-5 py-9 mt-3 mx-3 flex flex-col bg-white shadow rounded-lg md:px-10 md:w-2/3 md:mx-auto xl:w-1/2 xl:mx-auto relative'
+      {...pageAnimation}
+    >
       {loading && <Loading className='rounded-lg' cover />}
       {error && (
         <ApiError
@@ -124,7 +129,7 @@ const CreateVendorProfile = ({
           value='Create Profile'
         />
       </form>
-    </div>
+    </motion.div>
   );
 };
 

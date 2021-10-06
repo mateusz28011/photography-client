@@ -74,11 +74,11 @@ const Album = ({
   }, [user, creatorId]);
 
   return loading ? (
-    <Loading className='my-32' />
+    <Loading />
   ) : error ? (
     <ApiError error={error} center />
   ) : data ? (
-    <motion.div {...pageAnimation}>
+    <motion.div layout {...pageAnimation}>
       <AlbumApiErrors />
       {(showPreview || showPreview === 0) && (
         <Preview

@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router';
@@ -12,6 +13,7 @@ import {
 } from '../../../selectors';
 import ApiError from '../../ApiError';
 import Loading from '../../Loading';
+import pageAnimation from '../pageAnimation';
 import Cost from './Cost';
 import Notes from './Notes';
 import Status from './Status';
@@ -37,8 +39,8 @@ const Order = ({
   ) : error ? (
     <ApiError error={error} center />
   ) : data ? (
-    <div className='space-y-3'>
-      <div className='bg-white shadow rounded-b-lg p-5 relative'>
+    <motion.div layout className='space-y-3' {...pageAnimation}>
+      <motion.div layout className='bg-white shadow rounded-b-lg p-5 relative'>
         {errorUpdateOrderStatus && (
           <ApiError
             error={errorUpdateOrderStatus}
@@ -53,25 +55,25 @@ const Order = ({
             clearFunc={updateOrderCostClearError}
           />
         )}
-        <div className='text-xl text-center'>
+        <motion.div layout className='text-xl text-center'>
           Order number:
           <div className='ml-2 inline-block font-medium text-blue-600'>
             {data.id}
           </div>
-        </div>
+        </motion.div>
         <Status
           orderId={orderId}
           isVendor={isVendor}
           status={data.status}
           statusDisplay={data.statusDisplay}
         />
-        <div className='font-medium'>
+        <motion.div layout className='font-medium'>
           Order date:
           <div className='ml-2 inline-block font-normal text-blue-600'>
             {new Date(data.created).toLocaleString()}
           </div>
-        </div>
-        <div className='font-medium flex '>
+        </motion.div>
+        <motion.div layout className='font-medium flex '>
           {isVendor ? 'Client:' : 'Vendor:'}
           <div className='ml-2 inline-block font-normal text-blue-600'>
             {!isVendor && (
@@ -83,20 +85,20 @@ const Order = ({
               <div className='text-sm'>{`${data.vendor.firstName} ${data.vendor.lastName}`}</div>
             )}
           </div>
-        </div>
-        <div className='font-medium'>
+        </motion.div>
+        <motion.div layout className='font-medium'>
           Email:
           <div className='ml-2 inline-block font-normal text-blue-600'>
             {isVendor ? data.client.email : data.vendor.email}
           </div>
-        </div>
-        <div className='space-y-2'>
-          <div>
-            <div className='font-medium mt-2'>Description:</div>
+        </motion.div>
+        <motion.div layout className='space-y-2'>
+          <motion.div layout>
+            <div className='font-medium mt-2 break-all'>Description:</div>
             <div className='bg-gray-100 py-1 px-3 rounded-lg mt-1'>
               {data.description}
             </div>
-          </div>
+          </motion.div>
           <Cost
             orderId={orderId}
             isVendor={isVendor}
@@ -105,17 +107,17 @@ const Order = ({
             currency={data.currency}
           />
           {data.status === 4 && !isVendor && (
-            <div>
+            <motion.div layout>
               <div className='font-medium'>Payment info:</div>
               <div className='bg-gray-100 py-1 px-3 rounded-lg mt-1'>
                 {data.paymentInfo}
               </div>
-            </div>
+            </motion.div>
           )}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
       <Notes orderId={orderId} isVendor={isVendor} />
-    </div>
+    </motion.div>
   ) : null;
 };
 

@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiOutlineEdit } from 'react-icons/ai';
@@ -30,7 +31,7 @@ const Cost = ({
     <>
       {loading && <Loading className='rounded-b-lg' cover />}
       {showEditCost ? (
-        <form onSubmit={handleSubmit(onSubmit)} className='flex'>
+        <motion.form layout onSubmit={handleSubmit(onSubmit)} className='flex'>
           <div className='flex flex-col md:flex-row md:flex-wrap items-center '>
             <div className='font-medium self-start my-auto'>Cost:</div>
             <input
@@ -61,9 +62,9 @@ const Cost = ({
               className='btn-basic w-60 md:w-28 py-1.5 px-7 my-1 mx-2'
             />
           </div>
-        </form>
+        </motion.form>
       ) : (
-        <div className='font-medium'>
+        <motion.div layout className='font-medium'>
           Cost:
           <div className='ml-2 inline-block text-lg text-blue-600'>
             {cost ? `${cost} ${currency}` : '-----'}
@@ -75,7 +76,7 @@ const Cost = ({
               />
             )}
           </div>
-        </div>
+        </motion.div>
       )}
     </>
   ) : null;

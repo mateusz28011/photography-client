@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiOutlineEdit } from 'react-icons/ai';
@@ -55,9 +56,13 @@ const Status = ({
   return (
     <>
       {loading && <Loading className='rounded-b-lg' cover />}
-      <div className={'text-lg text-center' + (showEditStatus ? ' my-2' : '')}>
+      <motion.div
+        layout
+        className={'text-lg text-center' + (showEditStatus ? ' my-2' : '')}
+      >
         {showEditStatus ? (
-          <form
+          <motion.form
+            layout
             onSubmit={handleSubmit(onSubmit)}
             className='w-56 sm:w-auto text-blue-600'
           >
@@ -86,11 +91,14 @@ const Status = ({
                 className='btn-basic w-full sm:w-auto sm:ml-4 py-1.5 px-7 my-2.5 sm:mt-1 sm:mb-0'
               />
             </div>
-          </form>
+          </motion.form>
         ) : (
-          <>
+          <motion.div layout>
             <div className='inline-block mr-2 text-xl text-black'>Status:</div>
-            <div className='inline-block text-lg font-medium text-blue-600'>
+            <div
+              layout
+              className='inline-block text-lg font-medium text-blue-600'
+            >
               {statusDisplay}
               {statuses && (
                 <AiOutlineEdit
@@ -100,9 +108,9 @@ const Status = ({
                 />
               )}
             </div>
-          </>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
     </>
   );
 };

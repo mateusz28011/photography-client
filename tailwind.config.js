@@ -11,7 +11,8 @@ module.exports = {
         ssm: '450px',
       },
       minHeight: {
-        tile: '20rem',
+        tile: '16rem',
+        'tile-sm': '20rem',
       },
     },
   },

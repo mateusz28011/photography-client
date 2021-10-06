@@ -32,7 +32,7 @@ const Orders = ({ loading, error, data, user, searchOrders }) => {
   };
 
   return (
-    <motion.div {...pageAnimation}>
+    <>
       <OrdersPanel location={location} history={history} />
       {loading ? (
         <Loading className='py-32' />
@@ -41,7 +41,11 @@ const Orders = ({ loading, error, data, user, searchOrders }) => {
       ) : dataLoaded ? (
         orders && orders?.length !== 0 ? (
           <>
-            <div className='bg-white rounded-lg my-4 shadow py-4 sm:px-4 '>
+            <motion.div
+              layout
+              className='bg-white rounded-lg my-4 shadow py-4 sm:px-4 '
+              {...pageAnimation}
+            >
               <Table className='table-auto bg-white w-full text-center text-base sm:shadow'>
                 <Thead>
                   <Tr className='bg-blue-600 text-base md:text-lg text-white'>
@@ -91,7 +95,8 @@ const Orders = ({ loading, error, data, user, searchOrders }) => {
                   ))}
                 </Tbody>
               </Table>
-            </div>
+            </motion.div>
+
             <NavigationNextPrevious
               previous={data?.previous}
               next={data?.next}
@@ -103,7 +108,7 @@ const Orders = ({ loading, error, data, user, searchOrders }) => {
           </div>
         )
       ) : null}
-    </motion.div>
+    </>
   );
 };
 const loadingSelector = createLoadingSelector(['SEARCH']);

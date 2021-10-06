@@ -8,8 +8,10 @@ import {
 } from '../../../selectors';
 import Loading from '../../Loading';
 import ApiError from '../../ApiError';
+import { motion } from 'framer-motion';
 
 const MakeOrder = ({
+  controls,
   loading,
   error,
   vendorId,
@@ -30,7 +32,14 @@ const MakeOrder = ({
   };
 
   return (
-    <form className='w-full mt-8' onSubmit={handleSubmit(handleMakeOrder)}>
+    <motion.form
+      initial={{ x: '-25%', opacity: 0 }}
+      transition={{ type: 'spring', duration: 0.5 }}
+      animate={controls}
+      exit={{ x: '-25%', opacity: 0 }}
+      className='w-full mt-8'
+      onSubmit={handleSubmit(handleMakeOrder)}
+    >
       {loading && <Loading className='rounded-lg' cover />}
       {error && (
         <ApiError error={error} clearFunc={createOrderClearError} center />
@@ -52,7 +61,7 @@ const MakeOrder = ({
         type='submit'
         value='Submit'
       />
-    </form>
+    </motion.form>
   );
 };
 

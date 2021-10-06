@@ -9,9 +9,9 @@ const Welcome = () => {
     >
       <h1 className='text-center text-5xl md:text-6xl xl:text-7xl font-medium font-sans col-start-1 col-end-5 row-start-1 row-end-3 z-10'>
         Welcome to <span className='text-blue-600 font-bold'>PhotoBay</span>
-        <h3 className='text-base md:text-lg  lg:text-xl mt-4 md:mt-3 text-gray-600'>
+        <p className='text-base md:text-lg  lg:text-xl mt-4 md:mt-3 text-gray-600'>
           Place where photographers and their customers can drop the anchor
-        </h3>
+        </p>
       </h1>
       <img
         src={welcomeGraphic}

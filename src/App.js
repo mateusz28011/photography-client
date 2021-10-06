@@ -18,7 +18,7 @@ import Orders from './components/pages/Orders/Orders';
 import Home from './components/pages/Home/Home';
 import Account from './components/pages/Account/Account';
 import Album from './components/Album/Album';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 
 const App = () => {
   const location = useLocation();
@@ -31,38 +31,40 @@ const App = () => {
     <Provider store={store}>
       <Navbar />
       <div className='max-w-screen-2xl min-h-screen mx-auto w-full'>
-        <AnimatePresence exitBeforeEnter>
-          <Switch location={location} key={location.pathname}>
-            <Route exact path='/'>
-              <Home />
-            </Route>
-            <Route exact path='/login'>
-              <Login />
-            </Route>
-            <Route exact path='/register'>
-              <Register />
-            </Route>
-            <Route exact path='/search'>
-              <Search />
-            </Route>
-            <Route exact path='/vendor/:profileId'>
-              <Vendor />
-            </Route>
-            <PrivateRoute exact path='/orders/' component={Orders} />
-            <PrivateRoute exact path='/order/:orderId' component={Order} />
-            <PrivateRoute
-              exact
-              path='/albums/'
-              component={Albums}
-              isVendorRoute
-            />
-            <PrivateRoute exact path='/account/' component={Account} />
-            <Route exact path='/album/' component={Album} />
-            <Route>
-              <Home />
-            </Route>
-          </Switch>
-        </AnimatePresence>
+        <AnimateSharedLayout>
+          <AnimatePresence exitBeforeEnter>
+            <Switch location={location} key={location.pathname}>
+              <Route exact path='/'>
+                <Home />
+              </Route>
+              <Route exact path='/login'>
+                <Login />
+              </Route>
+              <Route exact path='/register'>
+                <Register />
+              </Route>
+              <Route exact path='/search'>
+                <Search />
+              </Route>
+              <Route exact path='/vendor/:profileId'>
+                <Vendor />
+              </Route>
+              <PrivateRoute exact path='/orders/' component={Orders} />
+              <PrivateRoute exact path='/order/:orderId' component={Order} />
+              <PrivateRoute
+                exact
+                path='/albums/'
+                component={Albums}
+                isVendorRoute
+              />
+              <PrivateRoute exact path='/account/' component={Account} />
+              <Route exact path='/album/' component={Album} />
+              <Route>
+                <Home />
+              </Route>
+            </Switch>
+          </AnimatePresence>
+        </AnimateSharedLayout>
       </div>
       <Footer />
     </Provider>

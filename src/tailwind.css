@@ -15,8 +15,8 @@
     @apply flex flex-col min-h-screen;
   }
 
-  .menuLinkStyle {
-    @apply mt-3 md:my-2 md:mx-4;
+  .glowMenuLink {
+    text-shadow: 1px 1px 12px white;
   }
 
   .btn-border {

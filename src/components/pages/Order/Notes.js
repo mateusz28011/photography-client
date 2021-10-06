@@ -9,6 +9,8 @@ import Loading from '../../Loading';
 import ApiError from '../../ApiError';
 import NavigationNextPrevious from '../Search/NavigationNextPrevious';
 import Message from './Message';
+import { motion } from 'framer-motion';
+import pageAnimation from '../pageAnimation';
 
 const Notes = ({
   loading,
@@ -35,7 +37,11 @@ const Notes = ({
     <>
       {data?.results?.length !== 0 && (
         <>
-          <div className='bg-white shadow rounded-lg p-5 flex flex-col-reverse'>
+          <motion.div
+            layout
+            {...pageAnimation}
+            className='bg-white shadow rounded-lg p-5 flex flex-col-reverse'
+          >
             {data?.results.map((note, index) => (
               <div
                 key={index}
@@ -55,7 +61,7 @@ const Notes = ({
                 {note.note}
               </div>
             ))}
-          </div>
+          </motion.div>
           {(data?.previous || data?.next) && (
             <NavigationNextPrevious
               next={data.previous}

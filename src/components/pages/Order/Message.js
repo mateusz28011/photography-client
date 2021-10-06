@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React, { useEffect, useRef, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
@@ -47,11 +48,12 @@ const Message = ({
       {error && (
         <ApiError error={error} clearFunc={createNoteClearError} center />
       )}
-      <form
+      <motion.form
+        layout
         className='bg-white shadow rounded-lg p-5 flex flex-col items-center'
         onSubmit={handleSubmit(handleCreateNote)}
       >
-        <div className='w-full sm:w-1/2 lg:w-1/3'>
+        <div className='w-full sm:w-2/3 md:w-1/2 lg:w-1/3'>
           <div className='font-medium text-blue-600 text-lg'>Send message:</div>
           <textarea className='w-full h-60' {...register('note')} required />
           <div className='h-16'>
@@ -66,7 +68,7 @@ const Message = ({
             )}
           </div>
         </div>
-      </form>
+      </motion.form>
     </>
   );
 };

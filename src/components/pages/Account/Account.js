@@ -41,18 +41,26 @@ const Account = ({
   ) : error ? (
     <ApiError error={error} center />
   ) : user ? (
-    <motion.div {...pageAnimation}>
+    <>
       <ApiError error={errorEditUser} clearFunc={editUserClearError} center />
-      <div className='px-5 py-9 mt-3 mx-3 flex flex-col bg-white shadow rounded-lg md:px-10 md:w-2/3 md:mx-auto xl:w-1/2 xl:mx-auto font-medium relative'>
+      <motion.div
+        layout
+        className='px-5 py-9 mt-3 mx-3 flex flex-col bg-white shadow rounded-lg md:px-10 md:w-2/3 md:mx-auto xl:w-1/2 xl:mx-auto font-medium relative'
+        {...pageAnimation}
+      >
         {loadingEditUser && <Loading cover className='rounded-lg' />}
-        <div className='text-2xl mb-8 font-bold self-center'>My account</div>
-        <div>
+        <motion.div layout className='text-2xl mb-8 font-bold self-center'>
+          My account
+        </motion.div>
+        <motion.div layout>
           Email:
           <div className='ml-2 inline-block text-blue-600'>{user.email}</div>
-        </div>
-        <div>
-          First name:
-          <div className='ml-2 inline-block text-blue-600'>
+        </motion.div>
+        <motion.div layout='position'>
+          <motion.div layout className='inline-block'>
+            First name:
+          </motion.div>
+          <motion.div layout className='ml-2 inline-block text-blue-600'>
             {showEdit ? (
               <input
                 type='text'
@@ -64,11 +72,13 @@ const Account = ({
             ) : (
               user.firstName
             )}
-          </div>
-        </div>
-        <div>
-          Last name:
-          <div className='ml-2 inline-block text-blue-600'>
+          </motion.div>
+        </motion.div>
+        <motion.div layout='position'>
+          <motion.div layout className='inline-block'>
+            Last name:
+          </motion.div>
+          <motion.div layout className='ml-2 inline-block text-blue-600'>
             {showEdit ? (
               <input
                 type='text'
@@ -80,28 +90,41 @@ const Account = ({
             ) : (
               user.lastName
             )}
-          </div>
-        </div>
-        <div>
+          </motion.div>
+        </motion.div>
+        <motion.div layout>
           Join date:
           <div className='ml-2 inline-block text-blue-600'>
             {new Date(user.joinDate).toLocaleDateString()}
           </div>
-        </div>
-        <button
-          className='btn-basic py-2 w-44 mt-4'
-          type='button'
-          onClick={showEdit ? handleSubmit(handleEdit) : toggleShowEdit}
+        </motion.div>
+        <motion.div
+          layout
+          className='flex w-full justify-start flex-wrap items-center gap-2 mt-2'
         >
-          {showEdit ? 'SUBMIT' : 'EDIT'}
-        </button>
-      </div>
+          <button
+            className='btn-basic w-44 py-1.5 px-7'
+            type='button'
+            onClick={showEdit ? handleSubmit(handleEdit) : toggleShowEdit}
+          >
+            {showEdit ? 'Confirm' : 'Edit'}
+          </button>
+          {showEdit && (
+            <input
+              type='button'
+              value='Close'
+              onClick={toggleShowEdit}
+              className='btn-basic w-44 py-1.5 px-7'
+            />
+          )}
+        </motion.div>
+      </motion.div>
       {user.isVendor ? (
         <Vendor profileId={user.profile} />
       ) : (
         <CreateVendorProfile />
       )}
-    </motion.div>
+    </>
   ) : null;
 };
 const loadingSelector = createLoadingSelector(['GET_USER']);

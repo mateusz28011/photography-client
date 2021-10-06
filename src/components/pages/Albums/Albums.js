@@ -20,12 +20,13 @@ import AlbumsPanel from './AlbumsPanel';
 import setQueryParams from '../../../utils/setQueryParams';
 import getQueryParams from '../../../utils/getQueryParams';
 import { useLocation, useHistory } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import pageAnimation from '../pageAnimation';
 
 const Albums = ({
   loading,
   error,
   data,
-  user,
   searchAlbums,
   errorCreateAlbum,
   searchCreateAlbumClearError,
@@ -78,7 +79,11 @@ const Albums = ({
           />
           {!albumId && (
             <>
-              <div className='grid grid-cols-2 min-h-tile sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 p-3 2xl:justify-between 2xl:px-0'>
+              <motion.div
+                layout
+                className='grid grid-cols-2 min-h-tile sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 p-3 2xl:justify-between 2xl:px-0'
+                {...pageAnimation}
+              >
                 {showCreateAlbum ? (
                   <CreateAlbum toggleShowCreateAlbum={toggleShowCreateAlbum} />
                 ) : (
@@ -104,7 +109,7 @@ const Albums = ({
                       />
                     );
                   })}
-              </div>
+              </motion.div>
               <NavigationNextPrevious
                 previous={data?.previous}
                 next={data?.next}

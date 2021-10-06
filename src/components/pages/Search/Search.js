@@ -12,7 +12,7 @@ import ApiError from '../../ApiError';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 import Loading from '../../Loading';
 import setQueryParams from '../../../utils/setQueryParams';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion, useAnimation } from 'framer-motion';
 import pageAnimation from '../pageAnimation';
 
 const Search = ({ loading, error, data, searchProfiles }) => {
@@ -21,6 +21,7 @@ const Search = ({ loading, error, data, searchProfiles }) => {
   const { register, handleSubmit } = useForm();
   const [showOrdering, setShowOrdering] = useState(false);
   const [dataLoaded, setDataLoaded] = useState(false);
+  const controls = useAnimation();
 
   const toggleShowOrdering = () => {
     setShowOrdering((prev) => !prev);
@@ -44,10 +45,24 @@ const Search = ({ loading, error, data, searchProfiles }) => {
     dataLoaded === false && setDataLoaded(true);
   }, [searchProfiles, location, dataLoaded]);
 
+  const animateFilterEnter = () => {
+    showOrdering === true &&
+      controls.start({
+        x: 0,
+        opacity: 1,
+      });
+  };
+
   return (
-    <motion.div {...pageAnimation}>
-      <div className='bg-white rounded-b-lg shadow'>
-        <form
+    <>
+      <motion.div
+        layout
+        onLayoutAnimationComplete={animateFilterEnter}
+        className='bg-white rounded-b-lg shadow'
+        {...pageAnimation}
+      >
+        <motion.form
+          layout
           onSubmit={handleSubmit(onSubmitSearch)}
           className='flex flex-col items-center p-5 '
         >
@@ -70,9 +85,14 @@ const Search = ({ loading, error, data, searchProfiles }) => {
               className='btn-basic ml-4 py-1.5 px-5 mt-1 mb-1'
             />
           </div>
-        </form>
-        <form onSubmit={handleSubmit(onSubmitFilter)} className='text-lg'>
-          <label
+        </motion.form>
+        <motion.form
+          layout
+          onSubmit={handleSubmit(onSubmitFilter)}
+          className='text-lg'
+        >
+          <motion.label
+            layout
             htmlFor='ordering'
             className='font-medium text-gray-700 flex items-center pb-2 pl-3'
           >
@@ -88,55 +108,65 @@ const Search = ({ loading, error, data, searchProfiles }) => {
                 className='ml-2 cursor-pointer'
               />
             )}
-          </label>
-          {showOrdering && (
-            <div className='flex w-full justify-start flex-wrap items-center pb-5 px-3'>
-              <select
-                name='ordering'
-                {...register('ordering')}
-                className='w-56 flex-shrink'
+          </motion.label>
+          <AnimatePresence>
+            {showOrdering && (
+              <motion.div
+                initial={{ x: '-25%', opacity: 0 }}
+                transition={{ type: 'spring', duration: 0.5 }}
+                animate={controls}
+                exit={{ x: '-25%', opacity: 0 }}
+                className='flex w-full justify-start flex-wrap items-center pb-5 px-3'
               >
-                <option value=''>-----</option>
-                <option value='name'>name - ascending</option>
-                <option value='-name'>name - descending</option>
-                <option value='created'>created - ascending</option>
-                <option value='-created'>created - descending</option>
-              </select>
-              <input
-                type='submit'
-                value='Filter'
-                className='btn-basic ml-4 py-1.5 px-7 mt-1'
-              />
-            </div>
-          )}
-        </form>
-      </div>
-      <div className=''>
-        {loading ? (
-          <Loading />
-        ) : error ? (
-          <ApiError error={error} center />
-        ) : dataLoaded ? (
-          data && data.results.length !== 0 ? (
-            <>
-              <div className='mt-3 grid md:grid-cols-2 md:gap-x-3 auto-rows-max px-3 2xl:px-0'>
-                {data.results.map((vendor, index) => (
-                  <Vendor vendor={vendor} showVendor={showVendor} key={index} />
-                ))}
-              </div>
-              <NavigationNextPrevious
-                previous={data?.previous}
-                next={data?.next}
-              />
-            </>
-          ) : (
-            <div className='w-full my-5 text-xl font-medium tracking-wide text-center'>
-              Nothing was found
-            </div>
-          )
-        ) : null}
-      </div>
-    </motion.div>
+                <select
+                  name='ordering'
+                  {...register('ordering')}
+                  className='w-56 flex-shrink'
+                >
+                  <option value=''>-----</option>
+                  <option value='name'>name - ascending</option>
+                  <option value='-name'>name - descending</option>
+                  <option value='created'>created - ascending</option>
+                  <option value='-created'>created - descending</option>
+                </select>
+                <input
+                  type='submit'
+                  value='Filter'
+                  className='btn-basic ml-4 py-1.5 px-7 mt-1'
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.form>
+      </motion.div>
+      {loading ? (
+        <Loading />
+      ) : error ? (
+        <ApiError error={error} center />
+      ) : dataLoaded ? (
+        data && data.results.length !== 0 ? (
+          <>
+            <motion.div
+              layout='position'
+              {...pageAnimation}
+              className='mt-3 grid md:grid-cols-2 md:gap-x-3 auto-rows-max px-3 2xl:px-0'
+            >
+              {data.results.map((vendor, index) => (
+                <Vendor vendor={vendor} showVendor={showVendor} key={index} />
+              ))}
+            </motion.div>
+            <NavigationNextPrevious
+              previous={data?.previous}
+              next={data?.next}
+            />
+          </>
+        ) : (
+          <div className='w-full my-5 text-xl font-medium tracking-wide text-center'>
+            Nothing was found
+          </div>
+        )
+      ) : null}
+    </>
   );
 };
 
