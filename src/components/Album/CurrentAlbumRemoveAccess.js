@@ -30,7 +30,13 @@ const CurrentAlbumRemoveAccess = ({
   }, [loading, loadingUserId]);
 
   return (
-    <div className='w-full'>
+    <motion.div
+      layout='position'
+      initial={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      animate={{ opacity: 1 }}
+      className='w-full'
+    >
       <ApiError
         error={error}
         clearFunc={removeAccessFromAlbumClearError}
@@ -77,11 +83,14 @@ const CurrentAlbumRemoveAccess = ({
           ))}
         </div>
       ) : (
-        <div className='w-full my-5 text-xl font-medium tracking-wide'>
+        <motion.div
+          layout='position'
+          className='w-full my-5 text-xl font-medium tracking-wide'
+        >
           No user has been granted access
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

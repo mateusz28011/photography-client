@@ -26,7 +26,6 @@ const App = () => {
   useEffect(() => {
     if (doesHttpOnlyCookieExist('refresh-token')) store.dispatch(getUser());
   }, []);
-
   return (
     <Provider store={store}>
       <Navbar />

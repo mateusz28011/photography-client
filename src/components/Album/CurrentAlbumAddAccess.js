@@ -72,42 +72,61 @@ const CurrentAlbumAddAccess = ({
   }, [searchUsersClearData]);
 
   return (
-    <>
-      <form
+    <motion.div
+      initial={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      animate={{ opacity: 1 }}
+      layout='position'
+      className='w-full'
+    >
+      <motion.form
+        layout
         onSubmit={handleSubmit(onSubmitSearch)}
         className='flex flex-col items-center py-5 px-2 ssm:p-5'
       >
-        <label
+        <motion.label
+          layout
           htmlFor='search'
           className='text-lg mb-2 ssm:mb-0 md:text-xl font-medium text-gray-700 text-center'
         >
           Search in e-mails, first and last names of users
-        </label>
-        <div className='flex w-full justify-center flex-wrap items-center'>
-          <input
+        </motion.label>
+        <motion.div
+          layout
+          className='flex w-full justify-center flex-wrap items-center'
+        >
+          <motion.input
+            layout
             type='search'
             name='search'
             required
             {...register('search')}
             className='mx-2 ssm:w-72 flex-shrink mb-1'
           />
-          <input
+          <motion.input
+            layout
             type='submit'
             value='Search'
             disabled={loading ? true : false}
             className='btn-basic mx-2 py-1.5 px-5 mt-1 mb-1 w-full ssm:w-auto'
           />
-        </div>
-      </form>
+        </motion.div>
+      </motion.form>
 
       {loading ? (
-        <Loading className='py-4' />
+        <Loading className='py-4' center />
       ) : error ? (
         <div className='w-full -mt-3'>
           <ApiError error={error} clearFunc={searchUsersClearError} center />
         </div>
       ) : (
-        <div className='w-full -mt-3'>
+        <motion.div
+          initial={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          animate={{ opacity: 1 }}
+          layout='position'
+          className='-mt-3  lg:px-8'
+        >
           <ApiError
             error={errorAddAccessToAlbum}
             clearFunc={addAccessToAlbumClearError}
@@ -159,23 +178,27 @@ const CurrentAlbumAddAccess = ({
               </div>
               <div className='px-4 mb-2 mt-5'>
                 <NavigationNextPrevious
-                  className=' bg-orange-00 ring-1 ring-blue-600'
+                  className='ring-1 ring-blue-600'
                   previous={data.previous}
                   next={data.next}
                   searchFunc={searchUsers}
+                  animationOff
                 />
               </div>
             </>
           ) : (
             data !== undefined && (
-              <div className='w-full my-5 text-xl font-medium tracking-wide'>
+              <motion.div
+                layout='position'
+                className='w-full my-5 text-xl font-medium tracking-wide'
+              >
                 Nothing was found
-              </div>
+              </motion.div>
             )
           )}
-        </div>
+        </motion.div>
       )}
-    </>
+    </motion.div>
   );
 };
 

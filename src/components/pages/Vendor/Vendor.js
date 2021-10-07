@@ -128,11 +128,10 @@ const Vendor = ({
         />
         {loadingEditVendor && <Loading className='rounded-lg z-20' cover />}
 
-        <motion.div className='text-xl font-semibold text-center'>
+        <motion.div layout className='text-xl font-semibold text-center'>
           {showEdit ? (
             <motion.input
               layoutId='nameAccount'
-              layout
               type='text'
               defaultValue={name}
               required
@@ -176,8 +175,13 @@ const Vendor = ({
           layout
           className='self-start text-blue-600 text-lg font-medium mb-5'
         >
-          <div className=''>{`${firstName} ${lastName}`}</div>
-          <div className='text-sm'>{email}</div>
+          <motion.div
+            layout
+            className=''
+          >{`${firstName} ${lastName}`}</motion.div>
+          <motion.div layout className='text-sm'>
+            {email}
+          </motion.div>
         </motion.div>
         <motion.div className='w-full '>
           {isOwner && (
@@ -191,6 +195,7 @@ const Vendor = ({
           <AnimatePresence exitBeforeEnter>
             {showEdit && (
               <motion.div
+                layout
                 key='descriptionAccountTextArea'
                 initial={{ x: '-50px', opacity: 0 }}
                 animate={controlsTextArea}
@@ -205,6 +210,7 @@ const Vendor = ({
             )}
             {!showEdit && (
               <motion.div
+                layout
                 className='break-all'
                 key='descriptionAccount'
                 initial={{ x: '-50px', opacity: 0 }}
@@ -220,14 +226,15 @@ const Vendor = ({
           <MakeOrder vendorId={ownerId} history={history} controls={controls} />
         )}
         {!isOwner && !showMakeOrder && (
-          <button
+          <motion.button
+            layout
             onClick={user ? toggleShowMakeOrder : redirectToLogin}
             className={
               'btn-basic py-2 w-full mt-6' + (user ? '' : ' opacity-60')
             }
           >
             {user ? 'Make Order' : 'Sign in to make order'}
-          </button>
+          </motion.button>
         )}
         {isOwner && (
           <>

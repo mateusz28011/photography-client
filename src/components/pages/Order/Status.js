@@ -66,8 +66,13 @@ const Status = ({
             onSubmit={handleSubmit(onSubmit)}
             className='w-56 sm:w-auto text-blue-600'
           >
-            <div className='flex w-full justify-start sm:justify-center flex-wrap items-center sm:px-3 sm:flex-nowrap'>
-              <div className='mr-2 text-xl text-black t'>Set status:</div>
+            <motion.div
+              layoutId='statusContent'
+              className='flex justify-start sm:justify-center flex-wrap items-center sm:px-3 sm:flex-nowrap'
+            >
+              <motion.div layoutId='status' className='mr-2 text-xl text-black'>
+                Set status:
+              </motion.div>
               <select
                 name='status'
                 {...register('status')}
@@ -90,13 +95,19 @@ const Status = ({
                 onClick={toggleShowEditStatus}
                 className='btn-basic w-full sm:w-auto sm:ml-4 py-1.5 px-7 my-2.5 sm:mt-1 sm:mb-0'
               />
-            </div>
+            </motion.div>
           </motion.form>
         ) : (
-          <motion.div layout>
-            <div className='inline-block mr-2 text-xl text-black'>Status:</div>
-            <div
-              layout
+          <>
+            <motion.div
+              layoutId='status'
+              className='inline-block mr-2 text-xl text-black'
+            >
+              Status:
+            </motion.div>
+            <motion.div
+              layout='position'
+              layoutId='statusContent'
               className='inline-block text-lg font-medium text-blue-600'
             >
               {statusDisplay}
@@ -107,8 +118,8 @@ const Status = ({
                   className='inline-block cursor-pointer ml-2'
                 />
               )}
-            </div>
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </motion.div>
     </>

@@ -32,8 +32,18 @@ const Cost = ({
       {loading && <Loading className='rounded-b-lg' cover />}
       {showEditCost ? (
         <motion.form layout onSubmit={handleSubmit(onSubmit)} className='flex'>
-          <div className='flex flex-col md:flex-row md:flex-wrap items-center '>
-            <div className='font-medium self-start my-auto'>Cost:</div>
+          <motion.div
+            layout
+            layoutId='cost'
+            className='font-medium self-start my-auto'
+          >
+            Cost:
+          </motion.div>
+          <motion.form
+            layout
+            layoutId='costContent'
+            className='flex flex-col md:flex-row md:flex-wrap items-center '
+          >
             <input
               type='text'
               required
@@ -61,12 +71,18 @@ const Cost = ({
               onClick={toggleShowEditCost}
               className='btn-basic w-60 md:w-28 py-1.5 px-7 my-1 mx-2'
             />
-          </div>
+          </motion.form>
         </motion.form>
       ) : (
         <motion.div layout className='font-medium'>
-          Cost:
-          <div className='ml-2 inline-block text-lg text-blue-600'>
+          <motion.div className='inline-block' layout layoutId='cost'>
+            Cost:
+          </motion.div>
+          <motion.form
+            layout='position'
+            layoutId='costContent'
+            className='ml-2 inline-block text-lg text-blue-600'
+          >
             {cost ? `${cost} ${currency}` : '-----'}
             {isVendor && [3, 4].includes(status) && (
               <AiOutlineEdit
@@ -75,7 +91,7 @@ const Cost = ({
                 className='inline-block cursor-pointer ml-3'
               />
             )}
-          </div>
+          </motion.form>
         </motion.div>
       )}
     </>

@@ -9,7 +9,7 @@ const Tile = ({ children, clickFunc }) => {
           transition: { duration: 0.25, ease: 'easeOut' },
         }
       }
-      onClick={clickFunc}
+      onClick={clickFunc ? clickFunc : undefined}
       className={
         'bg-white p-3 shadow auto-rows-fr rounded-lg flex flex-col items-center relative text-sm ssm:text-lg' +
         (clickFunc ? ' cursor-pointer ' : '')

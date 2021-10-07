@@ -5,9 +5,16 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import pageAnimation from '../pageAnimation';
 
-const NavigationNextPrevious = ({ next, previous, searchFunc, className }) => {
+const NavigationNextPrevious = ({
+  next,
+  previous,
+  searchFunc,
+  className,
+  animationOff,
+}) => {
   const location = useLocation();
   const history = useHistory();
+  const animation = animationOff ? undefined : pageAnimation;
 
   const updateLocation = (url) => {
     const { query } = queryString.parseUrl(url);
@@ -20,12 +27,12 @@ const NavigationNextPrevious = ({ next, previous, searchFunc, className }) => {
 
   return (
     <motion.div
-      layout
+      layout={animationOff ? false : true}
       className={
         'flex w-full bg-white shadow rounded-lg items-center justify-center mb-3 py-4 text-2xl space-x-12 text-blue-600' +
         (className ? ` ${className}` : ' ')
       }
-      {...pageAnimation}
+      {...animation}
     >
       {
         <motion.div

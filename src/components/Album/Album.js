@@ -99,7 +99,10 @@ const Album = ({
           returnToMyAlbums={returnToMyAlbums}
         />
       )}
-      <div className='grid grid-cols-2 auto-rows-fr sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 p-3 2xl:justify-between 2xl:px-0'>
+      <motion.div
+        layout
+        className='grid grid-cols-2 auto-rows-fr sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 p-3 2xl:justify-between 2xl:px-0'
+      >
         {returnToMyAlbums && (
           <Tile>
             <BackButton onClick={returnToMyAlbums} />
@@ -123,7 +126,6 @@ const Album = ({
                 ? () => handleSetAlbumId(null)
                 : handleSetAlbumId
             }
-            key={v4()}
           />
         )}
         <CreatorTile isCreator={isCreator} albumId={albumId} />
@@ -150,7 +152,7 @@ const Album = ({
               />
             );
           })}
-      </div>
+      </motion.div>
     </motion.div>
   ) : null;
 };

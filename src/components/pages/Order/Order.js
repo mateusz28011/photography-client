@@ -67,7 +67,7 @@ const Order = ({
           status={data.status}
           statusDisplay={data.statusDisplay}
         />
-        <motion.div layout className='font-medium'>
+        <motion.div layout className='font-medium mt-2.5'>
           Order date:
           <div className='ml-2 inline-block font-normal text-blue-600'>
             {new Date(data.created).toLocaleString()}

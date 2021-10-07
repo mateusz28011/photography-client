@@ -78,7 +78,10 @@ const AlbumManager = ({
   return (
     <>
       {showEditAlbum && (
-        <form
+        <motion.form
+          initial={isInsideAlbum && { opacity: 0 }}
+          transition={isInsideAlbum && { duration: 0.5 }}
+          animate={isInsideAlbum && { opacity: 1 }}
           className='space-y-3 my-auto'
           onClick={(e) => e.stopPropagation()}
           onSubmit={handleSubmit(handleEditAlbum)}
@@ -105,75 +108,77 @@ const AlbumManager = ({
             type='submit'
             value='Confirm'
           />
-        </form>
+        </motion.form>
       )}
       {showAddAccess && <CurrentAlbumAddAccess />}
       {showRemoveAccess && <CurrentAlbumRemoveAccess />}
       {showShare && <CurrentAlbumShare albumId={albumId} />}
       {isCreator && (
-        <ManagerButtons
-          showEdit={showEditAlbum}
-          handleToggleEdit={handleToggleEditAlbum}
-          handleDelete={handleDeleteAlbum}
-        >
-          {isInsideAlbum && (
-            <>
-              {!isPublic && (
-                <>
-                  <motion.div
-                    whileHover={{
-                      scale: 1.2,
-                    }}
-                  >
-                    <AiOutlineUserAdd
-                      onClick={toggleShowAddAccess}
-                      size='2rem'
-                      strokeWidth='-1rem'
-                      className={
-                        'rounded-full transition-colors cursor-pointer duration-100 p-0.5 ' +
-                        (showAddAccess
-                          ? 'bg-blue-600 text-white'
-                          : 'text-blue-600')
-                      }
-                    />
-                  </motion.div>
-                  <motion.div
-                    whileHover={{
-                      scale: 1.2,
-                    }}
-                  >
-                    <AiOutlineUserDelete
-                      onClick={toggleShowRemoveAccess}
-                      size='2rem'
-                      strokeWidth='-1rem'
-                      className={
-                        'rounded-full transition-colors cursor-pointer duration-100 p-0.5 ' +
-                        (showRemoveAccess
-                          ? 'bg-blue-600 text-white'
-                          : 'text-blue-600')
-                      }
-                    />
-                  </motion.div>
-                </>
-              )}
-              <motion.div
-                whileHover={{
-                  scale: 1.2,
-                }}
-              >
-                <AiOutlineShareAlt
-                  onClick={toggleShowShare}
-                  size='2rem'
-                  strokeWidth='-1rem'
-                  className={
-                    'rounded-full transition-colors cursor-pointer duration-100 p-0.5 ' +
-                    (showShare ? 'bg-blue-600 text-white' : 'text-blue-600')
-                  }
-                />
-              </motion.div>
-            </>
-          )}
-        </ManagerButtons>
+        <motion.div layout={isInsideAlbum ? true : false}>
+          <ManagerButtons
+            showEdit={showEditAlbum}
+            handleToggleEdit={handleToggleEditAlbum}
+            handleDelete={handleDeleteAlbum}
+          >
+            {isInsideAlbum && (
+              <>
+                {!isPublic && (
+                  <>
+                    <motion.div
+                      whileHover={{
+                        scale: 1.2,
+                      }}
+                    >
+                      <AiOutlineUserAdd
+                        onClick={toggleShowAddAccess}
+                        size='2rem'
+                        strokeWidth='-1rem'
+                        className={
+                          'rounded-full transition-colors cursor-pointer duration-100 p-0.5 ' +
+                          (showAddAccess
+                            ? 'bg-blue-600 text-white'
+                            : 'text-blue-600')
+                        }
+                      />
+                    </motion.div>
+                    <motion.div
+                      whileHover={{
+                        scale: 1.2,
+                      }}
+                    >
+                      <AiOutlineUserDelete
+                        onClick={toggleShowRemoveAccess}
+                        size='2rem'
+                        strokeWidth='-1rem'
+                        className={
+                          'rounded-full transition-colors cursor-pointer duration-100 p-0.5 ' +
+                          (showRemoveAccess
+                            ? 'bg-blue-600 text-white'
+                            : 'text-blue-600')
+                        }
+                      />
+                    </motion.div>
+                  </>
+                )}
+                <motion.div
+                  whileHover={{
+                    scale: 1.2,
+                  }}
+                >
+                  <AiOutlineShareAlt
+                    onClick={toggleShowShare}
+                    size='2rem'
+                    strokeWidth='-1rem'
+                    className={
+                      'rounded-full transition-colors cursor-pointer duration-100 p-0.5 ' +
+                      (showShare ? 'bg-blue-600 text-white' : 'text-blue-600')
+                    }
+                  />
+                </motion.div>
+              </>
+            )}
+          </ManagerButtons>
+        </motion.div>
       )}
     </>
   );

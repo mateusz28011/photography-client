@@ -8,7 +8,13 @@ const CurrentAlbumShare = ({ albumId }) => {
   const url = `${window.location.origin}/album/?album=${albumId}`;
 
   return (
-    <div className='mt-2 flex  items-center'>
+    <motion.div
+      initial={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      animate={{ opacity: 1 }}
+      layout='position'
+      className='mt-2 flex  items-center'
+    >
       <a
         href={url}
         className='break-all mx-2 text-sm ssm:text-base font-medium hover:text-blue-600'
@@ -36,7 +42,7 @@ const CurrentAlbumShare = ({ albumId }) => {
           )}
         </CopyToClipboard>
       </motion.div>
-    </div>
+    </motion.div>
   );
 };
 

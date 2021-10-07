@@ -4,6 +4,7 @@ import AlbumManager from './AlbumManager';
 import Loading from '../Loading';
 import { createErrorMessageSelector } from '../../selectors';
 import { AiOutlineLock } from 'react-icons/ai';
+import { motion } from 'framer-motion';
 
 const CurrentAlbumInfo = ({
   name,
@@ -51,16 +52,20 @@ const CurrentAlbumInfo = ({
 
   return (
     <>
-      <div className='bg-white shadow rounded-lg text-center py-3 font-base text-lg text-gray-600 relative'>
-        <div className='flex items-center justify-center'>
+      <motion.div
+        layout
+        className='bg-white shadow rounded-lg text-center py-3 font-base text-lg text-gray-600 relative'
+      >
+        <motion.div layout className='flex items-center justify-center'>
           Current album:
           <div className='ml-2 font-medium text-xl  text-blue-600'>{name}</div>
           {!isPublic && (
             <AiOutlineLock className='ml-1.5 text-blue-600 w-5 h-5' />
           )}
-        </div>
+        </motion.div>
         {isLoading() && <Loading className='rounded-lg' size={7} cover />}
-        <div
+        <motion.div
+          layout
           className={
             'w-full flex flex-col items-center justify-center' +
             (showEditAlbum ? ' mt-3 space-y-3' : '')
@@ -76,8 +81,8 @@ const CurrentAlbumInfo = ({
             isInsideAlbum
             setClickedDeleteToTrue={setClickedDeleteToTrue}
           />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </>
   );
 };
