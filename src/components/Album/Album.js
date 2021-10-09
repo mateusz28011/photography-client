@@ -23,6 +23,8 @@ import { motion } from 'framer-motion';
 import pageAnimation from '../pages/pageAnimation';
 
 const Album = ({
+  inOrder,
+  hideInfo,
   albumId: rootAlbumId,
   user,
   loading,
@@ -50,9 +52,9 @@ const Album = ({
     const album = getQueryParams(location, ['album']).album;
     album
       ? setAlbumId(parseInt(album))
-      : isPortfolio
-      ? setAlbumId(rootAlbumId)
-      : returnToMyAlbums && returnToMyAlbums();
+      : returnToMyAlbums
+      ? returnToMyAlbums()
+      : setAlbumId(rootAlbumId);
   }, [location, rootAlbumId, isPortfolio, returnToMyAlbums]);
 
   const handleSetAlbumId = (albumId) => {
@@ -87,8 +89,9 @@ const Album = ({
           setShowPreview={setShowPreview}
         />
       )}
-      {name && !isPortfolio && (
+      {name && !isPortfolio && !hideInfo && (
         <CurrentAlbumInfo
+          inOrder={inOrder}
           albumId={albumId}
           isCreator={isCreator}
           name={name}

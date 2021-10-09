@@ -17,6 +17,7 @@ import pageAnimation from '../pageAnimation';
 import Cost from './Cost';
 import Notes from './Notes';
 import Status from './Status';
+import OrderAlbum from './OrderAlbum';
 
 const Order = ({
   loading,
@@ -39,7 +40,7 @@ const Order = ({
   ) : error ? (
     <ApiError error={error} center />
   ) : data ? (
-    <motion.div layout className='space-y-3' {...pageAnimation}>
+    <motion.div layout='position' className='space-y-3' {...pageAnimation}>
       <motion.div layout className='bg-white shadow rounded-b-lg p-5 relative'>
         {errorUpdateOrderStatus && (
           <ApiError
@@ -117,6 +118,7 @@ const Order = ({
         </motion.div>
       </motion.div>
       <Notes orderId={orderId} isVendor={isVendor} />
+      <OrderAlbum albumId={data.album} isVendor={isVendor} />
     </motion.div>
   ) : null;
 };

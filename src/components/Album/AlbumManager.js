@@ -13,12 +13,16 @@ import {
   AiOutlineUserAdd,
   AiOutlineUserDelete,
   AiOutlineShareAlt,
+  AiOutlineUndo,
 } from 'react-icons/ai';
 import CurrentAlbumAddAccess from './CurrentAlbumAddAccess';
 import CurrentAlbumRemoveAccess from './CurrentAlbumRemoveAccess';
 import CurrentAlbumShare from './CurrentAlbumShare';
+import { setAlbumInOrder } from '../../actions/order';
 
 const AlbumManager = ({
+  orderId,
+  inOrder,
   isCreator,
   albumId,
   name,
@@ -29,6 +33,7 @@ const AlbumManager = ({
   editAlbum,
   isInsideAlbum,
   setClickedDeleteToTrue,
+  setAlbumInOrder,
 }) => {
   const { register, handleSubmit } = useForm();
   const [showAddAccess, setShowAddAccess] = useState(false);
@@ -175,6 +180,25 @@ const AlbumManager = ({
                     }
                   />
                 </motion.div>
+                {inOrder && (
+                  <motion.div
+                    whileHover={{
+                      scale: 1.2,
+                    }}
+                  >
+                    <AiOutlineUndo
+                      onClick={() => {
+                        setAlbumInOrder(orderId, null);
+                      }}
+                      size='2rem'
+                      strokeWidth='-1rem'
+                      className={
+                        'rounded-full transition-colors cursor-pointer duration-100 p-0.5 ' +
+                        (showShare ? 'bg-blue-600 text-white' : 'text-blue-600')
+                      }
+                    />
+                  </motion.div>
+                )}
               </>
             )}
           </ManagerButtons>
@@ -184,9 +208,14 @@ const AlbumManager = ({
   );
 };
 
-export default connect(null, {
+const mapStateToProps = (state) => ({
+  orderId: state.order?.data?.id,
+});
+
+export default connect(mapStateToProps, {
   deleteAlbum,
   editAlbum,
   addAccessToAlbum,
   removeAccessFromAlbum,
+  setAlbumInOrder,
 })(AlbumManager);

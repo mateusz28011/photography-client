@@ -1,5 +1,9 @@
 import axios from 'axios';
 import {
+  SET_ALBUM_IN_ORDER_ERROR_CLEAR,
+  SET_ALBUM_IN_ORDER_FAILURE,
+  SET_ALBUM_IN_ORDER_REQUEST,
+  SET_ALBUM_IN_ORDER_SUCCESS,
   CREATE_ORDER_ERROR_CLEAR,
   CREATE_ORDER_FAILURE,
   CREATE_ORDER_REQUEST,
@@ -80,4 +84,26 @@ export const updateOrderCost = (orderId, formData) => async (dispach) => {
 
 export const updateOrderCostClearError = () => async (dispach) => {
   dispach({ type: UPDATE_ORDER_COST_ERROR_CLEAR });
+};
+
+export const setAlbumInOrder = (orderId, albumId) => async (dispach) => {
+  try {
+    dispach({ type: SET_ALBUM_IN_ORDER_REQUEST });
+    const response = await axios.patch(`/orders/${orderId}/`, {
+      album: albumId,
+    });
+    dispach({
+      type: SET_ALBUM_IN_ORDER_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispach({
+      type: SET_ALBUM_IN_ORDER_FAILURE,
+      payload: error,
+    });
+  }
+};
+
+export const setAlbumInOrderClearError = () => async (dispach) => {
+  dispach({ type: SET_ALBUM_IN_ORDER_ERROR_CLEAR });
 };

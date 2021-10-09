@@ -7,6 +7,7 @@ import { AiOutlineLock } from 'react-icons/ai';
 import { motion } from 'framer-motion';
 
 const CurrentAlbumInfo = ({
+  inOrder,
   name,
   returnToMyAlbums,
   isCreator,
@@ -72,6 +73,7 @@ const CurrentAlbumInfo = ({
           }
         >
           <AlbumManager
+            inOrder={inOrder}
             isCreator={isCreator}
             albumId={albumId}
             name={name}

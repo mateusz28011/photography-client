@@ -6,8 +6,10 @@ import Loading from '../Loading';
 import AlbumManager from './AlbumManager';
 import BackButton from './BackButton';
 import { AiOutlineLock } from 'react-icons/ai';
+import AddAlbumToOrder from './AddAlbumToOrder';
 
 const AlbumTile = ({
+  inOrder,
   name,
   id: albumId,
   isPublic,
@@ -24,7 +26,12 @@ const AlbumTile = ({
   };
 
   const handleAlbumClick = () => {
-    handleSetAlbumId(albumId);
+    if (inOrder) {
+      const win = window.open(`/album/?album=${albumId}`, '_blank');
+      win.focus();
+    } else {
+      handleSetAlbumId(albumId);
+    }
   };
 
   return (
@@ -56,6 +63,7 @@ const AlbumTile = ({
               toggleShowEditAlbum={toggleShowEditAlbum}
             />
           )}
+          {inOrder && <AddAlbumToOrder albumId={albumId} />}
         </>
       )}
     </Tile>

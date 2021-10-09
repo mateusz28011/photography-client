@@ -24,6 +24,7 @@ import { motion } from 'framer-motion';
 import pageAnimation from '../pageAnimation';
 
 const Albums = ({
+  inOrder,
   loading,
   error,
   data,
@@ -80,7 +81,7 @@ const Albums = ({
           {!albumId && (
             <>
               <motion.div
-                layout
+                layout='position'
                 className='grid grid-cols-2 min-h-tile sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 p-3 2xl:justify-between 2xl:px-0'
                 {...pageAnimation}
               >
@@ -105,6 +106,7 @@ const Albums = ({
                       <AlbumTile
                         {...album}
                         handleSetAlbumId={handleSetAlbumId}
+                        inOrder={inOrder}
                         key={v4()}
                       />
                     );

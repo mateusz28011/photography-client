@@ -1,4 +1,5 @@
 import {
+  SET_ALBUM_IN_ORDER_SUCCESS,
   CREATE_ORDER_SUCCESS,
   GET_ORDER_SUCCESS,
   UPDATE_ORDER_COST_SUCCESS,
@@ -17,6 +18,8 @@ const order = (state = initialState, action) => {
     case UPDATE_ORDER_STATUS_SUCCESS:
       return { ...state, data: { ...state.data, ...payload } };
     case UPDATE_ORDER_COST_SUCCESS:
+      return { ...state, data: { ...state.data, ...payload } };
+    case SET_ALBUM_IN_ORDER_SUCCESS:
       return { ...state, data: { ...state.data, ...payload } };
     case GET_ORDER_SUCCESS:
       return { ...state, data: payload };
