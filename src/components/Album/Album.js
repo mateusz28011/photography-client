@@ -11,7 +11,6 @@ import PhotoTile from './PhotoTile';
 import AlbumTile from './AlbumTile';
 import Tile from './Tile';
 import CreatorTile from './CreatorTile';
-import Preview from './Preview';
 import Loading from '../Loading';
 import AlbumApiErrors from './AlbumApiErrors';
 import BackButton from './BackButton';
@@ -21,6 +20,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import getQueryParams from '../../utils/getQueryParams';
 import { motion } from 'framer-motion';
 import pageAnimation from '../pages/pageAnimation';
+import { setImages } from '../../actions/preview';
 
 const Album = ({
   inOrder,
@@ -33,13 +33,13 @@ const Album = ({
   getAlbum,
   returnToMyAlbums,
   isPortfolio,
+  setImages,
 }) => {
   const { images, childAlbums, name, isPublic } = data || {};
   const { id: creatorId } = data?.creator || {};
   const parentAlbum = data?.parentAlbum || null;
   const [isCreator, setIsCreator] = useState(false);
   const [albumId, setAlbumId] = useState();
-  const [showPreview, setShowPreview] = useState(false);
   const [showEditAlbum, setShowEditAlbum] = useState(false);
   const history = useHistory();
   const location = useLocation();
@@ -47,6 +47,10 @@ const Album = ({
   const toggleShowEditAlbum = () => {
     setShowEditAlbum((prev) => !prev);
   };
+
+  useEffect(() => {
+    setImages(images);
+  }, [setImages, images]);
 
   useEffect(() => {
     const album = getQueryParams(location, ['album']).album;
@@ -82,13 +86,7 @@ const Album = ({
   ) : data ? (
     <motion.div layout {...pageAnimation}>
       <AlbumApiErrors />
-      {(showPreview || showPreview === 0) && (
-        <Preview
-          images={images}
-          imageIndex={showPreview}
-          setShowPreview={setShowPreview}
-        />
-      )}
+
       {name && !isPortfolio && !hideInfo && (
         <CurrentAlbumInfo
           inOrder={inOrder}
@@ -149,7 +147,6 @@ const Album = ({
               <PhotoTile
                 {...image}
                 index={index}
-                setShowPreview={setShowPreview}
                 isCreator={isCreator}
                 key={v4()}
               />
@@ -171,5 +168,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
+  setImages,
   getAlbum,
 })(Album);

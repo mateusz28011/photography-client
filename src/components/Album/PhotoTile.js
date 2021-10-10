@@ -3,16 +3,17 @@ import Tile from './Tile';
 import PhotoManager from './PhotoManager';
 import { connect } from 'react-redux';
 import Loading from '../Loading';
+import { setCurrentImage } from '../../actions/preview';
 
 const PhotoTile = ({
   id: imageId,
   thumbnailUrl,
   title,
-  setShowPreview,
   index,
   isCreator,
   loadingDeleteImageFromAlbum,
   loadingRenameImageFromAlbum,
+  setCurrentImage,
 }) => {
   const [showRenameImage, setShowRenameImage] = useState(false);
 
@@ -21,7 +22,7 @@ const PhotoTile = ({
   };
 
   const handlePhotoClick = () => {
-    setShowPreview(index);
+    setCurrentImage(index);
   };
 
   return (
@@ -63,4 +64,4 @@ const mapStateToProps = (state) => ({
   loadingRenameImageFromAlbum: state.loading?.RENAME_IMAGE_FROM_ALBUM,
 });
 
-export default connect(mapStateToProps)(PhotoTile);
+export default connect(mapStateToProps, { setCurrentImage })(PhotoTile);

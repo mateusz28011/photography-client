@@ -19,6 +19,7 @@ import Home from './components/pages/Home/Home';
 import Account from './components/pages/Account/Account';
 import Album from './components/Album/Album';
 import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import Preview from './components/Album/Preview';
 
 const App = () => {
   const location = useLocation();
@@ -28,6 +29,7 @@ const App = () => {
   }, []);
   return (
     <Provider store={store}>
+      <Preview />
       <Navbar />
       <div className='max-w-screen-2xl min-h-screen mx-auto w-full'>
         <AnimateSharedLayout>

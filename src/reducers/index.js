@@ -7,6 +7,7 @@ import vendor from './vendor';
 import album from './album';
 import order from './order';
 import notes from './notes';
+import preview from './preview';
 
 export default combineReducers({
   auth,
@@ -17,4 +18,5 @@ export default combineReducers({
   album,
   order,
   notes,
+  preview,
 });
