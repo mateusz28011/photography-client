@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React from 'react';
 import { connect } from 'react-redux';
 import { setAlbumInOrderClearError } from '../../../actions/order';
@@ -26,9 +27,12 @@ const OrderAlbum = ({
         <Albums inOrder />
       ) : (
         <>
-          <div className='bg-white shadow rounded-lg text-center py-3 mt-3 font-medium text-xl text-gray-600'>
+          <motion.div
+            layout
+            className='bg-white shadow rounded-lg text-center py-3 my-3 font-medium text-xl text-gray-600'
+          >
             My order album
-          </div>
+          </motion.div>
           <Album albumId={albumId} hideInfo={!isVendor} inOrder={true} />
         </>
       )}

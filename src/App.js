@@ -31,8 +31,8 @@ const App = () => {
     <Provider store={store}>
       <Preview />
       <Navbar />
-      <div className='max-w-screen-2xl min-h-screen mx-auto w-full'>
-        <AnimateSharedLayout>
+      <AnimateSharedLayout>
+        <div className='max-w-screen-2xl min-h-screen mx-auto w-full'>
           <AnimatePresence exitBeforeEnter>
             <Switch location={location} key={location.pathname}>
               <Route exact path='/'>
@@ -65,9 +65,9 @@ const App = () => {
               </Route>
             </Switch>
           </AnimatePresence>
-        </AnimateSharedLayout>
-      </div>
-      <Footer />
+        </div>
+        <Footer />
+      </AnimateSharedLayout>
     </Provider>
   );
 };

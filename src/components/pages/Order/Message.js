@@ -13,6 +13,7 @@ import {
 } from '../../../selectors';
 import ApiError from '../../ApiError';
 import Loading from '../../Loading';
+import pageAnimation from '../pageAnimation';
 
 const Message = ({
   loading,
@@ -52,6 +53,7 @@ const Message = ({
         layout
         className='bg-white shadow rounded-lg p-5 flex flex-col items-center'
         onSubmit={handleSubmit(handleCreateNote)}
+        {...pageAnimation}
       >
         <div className='w-full sm:w-2/3 md:w-1/2 lg:w-1/3'>
           <div className='font-medium text-blue-600 text-lg'>Send message:</div>

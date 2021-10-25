@@ -173,7 +173,7 @@ const Search = ({ loading, error, data, searchProfiles }) => {
 const Vendor = ({ vendor, showVendor }) => {
   const { name, avatar, description } = vendor;
   return (
-    <div className='bg-white mb-3 rounded-lg shadow px-5 py-9 flex flex-col justify-start w-full sm:flex-none sm:grid sm:gap-y-4 sm:grid-rows-4 sm:grid-cols-6 sm:gap-x-5 sm:h-72'>
+    <div className='bg-white mb-3  rounded-lg shadow px-5 py-9 flex flex-col justify-start sm:flex-none sm:grid sm:gap-y-4 sm:grid-rows-4 sm:grid-cols-6 sm:gap-x-5 sm:h-72'>
       <img
         src={avatar}
         alt={`${name}'s avatar`}
@@ -182,7 +182,7 @@ const Vendor = ({ vendor, showVendor }) => {
       <div className='text-center mt-6 mb-2.5 text-xl font-semibold sm:my-0 sm:col-start-3 sm:col-end-7 sm:flex sm:items-center sm:justify-center'>
         <div>{name}</div>
       </div>
-      <div className='line-clamp-4 sm:mb-0 sm:col-start-3 sm:col-end-7 sm:row-start-2 sm:row-end-4 lg:line-clamp-4'>
+      <div className='break-all line-clamp-4 sm:mb-0 sm:col-start-3 sm:col-end-7 sm:row-start-2 sm:row-end-4 lg:line-clamp-4'>
         {description}
       </div>
       <button

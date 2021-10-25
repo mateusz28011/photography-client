@@ -97,12 +97,12 @@ const Navbar = ({ user, logoutUser }) => {
 
 const NavLinks = ({ user, logoutUser, isSmallScreen }) => {
   const location = useLocation();
-  const currentLink = 'border-b-2 rounded';
+  const currentLink = 'underline';
 
   return (
     <motion.div
       initial={isSmallScreen && { y: '-100%', opacity: 0, zIndex: -1 }}
-      transition={isSmallScreen && { type: 'spring', duration: 1 }}
+      transition={isSmallScreen && { type: 'spring', duration: 0.5 }}
       animate={isSmallScreen && { y: 0, opacity: 1 }}
       exit={
         isSmallScreen && {

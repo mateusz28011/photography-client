@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React from 'react';
 import {
   AiFillFacebook,
@@ -11,8 +12,14 @@ import { GoLocation } from 'react-icons/go';
 
 const Footer = () => {
   return (
-    <footer className='mt-auto w-full bg-blue-600 text-white z-50'>
-      <div className='max-w-screen-2xl mx-auto flex flex-wrap gap-y-10 px-10 py-10 text-sm gap-x-10 md:justify-around 2xl:justify-evenly sm:text-base md:py-5'>
+    <motion.footer
+      layout
+      className='mt-auto w-full bg-blue-600 text-white z-50'
+    >
+      <motion.div
+        layout
+        className='max-w-screen-2xl mx-auto flex flex-wrap gap-y-10 px-10 py-10 text-sm gap-x-10 md:justify-around 2xl:justify-evenly sm:text-base md:py-5'
+      >
         <div className='w-full md:w-52 lg:w-64 xl:w-80 '>
           <Header>ABOUT</Header>
           <p>
@@ -38,8 +45,8 @@ const Footer = () => {
             </div>
           </IconWithText>
         </div>
-      </div>
-    </footer>
+      </motion.div>
+    </motion.footer>
   );
 };
 
