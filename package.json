@@ -30,6 +30,7 @@
     "redux": "^4.1.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
+    "serve": "^13.0.2",
     "tailwind-capitalize-first-letter": "^1.0.3",
     "universal-cookie": "^4.0.4",
     "uuidv4": "^6.2.12",
@@ -37,7 +38,7 @@
     "yup": "^0.32.9"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "serve -s build",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
