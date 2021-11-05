@@ -4,6 +4,7 @@ import './tailwind.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
+import store from './store';
 
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 axios.defaults.withCredentials = true;
@@ -23,7 +24,8 @@ axios.interceptors.response.use(
       error.response?.status === 401 &&
       originalRequest.url.includes('/dj-rest-auth/token/refresh/')
     ) {
-      // store.commit('clearUserData');
+      localStorage.removeItem('user');
+      store.disptach({ type: 'LOGOUT_SUCCESS' });
       // router.push('/login');
       return Promise.reject(error);
     } else if (error.response?.status === 401 && !originalRequest._retry) {

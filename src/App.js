@@ -5,7 +5,6 @@ import Navbar from './components/Navbar';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { getUser } from './actions/auth';
-import doesHttpOnlyCookieExist from './utils/doesHttpOnlyCookieExist';
 import Search from './components/pages/Search/Search';
 import Vendor from './components/pages/Vendor/Vendor';
 import Login from './components/pages/Login/Login';
@@ -25,8 +24,10 @@ const App = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (doesHttpOnlyCookieExist('refresh-token')) store.dispatch(getUser());
+    const user = localStorage.getItem('user');
+    if (user) store.dispatch(getUser());
   }, []);
+
   return (
     <Provider store={store}>
       <Preview />
