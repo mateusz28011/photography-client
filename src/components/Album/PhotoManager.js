@@ -45,7 +45,7 @@ const PhotoManager = ({
           <input
             className='w-full'
             type='text'
-            required
+            maxLength={100}
             defaultValue={title}
             {...register('title')}
           />
