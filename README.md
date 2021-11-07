@@ -46,7 +46,7 @@ Project is created with:
 ## Setup
 
 ### Clone repository
-    git clone https://github.com/mateusz28011/festival-site.git
+    git clone https://github.com/mateusz28011/photography-client.git
 ### Create file `.env` and put there
     REACT_APP_BASE_URL=<url_to_api>
 ### Install dependecies
@@ -54,7 +54,7 @@ Project is created with:
 ### Run local server
     npm start
 ### Open your browser and enter
-    http://localhost:3000
+    https://localhost:3000
 
 ## Sources
 
