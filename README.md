@@ -18,7 +18,7 @@
 ## General Info
 
 This is my second project in react, tailwindcss and framer motion, additionally I started using redux and react hook form.\
-This project also includes API created with Django Rest Framework which you can find [here](https://github.com/mateusz28011/photography-api).
+For more informations about project visit repo of api [here](https://github.com/mateusz28011/photography-api).
 
 ## Technologies
 
@@ -45,7 +45,16 @@ Project is created with:
 
 ## Setup
 
-TODO
+### Clone repository
+    git clone https://github.com/mateusz28011/festival-site.git
+### Create file `.env` and put there
+    REACT_APP_BASE_URL=<url_to_api>
+### Install dependecies
+    npm install
+### Run local server
+    npm start
+### Open your browser and enter
+    http://localhost:3000
 
 ## Sources
 
