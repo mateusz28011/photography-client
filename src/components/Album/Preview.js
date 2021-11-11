@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState, useEffect } from 'react';
 import { HiX, HiChevronLeft, HiChevronRight } from 'react-icons/hi';
 import { connect } from 'react-redux';
@@ -37,19 +37,9 @@ const Preview = ({ images, currentImage, setCurrentImage }) => {
   });
 
   return currentImage || currentImage === 0 ? (
-    <motion.div
-      className='fixed h-19/20 max-h-screen w-19/20 max-w-screen-2xl inset-0 m-auto text-white shadow-lg rounded-xl bg-blue-600 border-2 border-white backdrop-filter backdrop-blur-xl bg-opacity-90'
+    <div
+      className='fixed h-19/20 max-h-screen w-full inset-0 m-auto text-white bg-black'
       style={{ zIndex: 100 }}
-      initial={{ x: '-100vw', opacity: 0, transition: { duration: 0.5 } }}
-      animate={{
-        x: 0,
-        opacity: 1,
-        transition: {
-          type: 'spring',
-          duration: 1,
-        },
-      }}
-      exit={{ x: '-100vw', opacity: 0, transition: { duration: 0.5 } }}
     >
       <HiX
         className='absolute w-10 h-10 sm:w-14 sm:h-14 mr-3 mt-3 top-0 right-0 z-50 cursor-pointer transition-transform transform hover:scale-110'
@@ -67,25 +57,27 @@ const Preview = ({ images, currentImage, setCurrentImage }) => {
           onClick={nextImage}
         />
       ) : null}
-      <motion.img
-        className='relative h-full w-full object-contain max-w-72xl mx-auto top-1/2s transform -translate-y-1/2s z-40 p-8 sm:p-16'
-        src={images[currentImage].url}
-        key={currentImage}
-        alt=''
-        initial={
-          firstSkip
-            ? false
-            : isLeftSkip
-            ? { x: 300, opacity: 0 }
-            : { x: -300, opacity: 0 }
-        }
-        animate={{ x: 0, opacity: 1 }}
-        // exit={{ x: -300, opacity: 0 }}
-      />
+      <AnimatePresence>
+        <motion.img
+          className='relative h-full w-full object-contain max-w-72xl mx-auto top-1/2s transform -translate-y-1/2s z-40 p-8 sm:p-16'
+          src={images[currentImage].url}
+          key={currentImage}
+          alt=''
+          initial={
+            firstSkip
+              ? false
+              : isLeftSkip
+              ? { x: 300, opacity: 0 }
+              : { x: -300, opacity: 0 }
+          }
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: -300, opacity: 0 }}
+        />
+      </AnimatePresence>
       <div className='absolute right-0 bottom-0 mr-4 mb-4 text-xl sm:text-3xl'>{`${
         currentImage + 1
       } of ${images.length}`}</div>
-    </motion.div>
+    </div>
   ) : null;
 };
 
