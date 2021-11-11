@@ -144,7 +144,7 @@ const Vendor = ({
           )}
         </motion.div>
 
-        <motion.label layout className='relative mt-6 mb-8'>
+        <motion.label layout='position' className='relative mt-6 mb-8'>
           <motion.img
             layout
             src={previewAvatar ? previewAvatar : avatar}
@@ -183,7 +183,7 @@ const Vendor = ({
             {email}
           </motion.div>
         </motion.div>
-        <motion.div className='w-full '>
+        <motion.div layout className='w-full '>
           {isOwner && (
             <motion.div
               layout='position'
@@ -236,60 +236,68 @@ const Vendor = ({
             {user ? 'Make Order' : 'Sign in to make order'}
           </motion.button>
         )}
-        {isOwner && (
-          <>
-            <motion.div layout className='self-start mt-4 font-medium'>
-              Payment info:
-            </motion.div>
-            <AnimatePresence exitBeforeEnter>
-              {showEdit ? (
-                <motion.div
-                  className='w-full'
-                  key='paymentInfoAccountTextArea'
-                  initial={{ x: '-50px', opacity: 0 }}
-                  animate={controlsTextArea}
-                  exit={{ x: '50px', opacity: 0 }}
-                >
-                  <TextareaAutosize
-                    defaultValue={paymentInfo}
-                    required
-                    {...register('paymentInfo')}
-                  />
-                </motion.div>
-              ) : (
-                <motion.div
-                  className='self-start break-all'
-                  key='paymentInfoAccount'
-                  initial={{ x: '-50px', opacity: 0 }}
-                  animate={controlsTextArea}
-                  exit={{ x: '50px', opacity: 0 }}
-                >
-                  {paymentInfo ? paymentInfo : 'Empty'}
-                </motion.div>
-              )}
-            </AnimatePresence>
-            <motion.div
-              layout
-              className='flex w-full justify-start flex-wrap items-center gap-2 mt-3'
-            >
-              <button
-                className='btn-basic w-44 py-1.5 px-7'
-                type='button'
-                onClick={showEdit ? handleSubmit(handleEdit) : toggleShowEdit}
+
+        <motion.div layout className='w-full'>
+          {isOwner && (
+            <>
+              <motion.div
+                layout='position'
+                className='self-start mt-4 font-medium'
               >
-                {showEdit ? 'Confirm' : 'Edit'}
-              </button>
-              {showEdit && (
-                <input
-                  type='button'
-                  value='Close'
-                  onClick={toggleShowEdit}
+                Payment info:
+              </motion.div>
+              <AnimatePresence exitBeforeEnter>
+                {showEdit ? (
+                  <motion.div
+                    layout
+                    className='w-full'
+                    key='paymentInfoAccountTextArea'
+                    initial={{ x: '-50px', opacity: 0 }}
+                    animate={controlsTextArea}
+                    exit={{ x: '50px', opacity: 0 }}
+                  >
+                    <TextareaAutosize
+                      defaultValue={paymentInfo}
+                      required
+                      {...register('paymentInfo')}
+                    />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    layout
+                    className='self-start break-all'
+                    key='paymentInfoAccount'
+                    initial={{ x: '-50px', opacity: 0 }}
+                    animate={controlsTextArea}
+                    exit={{ x: '50px', opacity: 0 }}
+                  >
+                    {paymentInfo ? paymentInfo : 'Empty'}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              <motion.div
+                layout
+                className='flex w-full justify-start flex-wrap items-center gap-2 mt-3'
+              >
+                <button
                   className='btn-basic w-44 py-1.5 px-7'
-                />
-              )}
-            </motion.div>
-          </>
-        )}
+                  type='button'
+                  onClick={showEdit ? handleSubmit(handleEdit) : toggleShowEdit}
+                >
+                  {showEdit ? 'Confirm' : 'Edit'}
+                </button>
+                {showEdit && (
+                  <input
+                    type='button'
+                    value='Close'
+                    onClick={toggleShowEdit}
+                    className='btn-basic w-44 py-1.5 px-7'
+                  />
+                )}
+              </motion.div>
+            </>
+          )}
+        </motion.div>
       </motion.div>
       <motion.div
         layout

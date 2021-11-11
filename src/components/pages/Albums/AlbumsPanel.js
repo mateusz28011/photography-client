@@ -37,10 +37,10 @@ const AlbumsPanel = ({ albumId, location }) => {
 
   return !albumId ? (
     <motion.div
+      {...pageAnimation}
       layout
       onLayoutAnimationComplete={animateFilterEnter}
       className={'bg-white rounded-b-lg shadow'}
-      {...pageAnimation}
     >
       <motion.form
         layout

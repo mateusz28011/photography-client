@@ -192,10 +192,7 @@ const AlbumManager = ({
                       }}
                       size='2rem'
                       strokeWidth='-1rem'
-                      className={
-                        'rounded-full transition-colors cursor-pointer duration-100 p-0.5 ' +
-                        (showShare ? 'bg-blue-600 text-white' : 'text-blue-600')
-                      }
+                      className='rounded-full transition-colors cursor-pointer duration-100 p-0.5 text-blue-600'
                     />
                   </motion.div>
                 )}

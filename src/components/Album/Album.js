@@ -101,7 +101,7 @@ const Album = ({
         />
       )}
       <motion.div
-        layout
+        layout='position'
         className='grid grid-cols-2 auto-rows-fr sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 p-3 2xl:justify-between 2xl:px-0'
       >
         {returnToMyAlbums && (

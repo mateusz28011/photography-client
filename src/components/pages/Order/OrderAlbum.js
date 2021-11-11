@@ -10,6 +10,7 @@ import Album from '../../Album/Album';
 import ApiError from '../../ApiError';
 import Loading from '../../Loading';
 import Albums from '../Albums/Albums';
+import pageAnimation from '../pageAnimation';
 
 const OrderAlbum = ({
   albumId,
@@ -18,14 +19,15 @@ const OrderAlbum = ({
   error,
   setAlbumInOrderClearError,
 }) => {
+  console.log(albumId);
   return (
-    <div className='relative'>
+    <motion.div {...pageAnimation} layout className='relative'>
       {error && (
         <ApiError error={error} center clearFunc={setAlbumInOrderClearError} />
       )}
       {isVendor && !albumId ? (
         <Albums inOrder />
-      ) : (
+      ) : albumId ? (
         <>
           <motion.div
             layout
@@ -35,9 +37,9 @@ const OrderAlbum = ({
           </motion.div>
           <Album albumId={albumId} hideInfo={!isVendor} inOrder={true} />
         </>
-      )}
+      ) : undefined}
       {loading && <Loading cover />}
-    </div>
+    </motion.div>
   );
 };
 
