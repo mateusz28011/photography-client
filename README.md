@@ -13,7 +13,7 @@
 
 ## Live demo
 
-[Demo link](https://photography-client.mateuszsiwinski.com/)
+[Demo link](https://photography-client.mateuszsiwinski.com/) (Loading may take a while)
 
 ## General Info
 
